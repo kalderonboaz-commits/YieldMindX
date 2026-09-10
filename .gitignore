@@ -1,0 +1,42 @@
+# Dependencies and generated output
+node_modules/
+dist/
+build/
+.next/
+out/
+coverage/
+playwright-report/
+test-results/
+*.log
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+bin/
+obj/
+# Local configuration and credentials; commit examples only
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+# Local database/runtime state and IaC state
+*.sqlite
+*.sqlite3
+*.db
+.data/
+backups/
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+# Host/editor files and exports
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+exports/
