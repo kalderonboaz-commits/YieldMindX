@@ -1,0 +1,5 @@
+[agents]
+enabled = true
+# Three spawned workers plus JANUS in the primary conversation.
+# Host/session limits still apply.
+max_concurrent_threads_per_session = 3
