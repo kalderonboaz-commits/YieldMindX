@@ -6,11 +6,35 @@
     :root{--edge:rgba(154,220,235,.34)}*{box-sizing:border-box}body{margin:0;background:#173d70;color:#fff;font-family:Aptos,Arial,sans-serif}
     .stage{min-height:100vh;padding:22px;background:linear-gradient(90deg,rgba(17,64,111,.74),rgba(19,91,137,.37)),url('../assets/yieldmindx-ai-wafer-background-rich.png') center/cover fixed}
     .topline{max-width:1380px;margin:0 auto 12px;display:flex;align-items:center;justify-content:space-between;gap:16px;color:#effbff}.brand{font-size:14px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}.tag{border:1px solid var(--edge);border-radius:999px;background:rgba(13,67,113,.75);padding:7px 11px;font-size:12px;color:#d7f2fa}
-    .frame-shell{position:relative;max-width:1380px;margin:auto;border:1px solid var(--edge);border-radius:22px;overflow:hidden;box-shadow:0 28px 80px rgba(4,24,54,.45);background:rgba(239,249,252,.15);backdrop-filter:blur(12px)}iframe{position:relative;z-index:0;width:100%;height:2600px;border:0;display:block;background:transparent}
+    .release-note{max-width:1380px;margin:0 auto 14px;padding:13px 16px;border:1px solid var(--edge);border-radius:14px;background:rgba(8,48,91,.84);box-shadow:0 12px 32px rgba(4,24,54,.18);color:#e9f9ff;display:flex;align-items:center;justify-content:space-between;gap:18px}.release-note strong,.release-note span{display:block}.release-note strong{font-size:15px}.release-note span{margin-top:3px;color:#cdeaf4;font-size:13px}.section-link{flex:0 0 auto;min-height:42px;padding:11px 16px;border:1px solid rgba(190,238,248,.56);border-radius:10px;background:#f0fbff;color:#164b7b;font-size:13px;font-weight:800;text-decoration:none}.section-link:hover{background:#fff}.section-link:focus-visible{outline:3px solid #fff;outline-offset:3px}
+    .frame-shell{position:relative;max-width:1380px;margin:auto;border:1px solid var(--edge);border-radius:22px;overflow:hidden;box-shadow:0 28px 80px rgba(4,24,54,.45);background:rgba(239,249,252,.15);backdrop-filter:blur(12px)}iframe{position:relative;z-index:0;width:100%;height:4000px;border:0;display:block;background:transparent}
     .header-atmosphere{position:absolute;z-index:1;pointer-events:none;top:28px;left:28px;right:28px;height:214px;border-radius:20px;background:linear-gradient(90deg,rgba(0,88,148,.43),rgba(22,154,198,.22),rgba(44,76,174,.27)),url('../assets/yieldmindx-ai-wafer-background-rich.png') center/cover;mix-blend-mode:screen;opacity:.62}
     .header-wafer{position:absolute;z-index:2;pointer-events:none;top:34px;right:42px;width:390px;height:196px;background:url('../assets/yieldmindx-ai-wafer-background.png') 82% 50%/720px auto no-repeat;opacity:.96;mix-blend-mode:screen;filter:saturate(1.24) brightness(1.18);-webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 30%,#000 87%,transparent 100%),linear-gradient(0deg,transparent 0%,#000 20%,#000 90%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent 0%,#000 30%,#000 87%,transparent 100%),linear-gradient(0deg,transparent 0%,#000 20%,#000 90%,transparent 100%);mask-composite:intersect}
-    @media(max-width:760px){.stage{padding:10px;background-attachment:scroll}.topline{padding:4px 6px}.tag{display:none}iframe{height:3300px}.header-atmosphere{top:18px;left:18px;right:18px;height:204px}.header-wafer{top:32px;right:-90px;width:305px;height:165px;opacity:.73}}
+    @media(max-width:760px){.stage{padding:10px;background-attachment:scroll}.topline{padding:4px 6px}.tag{display:none}.release-note{align-items:stretch;flex-direction:column}.section-link{text-align:center}iframe{height:4600px}.header-atmosphere{top:18px;left:18px;right:18px;height:204px}.header-wafer{top:32px;right:-90px;width:305px;height:165px;opacity:.73}}
   </style>
 </head>
-<body><div class="stage"><div class="topline"><span class="brand">YieldMindX · AI Yield Intelligence</span><span class="tag">Dashboard template · Rev 5</span></div><div class="frame-shell"><iframe title="YieldMindX dashboard" src="yieldmindx-five-section-workspace-chart-recovery.html"></iframe><div class="header-atmosphere" aria-hidden="true"></div><div class="header-wafer" role="img" aria-label="Integrated 3D silicon wafer illustration"></div></div></div></body>
+<body><div class="stage"><div class="topline"><span class="brand">YieldMindX · AI Yield Intelligence</span><span class="tag">Dashboard template · Rev 5</span></div><aside class="release-note" aria-label="Rev 5 GVB update"><div><strong>Section 5 · GVB analysis is ready</strong><span>Select one GVB CSV. YieldMindX automatically joins it to the validated parameter snapshot, runs Welch t-tests, and builds interactive charts.</span></div><a class="section-link" href="yieldmindx-five-section-workspace-chart-recovery.html#gvb" target="yieldmindx-dashboard">Go to Section 5</a></aside><div class="frame-shell"><iframe id="dashboard-frame" name="yieldmindx-dashboard" title="YieldMindX Rev 5 dashboard" aria-label="YieldMindX Rev 5 dashboard with integrated GVB analysis" src="yieldmindx-five-section-workspace-chart-recovery.html"></iframe><div class="header-atmosphere" aria-hidden="true"></div><div class="header-wafer" role="img" aria-label="Integrated 3D silicon wafer illustration"></div></div></div><script>
+  (()=>{
+    const frame=document.getElementById('dashboard-frame');
+    let observer;
+    const fit=()=>{
+      try{
+        const doc=frame.contentDocument;
+        if(!doc)return;
+        const height=Math.max(doc.body?.scrollHeight||0,doc.documentElement?.scrollHeight||0);
+        if(height)frame.style.height=`${height+24}px`;
+      }catch(_error){/* The 4000px responsive fallback keeps local-file results visible. */}
+    };
+    frame.addEventListener('load',()=>{
+      fit();
+      try{
+        observer?.disconnect();
+        observer=new MutationObserver(fit);
+        observer.observe(frame.contentDocument.documentElement,{attributes:true,childList:true,subtree:true});
+        if('ResizeObserver' in window)new ResizeObserver(fit).observe(frame.contentDocument.documentElement);
+      }catch(_error){/* Local browser security may block iframe inspection; fallback height remains. */}
+    });
+    window.addEventListener('resize',fit,{passive:true});
+  })();
+</script></body>
 </html>

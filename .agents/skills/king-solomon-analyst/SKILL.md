@@ -7,7 +7,8 @@ Read ../../../.codex/agents/king-solomon-analyst.toml relative to this skill dir
 
 For a comparison delivery, provide:
 
-- Join rule, matched/unmatched counts, duplicate-key handling, and CSV assumptions.
-- Per-variable Welch t-test evidence, effect size, and raw/corrected significance.
-- A ranked Good-versus-Bad separation table with stated statistical limitations.
-- Coordination requirements for ARIA to deliver an accessible interactive HTML results report.
+- A one-file workflow: accept the user's GVB CSV and use the fixed KING DAVID-validated `Commnality_paramters.csv` dataset or bundled snapshot automatically.
+- Composite-key validation and exact `LotName + WaferNum` joining, with matched/unmatched counts, missing/duplicate-key handling, exclusions, and source/snapshot metadata.
+- Exact Welch t-test evidence for eligible numeric measurements: group n/mean/SD, Good-minus-Bad difference and 95% CI, t, df, raw p, Benjamini-Hochberg q, and Cohen's d.
+- A deterministic ranked Good-versus-Bad evidence table with assumptions, limitations, association-only language, and full-precision CSV export.
+- ARIA-coordinated accessible interactive HTML with progress/error states, summary counts, effect bars, evidence scatter, and keyboard-accessible sortable/filterable results.
