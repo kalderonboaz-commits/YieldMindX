@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>YieldMinx Dashboard Rev 1</title>
+  <style>
+    :root{--navy:#061427;--cyan:#12c7db;--edge:rgba(154,220,235,.32)}
+    *{box-sizing:border-box} body{margin:0;background:#061427;color:#fff;font-family:Aptos,Arial,sans-serif}
+    .stage{min-height:100vh;padding:22px;background:linear-gradient(90deg,rgba(3,13,30,.90),rgba(3,13,30,.60)),url('../assets/yieldmindx-ai-wafer-background.png') center/cover fixed}
+    .topline{max-width:1380px;margin:0 auto 12px;display:flex;align-items:center;justify-content:space-between;gap:16px;color:#dcecf3}.brand{font-size:14px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}.tag{border:1px solid var(--edge);border-radius:999px;background:rgba(6,20,39,.72);padding:7px 11px;font-size:12px;color:#b6dbe5}
+    .frame-shell{max-width:1380px;margin:auto;border:1px solid var(--edge);border-radius:22px;overflow:hidden;box-shadow:0 28px 80px rgba(0,0,0,.42);background:rgba(239,249,252,.15);backdrop-filter:blur(12px)}
+    iframe{width:100%;height:2600px;border:0;display:block;background:transparent}
+    @media(max-width:760px){.stage{padding:10px;background-attachment:scroll}.topline{padding:4px 6px}.tag{display:none}iframe{height:3300px}}
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="topline"><span class="brand">YieldMindX · AI Yield Intelligence</span><span class="tag">Dashboard template · Rev 1</span></div>
+    <div class="frame-shell"><iframe id="dashboard" title="YieldMindX dashboard" src="yieldmindx-five-section-workspace-chart-recovery.html"></iframe></div>
+  </div>
+  <script>
+    const frame=document.getElementById('dashboard');
+    frame.addEventListener('load',()=>{
+      const doc=frame.contentDocument;
+      const style=doc.createElement('style');
+      style.textContent=`
+        body{background:transparent!important}.shell{max-width:1320px!important;padding:28px!important}
+        .hero{background:linear-gradient(90deg,rgba(4,17,36,.94),rgba(5,24,48,.74)),url('../assets/yieldmindx-ai-wafer-background.png') center/cover!important;border:1px solid rgba(137,221,238,.24)!important;box-shadow:0 14px 34px rgba(3,12,28,.25)!important}
+        .nav a{background:rgba(255,255,255,.94)!important}.card{background:rgba(255,255,255,.96)!important;box-shadow:0 10px 26px rgba(3,18,32,.12)!important}.tbl th{background:#edf8fb!important}
+        .comment{background:#fff!important;border:2px solid #78aeba!important;box-shadow:inset 0 0 0 1px rgba(19,195,213,.08)!important}.comment::placeholder{color:#6a7c87!important}
+        .upload{background:rgba(238,251,253,.98)!important;border-color:#4f9dad!important}.section{scroll-margin-top:16px}
+      `;
+      doc.head.appendChild(style);
+    });
+  </script>
+</body>
+</html>
