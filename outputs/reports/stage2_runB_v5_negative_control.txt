@@ -1,0 +1,27 @@
+STAGE 2 RUN B v5 -- NEGATIVE CONTROL (shuffled-target, bottleneck-fix pools)
+==============================================================================
+
+1. V5 PAIR POOL (91,783 pairs -- v4 preserved + new MEDIUM x MEDIUM)
+------------------------------------------------------------------------------
+Pairs re-tested under shuffled target: 91783 / 91783
+  STRONG:       79 (0.09%)
+  MODERATE:     208 (0.23%)
+  WEAK:         39455 (42.99%)
+  INCONCLUSIVE: 52041 (56.70%)
+Real STRONG+MODERATE rate: 92.1% (84508/91783)
+Shuffled STRONG+MODERATE rate: 0.31%
+V4's own shuffled rate (for comparison): 0.31%
+-> CLEAN SEPARATION: no material increase in false-discovery rate vs. v4.
+
+2. V5 3-WAY POOL (30,350 triples -- evidence-adaptive graph, no magnitude-rank edge cutoff)
+------------------------------------------------------------------------------
+Triples re-tested under shuffled target: 30350 / 30350
+  STRONG:       3 (0.01%)
+  MODERATE:     7 (0.02%)
+  WEAK:         23152 (76.28%)
+  INCONCLUSIVE: 7188 (23.68%)
+Real STRONG+MODERATE rate: 36.1% (10959/30350)
+Shuffled STRONG+MODERATE rate: 0.03%
+V4's own shuffled rate (for comparison): 0.16%
+-> CLEAN SEPARATION: no material increase in false-discovery rate vs. v4.
+

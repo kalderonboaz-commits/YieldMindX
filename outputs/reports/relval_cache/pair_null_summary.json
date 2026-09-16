@@ -1,0 +1,12 @@
+{
+  "family": "2way",
+  "n_hypotheses": 11920,
+  "b_perm": 10,
+  "null_pool_size": 119200,
+  "null_delta_r2_mean": -0.005676245994439907,
+  "null_delta_r2_95th_pctile": 0.008826815252397115,
+  "null_delta_r2_99th_pctile": 0.015566833063071512,
+  "real_strong_count": 9695,
+  "real_moderate_count": 1510,
+  "real_survives_fdr_count": 11622
+}

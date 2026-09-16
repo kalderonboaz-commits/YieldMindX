@@ -1,0 +1,4 @@
+overfit_verdict=SUBSTANTIAL (train-to-validation RMSE gap exceeds 50% of train RMSE)
+cv_val_r2_mean=0.2894
+negative_control_pass=True
+proceed_to_relationship_discovery=True

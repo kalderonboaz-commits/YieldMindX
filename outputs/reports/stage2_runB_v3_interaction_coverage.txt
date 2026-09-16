@@ -1,0 +1,81 @@
+STAGE 2 RUN B v3 -- INTERACTION DISCOVERY COVERAGE ACCOUNTING
+==================================================================
+All counts pulled directly from the frozen v3 output files, not estimated.
+
+------------------------------------------------------------------
+2-WAY INTERACTIONS
+------------------------------------------------------------------
+Total possible numeric pairs (C(1405,2)):                986,310
+Pairs receiving BOTH broad-screen scores:                 986,310 / 986,310 (100%)
+  score_1 (marginal-residual proxy, reused from v2):      100%
+  score_2 (2D-binned non-additivity energy, NEW):         100%
+  Full-universe Spearman rank correlation between the two scores: 0.0466
+  (near-zero -- the two scores are measuring genuinely different things;
+  zero overlap in each score's own top-300, confirming score_2 is not a
+  redundant re-derivation of score_1)
+
+Multi-channel candidate pool (union of 6 channels):        219 unique pairs
+  entering expensive additive-vs-joint confirmation
+  (177 unique features involved)
+
+Confirmed 2-way interactions (219 / 219 tested):
+  STRONG:        176  (80.4%)
+  MODERATE:       30  (13.7%)
+  WEAK:           10  (4.6%)
+  INCONCLUSIVE:    3  (1.4%)
+
+Note on the high STRONG rate: this reflects the candidate pool being
+PRE-FILTERED by the broad non-additivity screen and existing interaction
+evidence toward pairs already likely to show real structure -- not a
+miscalibrated confirmation gate. The dedicated negative control (same 219
+pairs, shuffled target) found 0/219 STRONG and 0/219 MODERATE, confirming
+clean separation (see stage2_runB_v3_interaction_negative_control.txt).
+
+Coverage boundary: 986,091 / 986,310 (99.98%) of numeric pairs received a
+broad-screen score but did NOT enter expensive confirmation -- broad
+screening is exhaustive, confirmation is necessarily a shortlist.
+
+------------------------------------------------------------------
+3-WAY INTERACTIONS
+------------------------------------------------------------------
+Approximate total possible triples (C(1405,3)):            461,264,310
+Candidate triples generated (3 channels, systematic,
+  non-exhaustive):                                          328
+Triples actually tested (lower-order vs. full-3-way CV):    328 / 328 (100% of generated candidates)
+
+Channel contribution (candidates may be found by more than one channel):
+  a_chaining_confirmed_pairs (third variable shares a
+    STRONG/MODERATE confirmed 2-way pair with A or B):       259
+  b_tree_path_cooccurrence (LightGBM tree-path 3-feature
+    co-occurrence, mined fresh from the v3 confirmed pool):   40
+  c_residual_conditional_structure (NEW: third variable
+    correlates with the RESIDUAL of a top confirmed pair's
+    own joint fit -- explains what that pair does not):       30
+
+Tested-triple results:
+  STRONG:          105  (32.0%)
+  MODERATE:         88  (26.8%)
+  WEAK:            134  (40.9%)
+  INCONCLUSIVE:      1  (0.3%)
+
+Why the other ~461,263,982 possible triples were NOT tested: this is a
+systematic, hierarchical candidate-generation design (as instructed), not
+an exhaustive search -- a true 3-way effect whose three members never (a)
+formed a confirmed 2-way pair together, (b) co-occurred in a LightGBM tree
+path, nor (c) had one member correlate with another confirmed pair's
+residual, would not have been generated as a candidate and remains
+genuinely untested (not "tested and rejected").
+
+------------------------------------------------------------------
+NEGATIVE CONTROL SUMMARY (full detail in
+stage2_runB_v3_interaction_negative_control.txt)
+------------------------------------------------------------------
+Broad screen (score_2, full coverage): real top-300 cutoff (0.9457) never
+  reached by any of 986,310 shuffled-target pair scores (max 0.2642) --
+  clean separation.
+Confirmed 2-way (same 219-pair pool): 0/219 STRONG, 0/219 MODERATE under
+  shuffle vs. 176/219 STRONG, 30/219 MODERATE real -- clean separation.
+3-way (same 328 candidate triples): 1/328 (0.3%) STRONG, 0/328 MODERATE
+  under shuffle vs. 105/328 (32.0%) STRONG, 88/328 (26.8%) MODERATE real --
+  shuffled rate is a small fraction of the real rate, clean separation.
+No recalibration was required at any stage.

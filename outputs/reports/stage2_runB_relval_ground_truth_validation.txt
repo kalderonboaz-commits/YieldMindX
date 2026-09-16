@@ -1,0 +1,197 @@
+STAGE 2 RUN B -- RELATIONSHIP VALIDATION ENGINE: GROUND-TRUTH VALIDATION
+==================================================================
+Evaluation-only checkpoint. The (audited, corrected) Relationship
+Validation Engine was NOT modified, retuned, or rerun with different
+logic in response to these results. All evidence below is read directly
+from the already-frozen, post-audit outputs: stage2_runB_relationship_
+validation_{single,pair_screen,2way,triple_screen,3way,fdr}.csv.
+
+Coverage-status vocabulary: single-parameter relationships have no
+separate screen/promote stage (100% of features are directly tested), so
+their status is TESTED->CONFIRMED or TESTED->NOT CONFIRMED. Pair/triple
+relationships use the full NOT SCREENED / SCREENED BUT NOT PROMOTED /
+PROMOTED BUT NOT CONFIRMED / CONFIRMED taxonomy.
+
+------------------------------------------------------------------
+#1 GATE CD OPTIMUM
+------------------------------------------------------------------
+1. Ground truth: GATE2_CD_Gate_Leg_Length, single-parameter, U-shaped /
+   process window (degrades on both sides of a preferred central region).
+2. Coverage: TESTED (100%) -> CONFIRMED (MODERATE, survives FDR).
+3. Recovery: PARTIAL.
+4. Evidence: p=0.000267, q=0.000684, folds=4/5, delta_R^2=0.0296.
+   Shape resolved as COMPLEX_NONLINEAR (two turning points at 0.206 and
+   0.249) -- a real, reproducible, statistically significant effect, but
+   not the clean symmetric U-shape/process-window the ground truth
+   specifies.
+5. Interpretation: genuinely tested and genuinely found real signal
+   (validation succeeded) -- the gap is SHAPE-CLASSIFICATION fidelity,
+   not candidate-generation coverage. Matches every prior method's
+   struggle with this exact parameter's shape.
+
+------------------------------------------------------------------
+#2 PAE BENEFIT
+------------------------------------------------------------------
+1. Ground truth: TOPSIN_ET_Load_Pull_P.A.E_Last, single-parameter, direct
+   positive (~+0.33 yield pt per +1 PAE pt).
+2. Coverage: TESTED (100%) -> NOT CONFIRMED (fails FDR).
+3. Recovery: MISSED.
+4. Evidence: p=0.512, q=0.595 (fails FDR), folds=3/5, delta_R^2=-0.00001
+   (essentially zero -- the nonlinear model does not beat the linear
+   baseline at all). Shape resolved as U_SHAPED, wrong shape and no
+   reproducible direction.
+5. Interpretation: genuinely tested, genuinely missed -- not a coverage
+   gap. This is the FIFTH independent method in this project (v1, v2,
+   spline, MLP, EBM, now this engine) to fail to cleanly recover PAE's
+   planted shape/direction -- strong, convergent evidence of a genuine
+   detection-method limitation for this specific parameter, not an
+   engine-specific defect.
+
+------------------------------------------------------------------
+#3 DRAIN-LAG PENALTY
+------------------------------------------------------------------
+1. Ground truth: TOPSIN_ET_DC_PIV_Drain_Lag_1, single-parameter, negative
+   threshold (~7).
+2. Coverage: TESTED (100%) -> CONFIRMED (MODERATE, survives FDR).
+3. Recovery: EXACT.
+4. Evidence: p=0.000089, q=0.000263, folds=4/5, delta_R^2=0.0658. Shape=
+   THRESHOLD, direction=negative, turning point=8.03 (close to planted
+   ~7).
+5. Interpretation: genuinely and directly recovered on the exact named
+   column, correct shape, correct direction, threshold within the
+   expected order of magnitude, statistically significant under FDR.
+   Confidence is MODERATE here (4/5 folds) rather than STRONG -- a
+   slightly stricter compound bar (stability AND FDR together) than
+   earlier checkpoints used, but does not change the EXACT classification.
+
+------------------------------------------------------------------
+#4 GATE CD x SiN THICKNESS
+------------------------------------------------------------------
+1. Ground truth: GATE2_CD_Gate_Leg_Length x SIN_Thickness_SiN_Thickness,
+   2-way interaction, additional loss when both deviate from target.
+2. Coverage: SCREENED (100% broad-screen coverage per engine design) BUT
+   NOT PROMOTED -- absent from the pair-screen retained-rows file and
+   absent from stage2_runB_relationship_validation_2way.csv.
+3. Recovery: NOT GENERATED / NOT TESTABLE.
+4. Evidence: none -- never reached the confirmatory (statistical) stage,
+   so no p-value/q-value/fold-stability/delta-R^2 exists for this pair.
+5. Interpretation: a candidate-generation coverage gap, NOT a validation
+   failure -- the statistical test itself was never run on this pair.
+   This is now the FOURTH independently-designed candidate-generation
+   system (v4, v5, and this freshly-built engine with entirely different
+   channels) to fail to promote this exact pair.
+
+------------------------------------------------------------------
+#5 Rc x Rsh
+------------------------------------------------------------------
+1. Ground truth: OHMIC_ET_Rc_an_ct2 x OHMIC_ET_Rsh_an_ct2, 2-way
+   interaction, worst yield when both are high.
+2. Coverage: SCREENED (100%) BUT NOT PROMOTED -- same as #4.
+3. Recovery: NOT GENERATED / NOT TESTABLE.
+4. Evidence: none.
+5. Interpretation: candidate-generation coverage gap, not a validation
+   failure. Also the fourth independent system to miss this exact pair.
+
+------------------------------------------------------------------
+#6 LEAKAGE THRESHOLD
+------------------------------------------------------------------
+1. Ground truth: ET leakage family (lkg_*), single-parameter/family,
+   threshold -- moderate penalty above ~0.20, additional stronger penalty
+   above ~0.35.
+2. Coverage: TESTED (100%, all 70 lkg-family columns) -> CONFIRMED.
+3. Recovery: APPROXIMATE.
+4. Evidence (top representatives): MEASURE_ET_lkg_50_at20V -- STRONG,
+   p=0.000089, q=0.000263, folds=5/5, delta_R^2=0.0645, turning point
+   0.2247 (close to planted 0.20); TOPSIN_ET_lkg_5 -- STRONG, same
+   p/q, folds=5/5, turning point 0.1320. Family-wide: 34/70 STRONG,
+   18/70 MODERATE, 64/70 survive FDR.
+5. Interpretation: family identity, dominance, direction, and the FIRST
+   threshold value are all genuinely and statistically confirmed. The
+   planted TWO-STAGE structure (a second, stronger breakpoint near 0.35)
+   is not confirmed -- this engine's shape classifier, like every prior
+   method's, only ever resolves one primary breakpoint per feature. A
+   real, disclosed method limitation, not a coverage gap (the family was
+   tested at 100% coverage).
+
+------------------------------------------------------------------
+#7 ALIGNMENT PROCESS WINDOW
+------------------------------------------------------------------
+1. Ground truth: GATE2_Ali_Litho_Gate_to_recess_alignment, single-
+   parameter, absolute-value process window (small effect inside ~±0.035).
+2. Coverage: TESTED (100%) -> CONFIRMED (STRONG, survives FDR).
+3. Recovery: APPROXIMATE.
+4. Evidence: p=0.000356, q=0.000772, folds=5/5, delta_R^2=0.0256. Shape=
+   COMPLEX_NONLINEAR, turning points at 0.0198 and 0.0387 -- the positive
+   turning point closely matches the planted +0.035 boundary.
+5. Interpretation: genuinely, statistically, and reproducibly recovered
+   with a turning point close to the planted value -- but the shape
+   resolves to COMPLEX_NONLINEAR rather than a clean symmetric window,
+   and no mirrored negative-side (~-0.035) turning point is independently
+   confirmed. Now STRONG + FDR-significant, the strongest evidence yet
+   for this relationship, still short of EXACT.
+
+------------------------------------------------------------------
+#8 Gm STAGE DEGRADATION
+------------------------------------------------------------------
+1. Ground truth: FIC_ET_Gm_max vs TOPSIN_ET_Gm_max, CROSS-STAGE
+   comparison, threshold, negative.
+2. Coverage: OUT OF SCOPE for this engine -- the Relationship Validation
+   Engine tests only same-stage single/2-way/3-way relationships; it has
+   no cross-stage testing capability by design.
+3. Recovery: N/A (not applicable to this engine).
+4. Evidence: none produced by this engine.
+5. Interpretation: this relationship remains resolved elsewhere in Stage
+   2 -- the dedicated v2 cross-stage module (frozen, unchanged, untouched
+   by this checkpoint) found it EXACTLY (STRONG, 5/5 fold, correct
+   direction) using the generic column-naming cross-stage comparison.
+   Stage 2 AS A WHOLE still has this relationship resolved; it is simply
+   not this specific engine's finding to claim or fail.
+
+------------------------------------------------------------------
+#9 Rc x DRAIN LAG x LOW PAE
+------------------------------------------------------------------
+1. Ground truth: OHMIC_ET_Rc_an_ct2 x TOPSIN_ET_DC_PIV_Drain_Lag_1 x
+   TOPSIN_ET_Load_Pull_P.A.E_Last, 3-way, additional loss when Rc>~0.255
+   AND Drain Lag>~9.5 AND PAE<~55.
+2. Coverage: NEVER GENERATED as a candidate (absent from
+   stage2_runB_relationship_validation_triple_screen.csv in every
+   parameter ordering) -> NOT SCREENED at the triple-confirmation stage.
+3. Recovery: NOT GENERATED / NOT TESTABLE.
+4. Evidence: none for the triple itself. Of its 3 pairwise legs under
+   THIS engine's own (differently-channeled) 2-way results: Rc x
+   Drain_Lag_1 IS confirmed (STRONG, delta_R^2=0.0464); Rc x PAE and
+   Drain_Lag_1 x PAE were NOT promoted to 2-way confirmation this run
+   (different candidate-generation channels than v4/v5 used, which HAD
+   confirmed those two legs as MODERATE -- that evidence remains valid
+   and frozen elsewhere, just not re-derived by this engine).
+5. Interpretation: candidate-generation coverage gap. This is now the
+   THIRD independently-designed system (v5 and this engine) to fail to
+   generate this exact triple, despite at least partial pairwise-leg
+   evidence existing across the project's frozen outputs.
+
+==================================================================
+FINAL SUMMARY
+==================================================================
+Exact recovery:                 1 / 9   (#3 Drain-lag penalty)
+Exact + Approximate:            3 / 9   (#3, #6 Leakage, #7 Alignment)
+Partial-or-better:              4 / 9   (+ #1 Gate CD optimum)
+Not testable (candidate-generation coverage gap): 3 / 9  (#4, #5, #9)
+Out of engine scope (cross-stage, resolved elsewhere in Stage 2): 1 / 9  (#8)
+Genuinely tested and missed:    1 / 9   (#2 PAE benefit)
+
+Sanity check: 1(partial-extra)+2(approx)+1(exact)+1(missed)+3(not
+testable)+1(out of scope) = 9. Consistent.
+
+FALSE POSITIVES: none found. The strongest CONFIRMED findings not on the
+planted list (e.g. TOPSIN_ET_C100CapUSV x TOPSIN_ET_lkg_CapFICM1,
+MEASURE_ET_lkg_5 x THIN_ET_lkg_PAD_10 x TOPSIN_ET_lkg_C500pf, and other
+top 2-way/3-way STRONG results) all draw from the SAME already-
+characterized correlated feature families (leakage, capacitance,
+resistance) reviewed for false-positive risk in the v2/v3 checkpoints and
+assessed there as plausible correlated proxies / repeated-measurement-
+family effects, not spurious or contradictory findings. No confirmed
+result contradicts a planted relationship's direction or existence.
+
+Ground-truth document was read only for this evaluation. The frozen
+engine was not modified, retuned, or rerun with different logic based on
+these results.

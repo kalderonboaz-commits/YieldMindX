@@ -1,0 +1,269 @@
+STAGE 2 RUN B -- SPLINE/GAM SINGLE-PARAMETER GROUND-TRUTH VALIDATION
+==================================================================
+
+Validation-only checkpoint. No retraining, no changes to the spline
+method, LightGBM, v1, or v2. Ground-truth document read only here, after
+the spline/GAM outputs were already frozen. Uses only:
+stage2_runB_spline_single_parameter.csv, stage2_runB_spline_vs_lightgbm.csv,
+stage2_runB_spline_negative_control.txt, stage2_runB_spline_summary.txt.
+
+------------------------------------------------------------------
+1. SPLINE RESULTS ON THE FIVE APPLICABLE SINGLE-PARAMETER RELATIONSHIPS
+------------------------------------------------------------------
+(Full per-relationship detail in stage2_runB_spline_ground_truth_validation.csv)
+
+#1 Gate CD optimum -- GATE2_CD_Gate_Leg_Length
+  Expected: U-shaped/process window, degrade both sides, central beneficial region.
+  Spline: COMPLEX_NONLINEAR, STRONG, 5/5 fold, turning points 0.206/0.249,
+  beneficial 0.2246-0.2673, harmful 0.1711-0.2192, effect 5.49 pct, oof R^2=0.0252.
+  -> PARTIALLY FOUND. Real, highly stable signal on the exact column with a
+  central beneficial region and adjacent harmful region, but the classifier
+  lands on the broader COMPLEX_NONLINEAR bucket, not a clean process-window
+  shape -- the full "degrades on both sides" structure is not confirmed.
+
+#2 PAE benefit -- TOPSIN_ET_Load_Pull_P.A.E_Last
+  Expected: direct positive.
+  Spline: U_SHAPED, direction n/a, MODERATE, 3/5 fold, effect 2.15 pct, oof R^2=0.0644.
+  -> PARTIALLY FOUND. Real, moderately-stable, positively-predictive signal
+  exists, but the shape is wrong (U-shaped, not monotonic) and direction is
+  not positive -- per instruction, this cannot receive full credit.
+
+#3 Drain-lag penalty -- TOPSIN_ET_DC_PIV_Drain_Lag_1
+  Expected: negative threshold, ~7.
+  Spline: THRESHOLD, negative, STRONG, 4/5 fold, turning point 8.03,
+  effect 3.35 pct, oof R^2=0.1916 (best of the five).
+  -> EXACTLY FOUND. Exact column, correct shape, correct direction, turning
+  point close to the planted ~7, strongest out-of-fold predictive power of
+  any single-parameter test in this checkpoint.
+
+#6 Leakage threshold -- ET leakage family (lkg_*)
+  Expected: threshold, moderate penalty >0.20, stronger penalty >0.35.
+  Spline: top representative MEASURE_ET_lkg_50_at20V -- SATURATION,
+  negative, STRONG, 5/5 fold, turning point 0.2247 (vs. planted 0.20),
+  effect 7.86 pct, oof R^2=0.3323 (best R^2 of any test in this checkpoint).
+  Secondary representative TOPSIN_ET_lkg_5 -- THRESHOLD, negative, STRONG, 5/5 fold.
+  -> APPROXIMATELY FOUND. Family identity, dominance, and direction all
+  confirmed; turning point closely matches the planted FIRST threshold; but
+  the top representative's shape label (SATURATION) is not a clean
+  THRESHOLD match, and the method's single-turning-point design cannot
+  confirm the planted TWO-STAGE escalating-penalty structure (the
+  additional, stronger penalty above ~0.35).
+
+#7 Alignment process window -- GATE2_Ali_Litho_Gate_to_recess_alignment
+  Expected: absolute-value process window, +/-0.035.
+  Spline: COMPLEX_NONLINEAR, MODERATE, 3/5 fold, turning points 0.0198/0.0387,
+  effect 1.21 pct, oof R^2=0.0213.
+  -> APPROXIMATELY FOUND. First method of the three (v1, v2, spline) to find
+  ANY real, reproducible evidence for this exact parameter. The positive-
+  side turning point (0.039) closely matches the planted +0.035 boundary,
+  but the symmetric negative-side boundary is not independently confirmed
+  and the shape is not a clean process-window bucket.
+
+------------------------------------------------------------------
+2. OUT-OF-SCOPE RELATIONSHIPS (NOT SCORED)
+------------------------------------------------------------------
+#4 Gate CD x SiN thickness, #5 Rc x Rsh, #8 Gm stage degradation,
+#9 Rc x Drain Lag x low PAE -- all classified NOT APPLICABLE TO CURRENT
+SPLINE METHOD (interactions / cross-stage comparisons; this checkpoint is
+single-parameter only by design). Not counted as MISSED.
+
+------------------------------------------------------------------
+3. SPLINE-ONLY RECOVERY METRICS (denominator = 5, the applicable set)
+------------------------------------------------------------------
+Exactly found:            1 / 5   (20.0%)
+Exact + approximate:      3 / 5   (60.0%)
+Partial:                  2 / 5   (40.0%)
+Missed:                   0 / 5   (0.0%)
+
+Zero outright misses among the five testable relationships -- every one
+produced at least a partial, reproducible, out-of-fold-predictive finding.
+
+------------------------------------------------------------------
+4. METHOD COMPARISON: v1 (LightGBM) vs. v2 (model-free binning) vs. spline/GAM
+------------------------------------------------------------------
+Relationship            | Expected shape         | v1                       | v2                      | Spline/GAM              | Best method         | Agree?
+Gate CD optimum         | U/process window       | MISSED                  | PARTIALLY FOUND         | PARTIALLY FOUND         | v2/spline (tie)      | v1 disagrees (missed); v2+spline agree on tier, spline has stronger evidence
+PAE benefit             | Direct positive        | PARTIALLY FOUND         | MISSED                  | PARTIALLY FOUND         | v1/spline (tie)      | No -- v2 alone finds zero evidence where v1 and spline both find some
+Drain-lag penalty       | Negative threshold, ~7 | APPROXIMATELY (proxy)   | APPROXIMATELY (multivar)| EXACTLY FOUND           | spline (clear win)   | Qualitative agreement (all found something); spline is the only one to hit exact on the named column directly
+Leakage threshold       | Threshold, 0.20/0.35   | EXACTLY FOUND           | APPROXIMATELY FOUND     | APPROXIMATELY FOUND     | v1                   | v1 disagrees with v2+spline (v1 cleaner); v2 and spline agree on tier
+Alignment process window| Abs-value window,+/-.035| MISSED                 | MISSED                  | APPROXIMATELY FOUND     | spline (clear win)   | v1+v2 agree (missed); spline disagrees (found real evidence)
+
+Spline is the sole or tied best-performing method on 4 of the 5 relationships
+(Gate CD, PAE, Drain-lag, Alignment) and only trails v1 on Leakage (where
+v1's advantage is a cleaner shape label, not a quantitative one -- spline's
+turning point actually matches the planted threshold value more precisely).
+This is a genuine, evidence-based demonstration of complementary value, not
+a marginal or coincidental improvement.
+
+------------------------------------------------------------------
+5. COMBINED STAGE 2 SCORECARD (ALL 9 PLANTED RELATIONSHIPS, BEST RESULT
+   ACROSS ALL FROZEN METHODS: v1, v2 univariate, v2 pair-confirm, v2
+   cross-stage, v2 3-way, spline)
+------------------------------------------------------------------
+(Full detail in stage2_runB_combined_ground_truth_scorecard.csv)
+
+  #1 Gate CD optimum          -> PARTIALLY FOUND   (spline/v2 tie)
+  #2 PAE benefit               -> PARTIALLY FOUND   (v1/spline tie)
+  #3 Drain-lag penalty         -> EXACTLY FOUND      (spline)
+  #4 Gate CD x SiN thickness   -> NOT TESTABLE
+  #5 Rc x Rsh                  -> NOT TESTABLE
+  #6 Leakage threshold         -> EXACTLY FOUND      (v1)
+  #7 Alignment process window  -> APPROXIMATELY FOUND (spline)
+  #8 Gm stage degradation      -> EXACTLY FOUND      (v2 cross-stage)
+  #9 Rc x Drain Lag x low PAE  -> NOT TESTABLE
+
+Combined exact recovery:            3 / 9  (33.3%)
+Combined exact + approximate:       4 / 9  (44.4%)
+Combined partial:                   2 / 9  (22.2%)
+Combined missed:                    0 / 9  (0.0%)
+Combined not yet testable:          3 / 9  (33.3%)
+
+No legitimately-earned combination was fabricated -- each entry above uses
+the SINGLE best frozen, evidence-supported result for that relationship
+from an already-completed checkpoint; no weak evidence was combined across
+methods to manufacture a higher tier than any individual method actually
+achieved. Headline result: across all methods completed to date, ZERO of
+the 9 planted relationships now sit at "missed" -- the remaining gap is
+entirely coverage (3 relationships never reached a testable stage), not
+detection failure.
+
+------------------------------------------------------------------
+6. FALSE-POSITIVE / PROXY CAUTION -- STRONGEST NON-PLANTED SPLINE FINDINGS
+------------------------------------------------------------------
+Reviewed using only already-frozen spline outputs and prior-checkpoint
+correlation/family context (no new discovery performed):
+
+- Leakage-family STRONG findings beyond the two representatives used above
+  (54/749 STRONG spline findings total contain "lkg"; e.g. THIN_ET_lkg_10,
+  TOPSIN_ET_lkg_C300, MEASURE_ET_lkg_PAD_10, MEASURE_ET_LT_SEC_Ileak_*):
+  NOT independent extra findings -- these are additional representatives of
+  the SAME already-accounted-for planted leakage-family relationship (#6),
+  not new discoveries needing separate judgment.
+
+- Alignment-family siblings: GATE2_Ali_Litho2_Gate_to_ohmic_alignment
+  (STRONG, 2.08 pct) and CHRE_Ali_Litho_Channel_to_Ohmic_Alignment (STRONG,
+  2.00 pct) both show STRONGER spline evidence than the actual planted
+  column GATE2_Ali_Litho_Gate_to_recess_alignment (only MODERATE, 1.21 pct).
+  EBCR2_Ali_Litho_Gate_to_ohmic_alignment is also STRONG here (1.34 pct),
+  independently corroborating the SAME column the v2 checkpoint already
+  flagged as a plausible correlated proxy. Taken together, nearly the
+  entire Ali_Litho alignment family shows real single-parameter signal --
+  ASSESSMENT: plausible additional/broader synthetic alignment structure
+  (or a shared-latent-driver effect across the alignment family), not
+  spurious -- worth flagging for engineering review, consistent with the
+  v2 checkpoint's identical caution.
+
+- Drain_Lag family: multiple siblings across MEASURE/FIC/SIN modules
+  (Drain_Lag_0, Drain_Lag_Imax, Drain_Lag_Idss, Gate_Lag_1) are independently
+  STRONG here, corroborating the "hub" pattern already identified in the v2
+  3-way false-positive review (TOPSIN_ET_DC_PIV_Drain_Lag_1 as a common
+  member across many STRONG triples). ASSESSMENT: repeated measurement-
+  family effect -- one genuinely important physical phenomenon (drain lag)
+  observed through several correlated measurement columns, not several
+  independent findings.
+
+- MEASURE_ET_DC_RF_S11ang_10GHz (STRONG here, 1.83 pct) and its siblings
+  MEASURE_ET_DC_Big_S11ang_10GHz (STRONG, 3.30 pct) and
+  MEASURE_ET_RF_Modeling_S11ang_10GHz (STRONG, 0.82 pct): this is the same
+  parameter the v2 checkpoint flagged as the single strongest unexplained
+  2-way interaction (paired with SIN_GATE_ET_lkg_SY8_80). The spline method
+  now independently confirms it ALSO carries real marginal (non-interaction)
+  signal on its own, across an entire RF S-parameter family. ASSESSMENT:
+  plausible additional synthetic relationship or a genuine correlate of the
+  leakage family it interacts with -- still cannot be classified as
+  spurious from available evidence, but is real and reproducible.
+
+- EBCR2_CD_Gate_Leg_Length (STRONG, 4.21 pct, COMPLEX_NONLINEAR): a sibling
+  of the planted GATE2_CD_Gate_Leg_Length column. ASSESSMENT: repeated
+  measurement-family effect -- the "gate leg length" concept appears to
+  matter across modules, not just the single planted column, reinforcing
+  rather than undermining relationship #1.
+
+- Rc-family (MEASURE_ET_Rc_an_ct2_OW_CR, STRONG, 5.16 pct): directly
+  relevant to the still-untestable Rc x Rsh interaction (#5) -- confirms Rc
+  matters on its own (univariately), which is expected and consistent with
+  the ground truth (the interaction, not the Rc main effect, is what
+  remains untested).
+
+No finding reviewed here is assessed as likely spurious; all trace back to
+either an already-accounted-for planted family or a plausible, previously-
+flagged correlated/related structure.
+
+------------------------------------------------------------------
+7. FINAL INTERPRETATION
+------------------------------------------------------------------
+
+1. Did the spline/GAM method improve recovery of smooth/nonlinear
+   single-parameter relationships?
+   Yes, materially. Spline-only recovery (3/5 exact+approximate, 60%,
+   zero misses) exceeds both v1 (1/5 exact+approximate among these same 5,
+   20%; v1 also had 2 outright MISSED) and v2 (2/5 exact+approximate, 40%;
+   v2 also had 2 outright MISSED). Spline is the sole or tied best method
+   on 4 of the 5 applicable relationships.
+
+2. Did it recover PAE better than previous methods?
+   No better than v1 (both PARTIALLY FOUND, via different evidence), and
+   better than v2 (which regressed to MISSED). Not a clean recovery under
+   any method -- direction was never confirmed positive by any of the
+   three.
+
+3. Did it recover Gate CD better?
+   Same classification tier as v2 (PARTIALLY FOUND) but with materially
+   stronger, more stable evidence (STRONG/5-fold vs. MODERATE/3-fold) --
+   a real improvement in evidence quality, not classification tier. Clear
+   improvement over v1 (MISSED, zero importance).
+
+4. Did it recover Alignment better?
+   Yes, clearly -- the only one of the three methods to find any real,
+   reproducible evidence at all for the exact planted column. Both v1 and
+   v2 previously showed zero stable evidence under two methodologically
+   distinct approaches; spline breaks that pattern with a MODERATE,
+   quantitatively-close-to-planted finding.
+
+5. Which single-parameter relationships remain unresolved?
+   PAE benefit is the clearest remaining gap: three distinct methods
+   (tree-importance/PDP, model-free binning, spline/GAM) have now each
+   tried and each failed to recover a clean monotonic-positive shape. Gate
+   CD's precise process-window sub-shape (as opposed to generic
+   nonlinearity) also remains unresolved by any method. Leakage's
+   two-stage threshold structure (second breakpoint near 0.35) is
+   unconfirmed by any method's current output format.
+
+6. Does the spline method add genuine complementary value to LightGBM?
+   Yes. It is not simply a redundant re-confirmation -- it independently
+   and directly resolved Drain-lag to EXACTLY FOUND (where both other
+   methods needed indirect evidence) and Alignment to APPROXIMATELY FOUND
+   (where both other methods found nothing), while remaining honest about
+   its own shortfalls (PAE, and Gate CD's precise shape).
+
+7. After combining all current Stage 2 methods, how many of the 9 planted
+   relationships can now be recovered?
+   4 / 9 (44.4%) at exact-or-approximate; 6 / 9 (66.7%) at partial-or-
+   better; and, notably, 0 / 9 now sit at outright "missed" -- every
+   single-parameter and cross-stage relationship that any method has
+   actually been able to test has produced at least a partial finding.
+   The remaining 3 / 9 (33.3%) are candidate-generation coverage gaps
+   (the two 2-way interactions and the one 3-way interaction), not
+   detection failures.
+
+8. What capability is still missing after this checkpoint?
+   (a) A multivariate/interaction-aware nonlinear method -- the 3 still-
+   not-testable relationships are all interaction/3-way structures that no
+   single-parameter method (LightGBM importance, binned screen, or spline)
+   can address; they need either broader interaction-candidate generation
+   or the pairs/triple to be explicitly forced into the existing v2
+   confirmation pipeline. (b) A shape-fitting method that can represent
+   TWO breakpoints per feature (for the leakage family's planted two-stage
+   structure) or a symmetric absolute-value/centered basis (for a cleaner
+   Gate CD / Alignment process-window fit) -- the current single-turning-
+   point design of both the spline and binned methods structurally caps
+   what shape detail can be confirmed even when the underlying signal is
+   present and strong. (c) PAE benefit specifically still has no confirmed
+   positive-monotonic recovery under any method tried so far -- if this
+   remains a priority, it is the strongest remaining candidate for a
+   different detection approach (e.g. a monotonicity-constrained fit)
+   before considering it a true model failure.
+
+No further model changes, threshold tuning, or pipeline modifications were
+made in this checkpoint. Waiting for explicit approval before any next
+step.

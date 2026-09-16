@@ -1,0 +1,85 @@
+STAGE 2 RUN B -- CANDIDATE-GENERATION IMPROVEMENT: BEFORE/AFTER EVALUATION
+==================================================================
+Implements exactly the audit's recommendation (a)+(d): a new per-feature/
+per-node guaranteed-local-top-k channel (H for pairs; per-node edge
+subgraph for triples), plus an evidence-ranked fix to triple chaining's
+overflow handling (was: random subsample). No statistical test, threshold,
+FDR logic, or permutation logic was touched. Ground truth was not
+consulted until the generic evaluation below was complete and the code
+frozen.
+
+------------------------------------------------------------------
+1. GENERIC EVALUATION (ground-truth-free)
+------------------------------------------------------------------
+                              BEFORE      AFTER      Change
+Pairs promoted                6,677      11,881      +78.0%
+Pair unique-feature coverage  1,128 (80.3%) 1,285 (91.5%)  +11.2 pts
+Pair multi-channel corrob.    2,041       3,423      +67.7%
+2-way FDR survival            97.3%       97.5%      ~unchanged
+Triples generated             13,064     11,067      -15.3%
+Triple unique-feature coverage 599 (42.6%) 1,016 (72.3%) +29.7 pts
+3-way FDR survival             92.2%       87.9%      -4.3 pts
+
+Interpretation: pairs gained substantially on every axis (more
+candidates, far more feature coverage, more cross-channel corroboration,
+FDR survival unchanged). Triples show the expected trade-off of the
+per-node subgraph redesign: fewer total triangles form from a sparser,
+more evenly-distributed edge set (each node capped at its own top-8
+edges instead of drawing from a large global top-2,500 pool), so total
+triple COUNT fell slightly -- but unique-feature coverage rose sharply
+(+30 points), meaning far more distinct features now get at least one
+tested triple. FDR survival dropped modestly (92.2%->87.9%), consistent
+with reaching more genuinely-diverse, less pre-selected structure.
+
+------------------------------------------------------------------
+2. CALIBRATION (negative control, fresh shuffle, same acceptance rule)
+------------------------------------------------------------------
+                    Real STRONG+MODERATE   Shuffled   Verdict
+Single-parameter    58.6%                  4.41%      PASS (unchanged -- single.py not rerun)
+2-way                94.0%                 2.93%      PASS
+3-way                82.8%                 6.61%      PASS
+OVERALL GATE: PASS. The larger, more diverse candidate pool did not
+degrade calibration -- shuffled-target rates remain far below real-target
+rates in every family.
+
+------------------------------------------------------------------
+3. GROUND-TRUTH COVERAGE CHECK (performed only after 1+2 passed)
+------------------------------------------------------------------
+The three previously-untestable relationships were checked again:
+- Gate CD x SiN thickness: STILL not promoted (absent from both the
+  screen file and 2way.csv).
+- Rc x Rsh: STILL not promoted.
+- Rc x Drain-Lag x low-PAE triple: STILL not generated (2 of 3 pairwise
+  legs still unconfirmed -- the PAE-involving legs specifically, because
+  PAE fails single-parameter FDR and is therefore never a trigger feature
+  for the new per-feature channel).
+
+DIAGNOSTIC (read-only, no tuning performed): for the two 2-way cases,
+checked each feature's OWN local rank of the other within its personal
+score_1/score_2 row (the exact quantity channel H uses). Both pairs rank
+in the several-hundred-to-low-thousands range on BOTH sides (e.g. one
+pair ranks ~400th-1300th out of ~1,404 possible partners for each
+feature) -- nowhere near the per-feature top-5 cutoff. This means the
+new channel's fix (crowding-out within a GLOBAL ranking) does not apply
+to these two specific cases: neither feature's own broad-screen SCORE
+considers the other a locally notable partner at all. The remaining gap
+here is upstream of candidate SELECTION -- it is a property of the broad-
+screen SCORING FORMULA itself for these particular pairs, not the
+promotion/selection logic this checkpoint changed.
+
+Recovery classification: UNCHANGED from the pre-improvement run --
+  Exact: 1/9, Exact+Approximate: 3/9, Partial-or-better: 4/9,
+  Not testable: 3/9, Out of scope (cross-stage): 1/9, Missed: 1/9.
+False positives: none new. The expanded STRONG top-10 lists (2-way and
+3-way) continue to draw from the same already-characterized correlated
+families (leakage, capacitance, resistance) reviewed in earlier
+checkpoints -- no result contradicts a planted relationship.
+
+------------------------------------------------------------------
+FILES CHANGED
+------------------------------------------------------------------
+src/explain/stage2_relval_pair_screen.py    -- added Channel H
+src/explain/stage2_relval_triple_screen.py  -- per-node edge subgraph;
+                                                evidence-ranked chain overflow
+No other file touched. 2way.py/3way.py/common.py/fdr.py/
+negative_control.py logic unchanged (only rerun, not modified).

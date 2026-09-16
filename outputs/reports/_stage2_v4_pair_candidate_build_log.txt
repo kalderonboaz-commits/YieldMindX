@@ -1,0 +1,10 @@
+high_evidence_features=364
+special_evidence_features=256
+channel_A_pairs=66066 (uncapped)
+channel_B_pairs_raw=93184 channel_B_pairs_used=5000 (capped at top 5000 by non-additivity score)
+channel_C_pairs=1000 (capped at top 1000 by non-additivity score)
+channel_D_pairs=71 (uncapped)
+channel_E_pairs_raw=181198 channel_E_pairs_used=3000 (498 underrepresented features, capped at top 3000 by non-additivity score)
+final_union_pairs=74365
+unique_features_represented=1007
+pct_of_numeric_universe=71.67

@@ -1,0 +1,10 @@
+relationship,planted_columns,planted_type,rediscovered_individual_level,rediscovered_cluster_level,rediscovered,check_method
+Gate CD optimum,['GATE2_CD_Gate_Leg_Length'],Nonlinear U-shaped,False,True,True,checked ['GATE2_CD_Gate_Leg_Length'] against top-30 individual SHAP importance AND top-20 cluster/family importance
+PAE benefit,['TOPSIN_ET_Load_Pull_P.A.E_Last'],Direct positive,False,False,False,checked ['TOPSIN_ET_Load_Pull_P.A.E_Last'] against top-30 individual SHAP importance AND top-20 cluster/family importance
+Drain-lag penalty,['TOPSIN_ET_DC_PIV_Drain_Lag_1'],Threshold / negative,False,True,True,checked ['TOPSIN_ET_DC_PIV_Drain_Lag_1'] against top-30 individual SHAP importance AND top-20 cluster/family importance
+Gate CD × SiN thickness,"['GATE2_CD_Gate_Leg_Length', 'SIN_Thickness_SiN_Thickness']",2-factor interaction,False,False,False,"checked pair ['GATE2_CD_Gate_Leg_Length', 'SIN_Thickness_SiN_Thickness'] against top-25 SHAP interactions"
+Rc × Rsh,"['OHMIC_ET_Rc_an_ct2', 'OHMIC_ET_Rsh_an_ct2']",2-factor interaction,False,False,False,"checked pair ['OHMIC_ET_Rc_an_ct2', 'OHMIC_ET_Rsh_an_ct2'] against top-25 SHAP interactions"
+Leakage threshold,[],Threshold,True,False,True,matched via any '_lkg_' column present in top individual features
+Alignment process window,['GATE2_Ali_Litho_Gate_to_recess_alignment'],Absolute-value threshold,False,False,False,checked ['GATE2_Ali_Litho_Gate_to_recess_alignment'] against top-30 individual SHAP importance AND top-20 cluster/family importance
+Gm stage degradation,"['TOPSIN_ET_Gm_max', 'FIC_ET_Gm_max']",Derived delta,False,False,False,"checked pair ['TOPSIN_ET_Gm_max', 'FIC_ET_Gm_max'] against top-25 SHAP interactions"
+Rc × Drain Lag × low PAE,"['OHMIC_ET_Rc_an_ct2', 'TOPSIN_ET_DC_PIV_Drain_Lag_1', 'TOPSIN_ET_Load_Pull_P.A.E_Last']",3-factor interaction,False,False,False,"checked all pairwise sub-combinations of ['OHMIC_ET_Rc_an_ct2', 'TOPSIN_ET_DC_PIV_Drain_Lag_1', 'TOPSIN_ET_Load_Pull_P.A.E_Last'] against top-25 SHAP interactions"

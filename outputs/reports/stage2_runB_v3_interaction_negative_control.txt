@@ -1,0 +1,30 @@
+STAGE 2 RUN B v3 -- INTERACTION-DISCOVERY NEGATIVE CONTROL (shuffled-target)
+==========================================================================
+
+1. BROAD 2-WAY NON-ADDITIVITY SCREEN (score_2, full 986,310-pair coverage)
+--------------------------------------------------------------------------
+Real-target score needed to enter the top-300 shortlist: 0.9457
+Shuffled-target maximum score (across all 986,310 pairs): 0.2642
+Shuffled-target pairs exceeding the real-target top-300 cutoff: 0
+-> CLEAN SEPARATION: the real top-300 shortlist reflects real structure, not screen noise.
+
+2. CONFIRMED 2-WAY INTERACTIONS (same 219-pair candidate pool as the real run)
+--------------------------------------------------------------------------
+Pairs re-tested under shuffled target: 219 / 219
+  STRONG:       0 (0.0%)
+  MODERATE:     0 (0.0%)
+  WEAK:         89 (40.6%)
+  INCONCLUSIVE: 130 (59.4%)
+Compare to the real-target result: 176/219 STRONG (80.4%), 30/219 MODERATE (13.7%).
+-> CLEAN SEPARATION: 0 STRONG/MODERATE survive under shuffle -- the confirmation gate is not noise-driven; the high real-target hit rate reflects the candidate pool already being pre-filtered toward real non-additive structure by the broad screen, not a miscalibrated threshold.
+
+3. 3-WAY INTERACTIONS (same candidate triples as the real run)
+--------------------------------------------------------------------------
+Triples re-tested under shuffled target: 328 / 328
+  STRONG:       1 (0.3%)
+  MODERATE:     0 (0.0%)
+  WEAK:         270 (82.3%)
+  INCONCLUSIVE: 57 (17.4%)
+Compare to the real-target result: 105/328 STRONG (32.0%), 88/328 MODERATE (26.8%).
+-> CLEAN SEPARATION: shuffled STRONG+MODERATE rate (0.3%) is a small fraction of the real rate (58.8%), consistent with an expected, non-alarming false-discovery floor (not 'many' survivors) -- thresholds are not noise-driven, no recalibration performed.
+

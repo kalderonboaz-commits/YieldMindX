@@ -1,0 +1,41 @@
+features_involved,relationship_type,pdp_shape_detail,direction_or_shape,strength_metric,strength_value,discovery_method,evidence_level,confidence
+MEASURE_ET_lkg_50_at20V (+71 correlated),nonlinear,threshold,negative,shap_importance,0.3461740632640202,SHAP importance + cluster aggregation,cluster/family,Medium
+MEASURE_ET_DC_Stress_Id_stress_before,nonlinear,nonlinear_complex,see_pdp_curve,shap_importance,0.15408574844205025,SHAP importance,individual,Medium
+TOPSIN_ET_C100Cap1pf (+81 correlated),nonlinear,threshold,negative,shap_importance,0.1277463387245419,SHAP importance + cluster aggregation,cluster/family,Medium
+MEASURE_ET_ABVIETCH,nonlinear,nonlinear_complex,see_pdp_curve,shap_importance,0.11146816979031705,SHAP importance,individual,Medium
+TOPSIN_ET_DC_PIV_Drain_Lag_0 (+10 correlated),nonlinear,threshold,negative,shap_importance,0.09457011475528244,SHAP importance + cluster aggregation,cluster/family,Medium
+THIN_ET_lkg_10 (+71 correlated),nonlinear,threshold,negative,shap_importance,0.09238531208967239,SHAP importance + cluster aggregation,cluster/family,Medium
+MEASURE_ET_DC_Big_S12dB_10GHz,nonlinear,threshold,negative,shap_importance,0.09228528728986696,SHAP importance,individual,Medium
+TOPSIN_ET_Rc_f_tn_23 (+51 correlated),direct,flat_no_clear_effect,see_pdp_curve,shap_importance,0.06666087447813555,SHAP importance + cluster aggregation,cluster/family,Medium
+ANODE_ET_Rc_an_ct2_OW_CR (+51 correlated),nonlinear,threshold,negative,shap_importance,0.056372203875096595,SHAP importance + cluster aggregation,cluster/family,Medium
+OHMIC_ET_Rsh_an_ct2,nonlinear,threshold,negative,shap_importance,0.054858552789613275,SHAP importance,individual,Medium
+MEASURE_ET_DC_RF2_MAG_26GHz,nonlinear,threshold,positive,shap_importance,0.04766691946238565,SHAP importance,individual,Medium
+MEASURE_ET_DC_SMALL_Ids_m0p2,direct,direct,negative,shap_importance,0.04740637723426689,SHAP importance,individual,Medium
+CATHODE_ET_Rcat_cn_2 (+51 correlated),nonlinear,threshold,negative,shap_importance,0.04397427333332839,SHAP importance + cluster aggregation,cluster/family,Medium
+TOPSIN_ET_lkg_C450pf (+71 correlated),nonlinear,threshold,negative,shap_importance,0.04175032603763308,SHAP importance + cluster aggregation,cluster/family,Medium
+MEASURE_ET_DC_RF_CF_S12_Mag_L1002,nonlinear,U_shaped_process_window,see_pdp_curve,shap_importance,0.03803082491890282,SHAP importance,individual,Medium
+TOPSIN_ET_DC_PIV_Drain_Lag_0 x MEASURE_ET_RF_Modeling_S12ang_10GHz,2-way interaction,,see 2D PDP,interaction_strength,0.5902961629930309,shap_interaction(0.0160); h_statistic(0.5903),pairwise,High
+TOPSIN_ET_DC_PIV_Drain_Lag_1 x MEASURE_ET_LT_SEC_Ileak_m10p5V_mA_mm,2-way interaction,,see 2D PDP,interaction_strength,0.5663346647725865,h_statistic(0.5663),pairwise,Medium
+ANODE_ET_Rc_an_ct2_OW_CR x TOPSIN_ET_R_f_hr_3,2-way interaction,,see 2D PDP,interaction_strength,0.4313384589299576,shap_interaction(0.0099); h_statistic(0.4313),pairwise,Medium
+TOPSIN_ET_DC_PIV_Drain_Lag_0 x TOPSIN_ET_R_f_hr_3,2-way interaction,,see 2D PDP,interaction_strength,0.4306871900914284,shap_interaction(0.0104); h_statistic(0.4307),pairwise,Medium
+MEASURE_ET_DC_RF2_S22dB_26GHz x TOPSIN_ET_C100Cap1pf,2-way interaction,,see 2D PDP,interaction_strength,0.3341349426869777,shap_interaction(0.0230); h_statistic(0.3341),pairwise,High
+THIN_ET_R_f_hr_1 x GATE2_Thickness4_PMMA_PR_etch_thickness,2-way interaction,,see 2D PDP,interaction_strength,0.2977594589400216,h_statistic(0.2978),pairwise,Low
+FIC_ET_DC_RF_Vbgs_0p01 x MEASURE_ET_LT_SEC_Ileak_m10p5V_mA_mm,2-way interaction,,see 2D PDP,interaction_strength,0.28334740126134944,h_statistic(0.2833),pairwise,Low
+MEASURE_ET_ABVIETCH x FIC_ET_DC_RF_Vbgs_0p01,2-way interaction,,see 2D PDP,interaction_strength,0.2798950341382224,shap_interaction(0.0121); h_statistic(0.2799),pairwise,High
+TOPSIN_ET_DC_PIV_Drain_Lag_0 x TOPSIN_ET_lkg_C385pf,2-way interaction,,see 2D PDP,interaction_strength,0.27099318302442416,h_statistic(0.2710),pairwise,Low
+MEASURE_ET_DC_Big_S12dB_10GHz x SIN_ET_DC_RF_Vbin_gs,2-way interaction,,see 2D PDP,interaction_strength,0.2595544813414372,shap_interaction(0.0111); h_statistic(0.2596),pairwise,Medium
+TOPSIN_ET_lkg_C385pf x TOPSIN_ET_lkg_C450pf,2-way interaction,,see 2D PDP,interaction_strength,0.25533589758375586,h_statistic(0.2553),pairwise,Low
+THIN_ET_Rcat_cn_3 x OHMIC_ET_Rsh_an_ct2,2-way interaction,,see 2D PDP,interaction_strength,0.24740351140621045,shap_interaction(0.0081); h_statistic(0.2474),pairwise,High
+THIN_ET_Rc_OG142 x TOPSIN_ET_lkg_5,2-way interaction,,see 2D PDP,interaction_strength,0.2466663331265435,shap_interaction(0.0117); h_statistic(0.2467),pairwise,High
+STAGE_DELTA_DC_PIV_Drain_Lag_0_FIC_minus_TOPSIN x MEASURE_ET_RF_Modeling_S21_25G_Before,2-way interaction,,see 2D PDP,interaction_strength,0.24650918403589933,shap_interaction(0.0081); h_statistic(0.2465),pairwise,Medium
+THIN_ET_TF_AB_1 x TOPSIN_ET_C100Cap1pf,2-way interaction,,see 2D PDP,interaction_strength,0.24514008611601823,shap_interaction(0.0190); h_statistic(0.2451),pairwise,Medium
+STAGE_STD_lkg_5,derived cross-stage relationship,,negative,pearson_correlation,-0.4156477329426862,"engineered-feature correlation (blind, generic stage-delta construction)",individual (engineered),Medium
+STAGE_RANGE_lkg_5,derived cross-stage relationship,,negative,pearson_correlation,-0.4126198184787614,"engineered-feature correlation (blind, generic stage-delta construction)",individual (engineered),Medium
+STAGE_DELTA_Gm_max_FIC_minus_TOPSIN,derived cross-stage relationship,,negative,pearson_correlation,-0.2722532548991113,"engineered-feature correlation (blind, generic stage-delta construction)",individual (engineered),Medium
+STAGE_STD_Gm_max,derived cross-stage relationship,,negative,pearson_correlation,-0.2681374598052656,"engineered-feature correlation (blind, generic stage-delta construction)",individual (engineered),Medium
+STAGE_RANGE_Gm_max,derived cross-stage relationship,,negative,pearson_correlation,-0.26813745980526554,"engineered-feature correlation (blind, generic stage-delta construction)",individual (engineered),Medium
+STAGE_STD_R_f_tn_1,derived cross-stage relationship,,positive,pearson_correlation,0.2411742276140736,"engineered-feature correlation (blind, generic stage-delta construction)",individual (engineered),Medium
+STAGE_DELTA_DC_PIV_Drain_Lag_1_FIC_minus_TOPSIN,derived cross-stage relationship,,positive,pearson_correlation,0.2233426884742317,"engineered-feature correlation (blind, generic stage-delta construction)",individual (engineered),Medium
+STAGE_STD_DC_RF_Vt_gs,derived cross-stage relationship,,positive,pearson_correlation,0.2232079560752863,"engineered-feature correlation (blind, generic stage-delta construction)",individual (engineered),Medium
+STAGE_RANGE_R_f_tn_1,derived cross-stage relationship,,positive,pearson_correlation,0.21667105950848814,"engineered-feature correlation (blind, generic stage-delta construction)",individual (engineered),Medium
+STAGE_STD_Vg_Vds_max,derived cross-stage relationship,,positive,pearson_correlation,0.2128166046844984,"engineered-feature correlation (blind, generic stage-delta construction)",individual (engineered),Medium

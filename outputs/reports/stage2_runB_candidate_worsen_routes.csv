@@ -1,0 +1,9 @@
+condition,n_wafers_matching,pct_of_train_set,mean_yield_in_condition,baseline_mean_yield,estimated_yield_effect,based_on
+TOPSIN_ET_DC_PIV_Drain_Lag_0 >= 7.839 (top quartile) AND MEASURE_ET_RF_Modeling_S12ang_10GHz >= -23.16 (top quartile),88,7.3,89.172,91.992,-2.82,"STRONG single-parameter/interaction findings, TRAIN portion only (not holdout-validated)"
+MEASURE_ET_R_f_hr_3 >= 52.76 (top quartile) AND MEASURE_ET_lkg_50_at20V >= 0.1142 (top quartile),47,3.9,89.856,91.992,-2.136,"STRONG single-parameter/interaction findings, TRAIN portion only (not holdout-validated)"
+TOPSIN_ET_DC_PIV_Drain_Lag_0 >= 7.839 (top quartile) AND TOPSIN_ET_R_f_hr_3 >= 7.629 (top quartile),93,7.8,90.385,91.992,-1.607,"STRONG single-parameter/interaction findings, TRAIN portion only (not holdout-validated)"
+MEASURE_ET_lkg_50_at20V >= 0.1142 (top quartile) AND MEASURE_ET_DC_SEC_Ids_min_ON >= 43.37 (top quartile),67,5.6,91.194,91.992,-0.798,"STRONG single-parameter/interaction findings, TRAIN portion only (not holdout-validated)"
+MEASURE_ET_DC_RF_CF_S12_Mag_L1002 >= 15.69 (top quartile) AND MEASURE_ET_Rc_an_ct2_OW_CR >= 0.2345 (top quartile),91,7.6,91.463,91.992,-0.529,"STRONG single-parameter/interaction findings, TRAIN portion only (not holdout-validated)"
+MEASURE_ET_ABVIETCH <= 23.19 (bottom quartile) AND MEASURE_ET_DC_Big_S12dB_10GHz <= -27 (bottom quartile),54,4.5,91.614,91.992,-0.378,"STRONG single-parameter/interaction findings, TRAIN portion only (not holdout-validated)"
+MEASURE_ET_DC_RF_CF_S12_Mag_L1002 <= 14.27 (bottom quartile) AND MEASURE_ET_Rc_an_ct2_OW_CR <= 0.1857 (bottom quartile),65,5.4,91.95,91.992,-0.042,"STRONG single-parameter/interaction findings, TRAIN portion only (not holdout-validated)"
+MEASURE_ET_ABVIETCH <= 23.19 (bottom quartile) AND MEASURE_ET_DC_RF2_S22dB_26GHz <= -13.43 (bottom quartile),94,7.8,91.979,91.992,-0.013,"STRONG single-parameter/interaction findings, TRAIN portion only (not holdout-validated)"

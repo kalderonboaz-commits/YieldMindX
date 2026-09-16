@@ -1,0 +1,60 @@
+STAGE 2 -- RELATIONSHIP DISCOVERY ENGINE: FEATURE ELIGIBILITY AUDIT SUMMARY
+==============================================================================
+
+Scope: original raw-CSV columns only. The 307 project-created engineered
+features (STAGE_RANGE_*/STAGE_STD_*/STAGE_DELTA_*) do not exist in the raw
+CSV and are excluded from this audit by construction -- they are not deleted
+from the project and remain available for later Stage 2 work.
+
+Total original CSV columns audited: 1430
+
+By category:
+  A. Target:                                          1
+  B. Legitimate process / inline / ET parameter:      1405
+  C. Categorical process parameter:                   7
+  D. Suspected data leakage / target-derived output:  3
+  E. Metadata / ID / date / traceability:             9
+  F. Exact duplicate / redundant column:              1
+  G. Uncertain -- requires engineering review:        4
+
+By Stage 2 eligibility:
+  yes (eligible):     1412
+  no (excluded):      14
+  review (uncertain): 4
+
+Suspected leakage columns (category D):
+  - Actual Sorting Yield (%)
+  - TotalYield
+  - EstimatedSupplyChipsCount
+
+Uncertain columns requiring engineering review (category G):
+  - LineYield
+  - BackEndYield
+  - VIYield
+  - LTYield
+
+Exact duplicate columns (category F):
+  - MaskSetName_group
+
+Metadata / ID / date columns (category E):
+  - Sorting Date
+  - Process
+  - FinishLineDate
+  - FinishLineYear
+  - LotName
+  - WaferNum
+  - Sort_WW
+  - Year_WW
+  - Exception
+
+Categorical process parameters (category C):
+  - MaskSetName
+  - VendorName
+  - Version
+  - Lot_type
+  - Customer
+  - Technology
+  - Sort_Yield_target[%]
+
+Legitimate process/ET numeric predictors (category B): 1405 columns
+(full list in stage2_feature_eligibility.csv -- not enumerated here for brevity)

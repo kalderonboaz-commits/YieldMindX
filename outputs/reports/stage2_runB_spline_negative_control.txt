@@ -1,0 +1,19 @@
+STAGE 2 RUN B -- SPLINE/GAM METHOD NEGATIVE CONTROL (shuffled-target)
+======================================================================
+
+Predictors re-screened under one shuffled-target permutation: 1405 / 1405 (100%)
+
+Evidence label counts under shuffled target:
+  STRONG:       0 (0.0%)
+  MODERATE:     0 (0.0%)
+  WEAK:         17 (1.2%)
+  INCONCLUSIVE: 1388 (98.8%)
+
+Nonlinear-advantage (spline reproducibly beat linear null) under shuffled target: 0 / 1405 (0.0%)
+
+Interpretation: these are the pipeline's own false-discovery rates under pure
+noise, for both the shape/fold-stability gate (STRONG/MODERATE counts) and the
+linear-vs-spline improvement gate (nonlinear-advantage count). Compare directly
+against the real-target rates reported in stage2_runB_spline_summary.txt. A real
+rate not meaningfully above this shuffled floor means the method's thresholds are
+not trustworthy and must be recalibrated before further use.

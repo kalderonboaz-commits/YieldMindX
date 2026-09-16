@@ -1,0 +1,150 @@
+STAGE 2 RUN B v5 -- FIXING THE TWO V4-IDENTIFIED CANDIDATE-GENERATION BOTTLENECKS
+==================================================================
+
+Purpose: the v4 ground-truth validation narrowed the remaining Stage 2
+limitation to two precise, structural candidate-generation gaps: (1)
+MEDIUM_EVIDENCE x MEDIUM_EVIDENCE pairs had no generous generation channel,
+and (2) 3-way motif generation was built from only the top-3,000 confirmed
+edges by raw magnitude, excluding real, high-quality, MODERATE-confidence
+or modest-effect-size edges. V5 addresses ONLY these two issues. LightGBM,
+spline/GAM, Stage 1, the Run B feature universe, and the v3/v4
+additive-vs-joint and lower-order-vs-full confirmation logic are all
+unchanged (literal function reuse throughout). No new model. Ground-truth
+document was not read anywhere in this pipeline; no known planted
+parameter name or relationship was hard-coded, forced, or used to tune any
+threshold.
+
+------------------------------------------------------------------
+FILES CREATED (no existing Stage 2 output overwritten)
+------------------------------------------------------------------
+src/explain/stage2_v5_pair_candidates.py
+src/explain/stage2_v5_confirm_2way.py
+src/explain/stage2_v5_three_way_graph.py
+src/explain/stage2_v5_three_way_candidates.py
+src/explain/stage2_v5_three_way_confirm.py
+src/explain/stage2_v5_negative_control.py
+outputs/reports/stage2_runB_v5_pair_candidates.csv
+outputs/reports/stage2_runB_v5_confirmed_2way_interactions.csv
+outputs/reports/stage2_runB_v5_three_way_graph.csv
+outputs/reports/stage2_runB_v5_three_way_candidates.csv
+outputs/reports/stage2_runB_v5_three_way_interactions.csv
+outputs/reports/stage2_runB_v5_negative_control.txt
+outputs/reports/stage2_runB_v5_coverage.txt
+outputs/reports/stage2_runB_v5_summary.txt (this file)
+
+------------------------------------------------------------------
+1. BOTTLENECK #1 FIX -- MEDIUM x MEDIUM PAIR ADMISSION
+------------------------------------------------------------------
+6 generic, independent admission rules (a MEDIUM x MEDIUM pair admitted if
+it satisfies >=1): non-additivity outlier within its own subset (M1),
+dual-broad-score corroboration (M2), fresh tree-path co-occurrence mined
+among MEDIUM features only (M3), shared interaction neighborhood via a
+common confirmed-v4 partner (M4), shared process-family/stage-group
+structure via the existing find_stage_groups matcher (M5), and both
+features nonlinear-evidenced (M6). Of 387 MEDIUM_EVIDENCE features
+(74,691 possible pairs), 17,673 (23.66%) were admitted -- dominated by M4
+(shared interaction neighborhood, 13,979 pairs), confirming that most
+newly-relevant MEDIUM pairs share a common, already-proven interaction
+partner rather than being outliers on a single raw score.
+
+These were UNIONED with v4's pool (reused in full, unchanged); v4's
+74,365 already-confirmed pairs were PRESERVED (not recomputed) and only
+the 17,418 net-new pairs were confirmed with the unchanged additive-vs-
+joint test.
+
+Result: V5 pair pool = 91,783 pairs (+23.4% vs. v4), 1,109/1,405 features
+(78.9%, up from 71.7%). Newly-confirmed MEDIUM x MEDIUM pairs: 11,599
+STRONG, 4,595 MODERATE, 1,109 WEAK, 115 INCONCLUSIVE (66.6% STRONG rate,
+consistent with v4's own 64.4%, not inflated).
+
+------------------------------------------------------------------
+2. BOTTLENECK #2 FIX -- EVIDENCE-ADAPTIVE 3-WAY EDGE GRAPH
+------------------------------------------------------------------
+Replaced v4's single "top 3,000 STRONG edges by magnitude" rule with a
+union of 3 quality-based rules operating on ALL 84,508 v5-confirmed
+STRONG+MODERATE edges: a composite quality score (confidence tier + fold
+reproducibility + channel corroboration + endpoint evidence strength,
+top 6,000 by this composite, NOT by raw effect size), all edges touching a
+"hub" feature (top decile by confirmed-STRONG degree, 110 hubs, 36,376
+edges), and all multi-channel-corroborated edges (3,694). Union: 41,515
+edges (13.84x v4's fixed gate), 869 nodes, density 0.1101 -- explicitly
+including MODERATE-confidence edges, which v4's rule excluded entirely.
+
+This graph is dense enough that unrestricted motif enumeration produces
+~6.5 million raw candidate triples (measured) -- intractable in wall time.
+Each motif channel is therefore capped at the TRIPLE level by summed
+constituent-edge quality_score (not a reintroduced pairwise-edge magnitude
+cutoff): triangles top 5,000 of 1,860,747; shared-node chains top 20,000
+of 10,248,678; hub-triples top 3,000 of 215,820. Combined with 3 additional
+unbounded/small channels (edge+HIGH-or-MEDIUM-conditional, tree-path
+co-occurrence, residual-conditional), the final V5 3-way candidate pool is
+30,350 triples.
+
+------------------------------------------------------------------
+3. 3-WAY CONFIRMATION RESULTS (v3's lower-order-vs-full test, UNCHANGED)
+------------------------------------------------------------------
+30,350 / 30,350 tested (100%):
+  STRONG:     5,664  (18.7%)
+  MODERATE:   5,295  (17.4%)
+  WEAK:      17,864  (58.9%)
+  INCONCLUSIVE: 1,527 (5.0%)
+
+------------------------------------------------------------------
+4. HONEST TRADE-OFF: TRIPLE-LEVEL COVERAGE VS. V4
+------------------------------------------------------------------
+Despite the underlying 2-way EDGE GRAPH growing 13.84x and no longer
+excluding MODERATE or modest-magnitude edges, the final V5 TRIPLE
+candidate count (30,350) and feature coverage (380/1,405, 27.0%) are
+SMALLER than v4's (69,606 candidates, 651/1,405, 46.3%). This is a direct,
+disclosed consequence of the triple-level quality cap required to keep the
+now-much-denser edge graph's motif search computationally tractable. The
+edge evidence feeding candidate generation is genuinely richer and less
+magnitude-biased than v4's; whether that translates into better RECOVERY
+of any specific relationship can only be assessed in ground-truth
+validation (not performed in this discovery-only checkpoint). This
+trade-off is reported plainly rather than presented as an unambiguous
+improvement.
+
+------------------------------------------------------------------
+5. NEGATIVE CONTROL (ONE SHUFFLED-TARGET PERMUTATION, SAME CANDIDATES)
+------------------------------------------------------------------
+Pair pool (91,783 pairs): real STRONG+MODERATE rate 92.1%, shuffled 0.31%
+  -- identical to v4's own 0.31% shuffled rate. Clean separation, no
+  increase in false-discovery floor.
+3-way pool (30,350 triples): real STRONG+MODERATE rate 36.1%, shuffled
+  0.03% -- LOWER than v4's own 0.16% shuffled rate. Clean separation, no
+  increase in false-discovery floor.
+No recalibration was needed or performed at either level, consistent with
+every prior checkpoint's negative-control results in this project.
+
+------------------------------------------------------------------
+6. COMPUTATIONAL LIMITATIONS
+------------------------------------------------------------------
+- MEDIUM x MEDIUM admission rules M1/M2/M3/M6 all carry explicit,
+  disclosed top-K caps (their own generic percentile-style cuts, not
+  ground-truth-informed) -- some MEDIUM x MEDIUM pairs outside all 6 rules'
+  reach remain uncovered (76.3% of the 74,691 possible).
+- The 3-way triple-level quality caps (triangles, chains, hub-triples) are
+  a NEW form of truncation introduced specifically to make the larger,
+  less-magnitude-biased edge graph tractable -- they are evidence-based
+  (summed edge quality) but still caps, and the net triple/feature
+  coverage is smaller than v4's as a result (see section 4).
+- The composite "quality_score" formula (confidence tier points + fold
+  fraction + channel-count points + endpoint-tier points) is a generic,
+  round-number weighting, not formally optimized -- a different weighting
+  would shift which edges rank into the top-6,000 G1 cut.
+- The "hub" definition (top decile of confirmed-STRONG degree) is a
+  generic percentile cut; a feature just below this cutoff receives no
+  special treatment even if qualitatively similar to a hub.
+- No SHAP-interaction/H-statistic corroboration is computed for V5 pairs
+  or triples (consistent with v4's scope decision -- this checkpoint tests
+  candidate generation, not confirmation redesign).
+- No formal multiple-testing correction was applied across the 91,783 pair
+  tests or 30,350 triple tests -- the shuffle-based negative control
+  (clean at both scales, on par with or better than v4) is the
+  false-discovery safeguard used, consistent with every prior checkpoint.
+
+Ground-truth document was not read at any point in this checkpoint. No
+threshold, rule, or candidate was tuned or forced based on known planted
+relationships. Stopping here as instructed, pending explicit approval
+before ground-truth validation.

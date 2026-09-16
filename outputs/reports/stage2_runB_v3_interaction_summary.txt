@@ -1,0 +1,161 @@
+STAGE 2 RUN B v3 -- FOCUSED INTERACTION DISCOVERY (2-WAY AND 3-WAY)
+==================================================================
+
+Purpose: improve detection AND validation of 2-way and 3-way interactions
+specifically, via a non-additivity test (does f(A,B) beat f(A)+f(B)?)
+rather than "are A and B both important." LightGBM, the v1/v2 methods, and
+the spline/GAM single-parameter layer are all untouched. No neural
+network, no new general prediction model. Ground-truth document was not
+read anywhere in this pipeline; no known planted parameter name was
+hard-coded or prioritized.
+
+------------------------------------------------------------------
+METHOD
+------------------------------------------------------------------
+Core test for every 2-way candidate: a leakage-safe, grouped-by-LotName
+5-fold CV comparison of an ADDITIVE 2D-binned model (marginal_A +
+marginal_B - grand_mean, count-shrunk) against a JOINT 2D-binned model
+(actual cell mean, shrunk TOWARD the additive prediction so sparse cells
+default to "no interaction assumed"). The interaction evidence is the
+reproducible INCREMENTAL improvement of joint over additive -- never
+importance alone. Same construction extended to 3 variables for 3-way
+candidates: LOWER-ORDER model (all 3 pairwise joint surfaces, combined via
+inclusion-exclusion so main effects aren't double-counted) vs. FULL 3-way
+model (an 8-cell table shrunk toward the lower-order prediction).
+
+------------------------------------------------------------------
+FILES CREATED (no existing Stage 2 output overwritten)
+------------------------------------------------------------------
+src/explain/stage2_v3_common.py            -- shared non-additivity/CV utilities
+src/explain/stage2_v3_pair_screen.py        -- broad 2-way screen, 2 scores
+src/explain/stage2_v3_candidates.py         -- 6-channel candidate pool
+src/explain/stage2_v3_confirm_2way.py       -- additive-vs-joint confirmation
+src/explain/stage2_v3_three_way.py          -- hierarchical 3-way discovery
+src/explain/stage2_v3_negative_control.py   -- shuffle-based false-discovery check
+outputs/reports/stage2_runB_v3_pair_screen.csv
+outputs/reports/stage2_runB_v3_pair_candidates.csv
+outputs/reports/stage2_runB_v3_confirmed_2way_interactions.csv
+outputs/reports/stage2_runB_v3_three_way_interactions.csv
+outputs/reports/stage2_runB_v3_interaction_negative_control.txt
+outputs/reports/stage2_runB_v3_interaction_coverage.txt
+outputs/reports/stage2_runB_v3_interaction_summary.txt (this file)
+
+------------------------------------------------------------------
+2-WAY BROAD SCREEN: TWO CONCEPTUALLY DIFFERENT SCORES, FULL COVERAGE
+------------------------------------------------------------------
+score_1 (reused from v2): |corr(y-minus-marginal-fit, partner's bin index)|
+score_2 (NEW): full 2D-binned Tukey non-additivity energy -- count-weighted
+  mean squared deviation of the actual joint cell mean from the additive
+  prediction. No linearity assumption, unlike score_1.
+
+Both computed for all 986,310 pairs via dense matmuls in under 1.5 seconds
+each (100% coverage, not a sample). Full-universe Spearman rank
+correlation between the two scores: 0.0466 -- essentially uncorrelated,
+and ZERO overlap between their respective top-300 lists. The two scores
+are genuinely measuring different things, as required -- score_2 is not a
+redundant re-derivation of score_1.
+
+------------------------------------------------------------------
+CANDIDATE POOL: 6-CHANNEL UNION
+------------------------------------------------------------------
+A. top score_1 + top score_2 (broad non-additivity):        100 pairs (50+50)
+B. existing frozen SHAP-interaction evidence (v1+v2):         50 pairs
+C. existing frozen H-statistic evidence (v1+v2):               50 pairs
+D. fresh LightGBM tree-path co-occurrence:                     50 pairs
+E. weak-marginal-importance + strong non-additivity:           30 pairs
+F. score_1/score_2 rank-disagreement:                          20 pairs
+Union after dedup:                                            219 unique pairs (177 unique features)
+Pairs corroborated by >=2 channels:                            71 / 219 (32.4%)
+
+------------------------------------------------------------------
+2-WAY CONFIRMATION RESULTS
+------------------------------------------------------------------
+219 / 219 candidates tested (100% of the candidate pool):
+  STRONG:        176  (80.4%)
+  MODERATE:       30  (13.7%)
+  WEAK:           10  (4.6%)
+  INCONCLUSIVE:    3  (1.4%)
+
+Among the 176 STRONG: 114 supported by exactly 1 channel, 53 by 2 channels,
+9 by 3 channels. SHAP-interaction corroboration (top quartile of the pool's
+own SHAP values): 40/176. H-statistic corroboration (top quartile): 43/176.
+
+IMPORTANT, notable finding: the pairs with the LARGEST incremental R^2
+(0.23-0.27, the strongest of the whole pool) almost all come from the score_2
+non-additivity channel and have NEAR-ZERO SHAP-interaction strength
+(0.00000-0.0002) -- e.g. TOPSIN_ET_C100CapUSV x TOPSIN_ET_lkg_CapFICM1
+(incremental R^2=0.271, SHAP=0.00002). LightGBM's own interaction
+mechanism essentially never flagged these pairs at all; the explicit
+additive-vs-joint binned test found them as the strongest interactions in
+the whole pool, and the negative control confirms this is not noise. This
+is direct, concrete evidence that this checkpoint's method adds real
+complementary detection capability beyond LightGBM SHAP/H-statistic, not
+just a re-confirmation of what was already knowable.
+
+------------------------------------------------------------------
+3-WAY DISCOVERY RESULTS
+------------------------------------------------------------------
+328 candidate triples generated from 3 channels (chaining=259, tree-path
+co-occurrence=40, NEW residual-conditional-structure=30; overlapping),
+all 328 tested (100% of generated candidates):
+  STRONG:    105  (32.0%)
+  MODERATE:   88  (26.8%)
+  WEAK:      134  (40.9%)
+  INCONCLUSIVE: 1  (0.3%)
+
+Sample STRONG 3-way findings with joint conditions:
+  TOPSIN_ET_Cap3pf x TOPSIN_ET_CapFICM1 x TOPSIN_ET_Load_Pull_Id_ini
+    (incremental R^2=0.056, 5/5 folds) -- high-yield when all three are
+    positioned as Cap3pf=low, CapFICM1=low, Load_Pull_Id_ini=HIGH; low-
+    yield when the same first two are low but Load_Pull_Id_ini is also low.
+  ANODE_ET_Rc_an_ct2_OW_CR x MEASURE_ET_Vbkdn_Cap100 x TOPSIN_ET_C100Cap1pf
+    (incremental R^2=0.035, 5/5 folds) -- the high/low yield regions flip
+    specifically on Rc_an_ct2_OW_CR (low vs. high) while the other two stay
+    fixed at low, a genuine conditional pattern.
+
+------------------------------------------------------------------
+NEGATIVE CONTROL (ONE SHUFFLED-TARGET PERMUTATION, SAME CANDIDATES)
+------------------------------------------------------------------
+Broad screen (score_2, full 986,310-pair coverage): real top-300 cutoff
+  (0.9457) never reached by ANY shuffled pair (max 0.2642) -- clean.
+Confirmed 2-way (same 219 pairs): 0/219 STRONG, 0/219 MODERATE under
+  shuffle vs. 176/219 STRONG, 30/219 MODERATE real -- clean separation.
+3-way (same 328 triples): 1/328 (0.3%) STRONG, 0/328 MODERATE under
+  shuffle vs. 105/328 (32.0%) STRONG, 88/328 (26.8%) MODERATE real -- the
+  shuffled rate is a small fraction (~1%) of the real rate -- clean
+  separation. No recalibration was needed at any of the three stages.
+
+------------------------------------------------------------------
+COMPUTATIONAL LIMITATIONS
+------------------------------------------------------------------
+- The additive/joint and lower-order/full binned models use count-based
+  shrinkage, not a formal regression with confidence intervals -- the
+  shrinkage constants (5-8) are fixed, generic values reused across all
+  pairs/triples, not tuned per-candidate or against any known answer.
+- score_2's high real-target STRONG rate (80.4%) reflects that the
+  candidate-generation channels are themselves selecting for likely-real
+  structure (by design) -- this is not the false-discovery rate of an
+  UNFILTERED universe; the negative control on the SAME pool is the
+  correct, and clean, comparison.
+- The 2-bin (median-split) design for 3-way candidates trades resolution
+  for cell-count stability at n~1200 training rows split 5 ways; a true
+  3-way effect with a narrow (non-median-split-aligned) joint sweet spot
+  could be underrepresented.
+- 3-way candidate generation is systematic, not exhaustive (328 of
+  ~461 million possible triples) -- a true 3-way effect whose members never
+  appear together in a confirmed pair, a tree path, or a residual-
+  correlation channel would not be generated as a candidate.
+- SHAP-interaction and H-statistic are computed and reported per pair as
+  corroborating context, but explicitly NOT used to gate the STRONG/
+  MODERATE label -- some of the strongest confirmed pairs by incremental
+  R^2 have near-zero SHAP-interaction strength, which is the expected and
+  intended behavior of this checkpoint's design, not an inconsistency.
+- No formal multiple-testing correction was applied across the 219 pair
+  tests or 328 triple tests -- the shuffle-based negative control is the
+  false-discovery safeguard used, consistent with every prior checkpoint
+  in this project.
+
+Ground-truth document was not read at any point in this checkpoint. No
+threshold, channel, or candidate was tuned or forced based on known
+planted relationships. Stopping here as instructed, pending explicit
+approval before ground-truth validation.

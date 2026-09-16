@@ -1,0 +1,6 @@
+eligible_numeric_predictors=1405
+total_theoretical_triples=461264310
+triples_cheaply_generated=11002
+unique_features_in_generated_triples=1010
+pct_numeric_universe_covered=71.8861
+estimated_search_coverage_pct_of_theoretical=0.0023851835

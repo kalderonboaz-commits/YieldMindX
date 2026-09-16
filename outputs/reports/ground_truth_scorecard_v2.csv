@@ -1,0 +1,10 @@
+relationship,planted_columns,planted_type,detected_strict,methods_that_detected_it,fold_stability
+Gate CD optimum,['GATE2_CD_Gate_Leg_Length'],Nonlinear U-shaped,True,cluster_shap,n/a
+PAE benefit,['TOPSIN_ET_Load_Pull_P.A.E_Last'],Direct positive,False,none,n/a
+Drain-lag penalty,['TOPSIN_ET_DC_PIV_Drain_Lag_1'],Threshold / negative,True,cluster_shap,n/a
+Gate CD × SiN thickness,"['GATE2_CD_Gate_Leg_Length', 'SIN_Thickness_SiN_Thickness']",2-factor interaction,False,none,not observed in any fold
+Rc × Rsh,"['OHMIC_ET_Rc_an_ct2', 'OHMIC_ET_Rsh_an_ct2']",2-factor interaction,False,none,not observed in any fold
+Leakage threshold,[],Threshold,True,individual_shap,n/a
+Alignment process window,['GATE2_Ali_Litho_Gate_to_recess_alignment'],Absolute-value threshold,False,none,n/a
+Gm stage degradation,"['TOPSIN_ET_Gm_max', 'FIC_ET_Gm_max']",Derived delta,True,cluster_shap; engineered_feature_correlation(STAGE_DELTA_Gm_max_FIC_minus_TOPSIN),n/a
+Rc × Drain Lag × low PAE,"['OHMIC_ET_Rc_an_ct2', 'TOPSIN_ET_DC_PIV_Drain_Lag_1', 'TOPSIN_ET_Load_Pull_P.A.E_Last']",3-factor interaction,False,none,"('TOPSIN_ET_DC_PIV_Drain_Lag_1', 'OHMIC_ET_Rc_an_ct2'): not observed in any fold; ('OHMIC_ET_Rc_an_ct2', 'TOPSIN_ET_Load_Pull_P.A.E_Last'): not observed in any fold; ('TOPSIN_ET_DC_PIV_Drain_Lag_1', 'TOPSIN_ET_Load_Pull_P.A.E_Last'): not observed in any fold"

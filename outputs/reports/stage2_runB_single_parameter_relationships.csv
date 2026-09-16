@@ -1,0 +1,155 @@
+raw_csv_parameter_name,relationship_type,direction,shap_rank,shape_fold_consistency,direction_fold_consistency,evidence_label,reason
+MEASURE_ET_lkg_50_at20V,threshold,see_pdp_curve,1,3/5,4/5,MODERATE,"Shape consistent in 3/5 folds, direction in 4/5 -- majority but not unanimous."
+MEASURE_ET_DC_Stress_Id_stress_before,threshold,positive,2,0/5,0/5,INCONCLUSIVE,Shape/direction agree in only 0/5 and 0/5 folds -- likely fold-specific artifact.
+TOPSIN_ET_C100Cap1pf,threshold,negative,3,4/5,4/5,STRONG,Shape and direction consistent in 4/5 and 4/5 folds.
+THIN_ET_lkg_10,threshold,negative,4,2/5,2/5,WEAK,"Shape consistent in 2/5 folds, direction in 2/5 -- inconsistent across folds."
+TOPSIN_ET_DC_PIV_Drain_Lag_0,threshold,negative,5,5/5,5/5,STRONG,Shape and direction consistent in 5/5 and 5/5 folds.
+MEASURE_ET_ABVIETCH,nonlinear_complex,see_pdp_curve,6,0/5,2/5,WEAK,"Shape consistent in 0/5 folds, direction in 2/5 -- inconsistent across folds."
+MEASURE_ET_LT_SEC_Ileak_m5p5V_mA_mm,threshold,negative,7,2/5,1/5,WEAK,"Shape consistent in 2/5 folds, direction in 1/5 -- inconsistent across folds."
+MEASURE_ET_DC_Big_S12dB_10GHz,threshold,negative,8,3/5,3/5,MODERATE,"Shape consistent in 3/5 folds, direction in 3/5 -- majority but not unanimous."
+TOPSIN_ET_Rc_f_tn_23,flat_no_clear_effect,see_pdp_curve,9,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_RF2_MAG_26GHz,nonlinear_complex,see_pdp_curve,10,0/5,2/5,WEAK,"Shape consistent in 0/5 folds, direction in 2/5 -- inconsistent across folds."
+FIC_ET_DC_RF_Vbgs_0p01,threshold,see_pdp_curve,11,2/5,3/5,MODERATE,"Shape consistent in 2/5 folds, direction in 3/5 -- majority but not unanimous."
+MEASURE_ET_DC_RF2_S22dB_26GHz,threshold,negative,12,2/5,4/5,MODERATE,"Shape consistent in 2/5 folds, direction in 4/5 -- majority but not unanimous."
+ANODE_ET_Rc_an_ct2_OW_CR,threshold,negative,13,5/5,5/5,STRONG,Shape and direction consistent in 5/5 and 5/5 folds.
+MEASURE_ET_DC_SMALL_Ids_m0p2,nonlinear_complex,see_pdp_curve,14,1/5,2/5,WEAK,"Shape consistent in 1/5 folds, direction in 2/5 -- inconsistent across folds."
+OHMIC_ET_Rsh_an_ct2,threshold,negative,15,5/5,5/5,STRONG,Shape and direction consistent in 5/5 and 5/5 folds.
+MEASURE_ET_CapPARCAP_0,threshold,negative,16,4/5,4/5,STRONG,Shape and direction consistent in 4/5 and 4/5 folds.
+MEASURE_ET_Rc_an_ct2_OW_CR,U_shaped_process_window,see_pdp_curve,17,3/5,3/5,MODERATE,"Shape consistent in 3/5 folds, direction in 3/5 -- majority but not unanimous."
+TOPSIN_ET_C100Cap2pf,threshold,negative,18,3/5,3/5,MODERATE,"Shape consistent in 3/5 folds, direction in 3/5 -- majority but not unanimous."
+MEASURE_ET_C200_0,flat_no_clear_effect,see_pdp_curve,19,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+TOPSIN_ET_lkg_5,threshold,negative,20,4/5,4/5,STRONG,Shape and direction consistent in 4/5 and 4/5 folds.
+MEASURE_ET_DC_RF_K_W,threshold,positive,21,5/5,5/5,STRONG,Shape and direction consistent in 5/5 and 5/5 folds.
+SIN_ET_DC_RF_Vbin_gs,direct,positive,22,0/5,3/5,MODERATE,"Shape consistent in 0/5 folds, direction in 3/5 -- majority but not unanimous."
+MEASURE_ET_DC_RF_CF_S12_Mag_L1002,U_shaped_process_window,see_pdp_curve,23,0/5,2/5,WEAK,"Shape consistent in 0/5 folds, direction in 2/5 -- inconsistent across folds."
+MEASURE_ET_LT_SEC_Ileak_m10p5V_mA_mm,threshold,negative,24,1/5,1/5,INCONCLUSIVE,Shape/direction agree in only 1/5 and 1/5 folds -- likely fold-specific artifact.
+TOPSIN_ET_Cap3pf_0,U_shaped_process_window,see_pdp_curve,25,0/5,2/5,WEAK,"Shape consistent in 0/5 folds, direction in 2/5 -- inconsistent across folds."
+MEASURE_ET_DC_Big_Vg_optt2,threshold,positive,26,1/5,1/5,INCONCLUSIVE,Shape/direction agree in only 1/5 and 1/5 folds -- likely fold-specific artifact.
+MEASURE_ET_DC_RF2_S21ang_26GHz,threshold,positive,27,3/5,3/5,MODERATE,"Shape consistent in 3/5 folds, direction in 3/5 -- majority but not unanimous."
+MEASURE_ET_VIA_KLV,nonlinear_complex,see_pdp_curve,28,1/5,5/5,MODERATE,"Shape consistent in 1/5 folds, direction in 5/5 -- majority but not unanimous."
+MEASURE_ET_DC_RF_Min_S21_Freq_L1018,threshold,positive,29,1/5,1/5,INCONCLUSIVE,Shape/direction agree in only 1/5 and 1/5 folds -- likely fold-specific artifact.
+TOPSIN_ET_R_f_hr_3,nonlinear_complex,see_pdp_curve,30,0/5,5/5,MODERATE,"Shape consistent in 0/5 folds, direction in 5/5 -- majority but not unanimous."
+FIC_ET_G_per_25,U_shaped_process_window,see_pdp_curve,31,0/5,3/5,MODERATE,"Shape consistent in 0/5 folds, direction in 3/5 -- majority but not unanimous."
+TOPSIN_ET_Cap3pf,threshold,negative,32,2/5,0/5,WEAK,"Shape consistent in 2/5 folds, direction in 0/5 -- inconsistent across folds."
+CATHODE_ET_Rcat_cn_2,threshold,negative,33,3/5,2/5,MODERATE,"Shape consistent in 3/5 folds, direction in 2/5 -- majority but not unanimous."
+THIN_ET_lkg_100_at20V,threshold,negative,34,1/5,1/5,INCONCLUSIVE,Shape/direction agree in only 1/5 and 1/5 folds -- likely fold-specific artifact.
+MaskSetSupplyChipsCount,nonlinear_complex,see_pdp_curve,35,0/5,5/5,MODERATE,"Shape consistent in 0/5 folds, direction in 5/5 -- majority but not unanimous."
+THIN_ET_Rcat_cn_1,U_shaped_process_window,see_pdp_curve,36,0/5,5/5,MODERATE,"Shape consistent in 0/5 folds, direction in 5/5 -- majority but not unanimous."
+THIN_ET_TF_AB_1,flat_no_clear_effect,see_pdp_curve,37,4/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+ANODE_ET_Ran_con_1,flat_no_clear_effect,see_pdp_curve,38,2/5,3/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_RF_Max_S11_Ph_L2180,flat_no_clear_effect,see_pdp_curve,39,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_RF_Modeling_S21_25G_Before,flat_no_clear_effect,see_pdp_curve,40,2/5,3/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_Diode_S11_dB_forw,threshold,positive,41,0/5,0/5,INCONCLUSIVE,Shape/direction agree in only 0/5 and 0/5 folds -- likely fold-specific artifact.
+MEASURE_ET_DC_Diode_Rs_9p5,flat_no_clear_effect,see_pdp_curve,42,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+SIN_ET_lkg_SY07_10,U_shaped_process_window,see_pdp_curve,43,0/5,5/5,MODERATE,"Shape consistent in 0/5 folds, direction in 5/5 -- majority but not unanimous."
+FIC_ET_lkg_SY8_80,flat_no_clear_effect,see_pdp_curve,44,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+FIC_ET_Gm_max,flat_no_clear_effect,see_pdp_curve,45,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_SEC_X_Ig_cut1_mAmm_pos,threshold,positive,46,1/5,1/5,INCONCLUSIVE,Shape/direction agree in only 1/5 and 1/5 folds -- likely fold-specific artifact.
+THIN_ET_Rc_OG142,flat_no_clear_effect,see_pdp_curve,47,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_RF_Vbon_min,flat_no_clear_effect,see_pdp_curve,48,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_SEC_X_Vg_at_I1_pos_SD3p5,flat_no_clear_effect,see_pdp_curve,49,3/5,3/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+FIC_ET_Probe_Number,flat_no_clear_effect,see_pdp_curve,50,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_Cap3pf_0,threshold,see_pdp_curve,51,1/5,4/5,MODERATE,"Shape consistent in 1/5 folds, direction in 4/5 -- majority but not unanimous."
+ANODE_ET_Rc_an_ct2,flat_no_clear_effect,see_pdp_curve,52,4/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_RF_CF_S11_Ph_L2180,flat_no_clear_effect,see_pdp_curve,53,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+TOPSIN_ET_Load_Pull_P.A.E_Last,flat_no_clear_effect,see_pdp_curve,54,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+FIC_ET_Bad_Gates,U_shaped_process_window,see_pdp_curve,55,0/5,4/5,MODERATE,"Shape consistent in 0/5 folds, direction in 4/5 -- majority but not unanimous."
+MEASURE_ET_RF_Modeling_Cgd_err,flat_no_clear_effect,see_pdp_curve,56,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+FIC_ET_sh_f_tn_23,flat_no_clear_effect,see_pdp_curve,57,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+SIN_GATE_ET_Ran_con_2,flat_no_clear_effect,see_pdp_curve,58,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+TOPSIN_ET_DC_SMALL_Vbgd_0p1,flat_no_clear_effect,see_pdp_curve,59,4/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_SEC_X_Id_at_Vboff_mA_mm_SD3p5,flat_no_clear_effect,see_pdp_curve,60,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+TOPSIN_ET_R414,flat_no_clear_effect,see_pdp_curve,61,4/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_C300,flat_no_clear_effect,see_pdp_curve,62,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_HIRS,flat_no_clear_effect,see_pdp_curve,63,4/5,4/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_RF_Modeling_S12ang_10GHz,flat_no_clear_effect,see_pdp_curve,64,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_Stress_Id_max_Ig_after,flat_no_clear_effect,see_pdp_curve,65,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_SEC_X_Ig_mAmm_at_Vg_cond_neg,flat_no_clear_effect,see_pdp_curve,66,3/5,4/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_RF_Modeling_Gm,flat_no_clear_effect,see_pdp_curve,67,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+TOPSIN_ET_DC_RF_Vds_max,flat_no_clear_effect,see_pdp_curve,68,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_RGAN1,flat_no_clear_effect,see_pdp_curve,69,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_RF_Modeling_Ft,flat_no_clear_effect,see_pdp_curve,70,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_USV_Cappf,flat_no_clear_effect,see_pdp_curve,71,3/5,4/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_SEC_X_Ig_cut1_mAmm_pos_FPSD3p2,flat_no_clear_effect,see_pdp_curve,72,3/5,3/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+TOPSIN_ET_sh_f_tn_23,flat_no_clear_effect,see_pdp_curve,73,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+FIC_ET_DC_RF_Vbgs1,threshold,positive,74,0/5,0/5,INCONCLUSIVE,Shape/direction agree in only 0/5 and 0/5 folds -- likely fold-specific artifact.
+MEASURE_ET_LT_SEC_Vbgd1_Vd7,nonlinear_complex,see_pdp_curve,75,1/5,5/5,MODERATE,"Shape consistent in 1/5 folds, direction in 5/5 -- majority but not unanimous."
+MEASURE_ET_DC_SEC_Ids_min_ON,flat_no_clear_effect,see_pdp_curve,76,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_SEC_S_Id_mA_mm_at_Vg3_FPSD3p2,flat_no_clear_effect,see_pdp_curve,77,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_SEC_X_Id_plus_Ig_at_Vboff_mA_mm_FPSD3p2,flat_no_clear_effect,see_pdp_curve,78,4/5,4/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_RF_Modeling_S21_19G_After,flat_no_clear_effect,see_pdp_curve,79,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_Load_Pull_Pout_W_mm_last,flat_no_clear_effect,see_pdp_curve,80,4/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+THIN_ET_i5021_2,flat_no_clear_effect,see_pdp_curve,81,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+TOPSIN_ET_DC_SMALL_Vt_gs,flat_no_clear_effect,see_pdp_curve,82,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+SIN_GATE_ET_Rc_an_ct2,flat_no_clear_effect,see_pdp_curve,83,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_C100CapPARCAP,flat_no_clear_effect,see_pdp_curve,84,4/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+SIN_ET_DC_RF_Vp_1,flat_no_clear_effect,see_pdp_curve,85,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_RGAN2,flat_no_clear_effect,see_pdp_curve,86,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_Vbkdn_Cap100,flat_no_clear_effect,see_pdp_curve,87,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_lkg_CapFICBRGM,flat_no_clear_effect,see_pdp_curve,88,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+THIN_ET_C_AN_2,flat_no_clear_effect,see_pdp_curve,89,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_Vbpin,flat_no_clear_effect,see_pdp_curve,90,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_Load_Pull_GL_set,flat_no_clear_effect,see_pdp_curve,91,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+TOPSIN_ET_CapPARCAP_0,flat_no_clear_effect,see_pdp_curve,92,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_SEC_Vgs_0p5V,flat_no_clear_effect,see_pdp_curve,93,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+ANODE_ET_Ran_con_3,flat_no_clear_effect,see_pdp_curve,94,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_R_f_hr_3,flat_no_clear_effect,see_pdp_curve,95,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_RF_Vbgs_0p1,flat_no_clear_effect,see_pdp_curve,96,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_SEC_X_Ig_cut2_mAmm_neg,flat_no_clear_effect,see_pdp_curve,97,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+TOPSIN_ET_CapUSV_0,flat_no_clear_effect,see_pdp_curve,98,4/5,4/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_Rc_OG142_GN,flat_no_clear_effect,see_pdp_curve,99,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_R414,flat_no_clear_effect,see_pdp_curve,100,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MaskSetName_MS_D,flat_no_clear_effect,see_pdp_curve,101,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_RD_Vg_Vbon_min,flat_no_clear_effect,see_pdp_curve,102,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_SEC_Vgs_0p1V,flat_no_clear_effect,see_pdp_curve,103,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+FIC_ET_R_f_tn_2,flat_no_clear_effect,see_pdp_curve,104,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+FIC_ET_DC_PIV_Drain_Lag_1,flat_no_clear_effect,see_pdp_curve,105,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_C385pf,flat_no_clear_effect,see_pdp_curve,106,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_Vbkdn_Cap100_Long,flat_no_clear_effect,see_pdp_curve,107,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+FIN_FIN_Alignment_FIN_to_ohmic_alignment,flat_no_clear_effect,see_pdp_curve,108,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_PIV_Ids0_QP1,flat_no_clear_effect,see_pdp_curve,109,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_SMALL_Vbgs_0p01,flat_no_clear_effect,see_pdp_curve,110,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_RF_CF_S11_Ph_L1002,flat_no_clear_effect,see_pdp_curve,111,4/5,4/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_RF_Vboff,flat_no_clear_effect,see_pdp_curve,112,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_Load_Pull_Gss,flat_no_clear_effect,see_pdp_curve,113,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_SEC_X_Vg_at_I3_pos,flat_no_clear_effect,see_pdp_curve,114,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_RF_S11ang_26GHz,flat_no_clear_effect,see_pdp_curve,115,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_C_CAT_2,flat_no_clear_effect,see_pdp_curve,116,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_RF_Modeling_Mag_d,flat_no_clear_effect,see_pdp_curve,117,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_RF_Max_S11_Freq_L2180,flat_no_clear_effect,see_pdp_curve,118,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+ANODE_ET_Probe_Number,flat_no_clear_effect,see_pdp_curve,119,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+FIC_ET_DC_RF_Vg_max_Vd,flat_no_clear_effect,see_pdp_curve,120,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_RF_S11dB_10GHz,flat_no_clear_effect,see_pdp_curve,121,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_RF_Max_S11_Ph_L1018,flat_no_clear_effect,see_pdp_curve,122,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+SIN_GATE_ET_sh_GA144,flat_no_clear_effect,see_pdp_curve,123,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+THIN_ET_R_4000_HOR,flat_no_clear_effect,see_pdp_curve,124,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+THIN_ET_Rc_an_ct2_OW_CR,flat_no_clear_effect,see_pdp_curve,125,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_LT_SEC_Id_min_mA_mm,flat_no_clear_effect,see_pdp_curve,126,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+THIN_ET_DC_RF_Vg_optt1,flat_no_clear_effect,see_pdp_curve,127,4/5,4/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+FIC_ET_DC_RF_Vbgs_0p1,flat_no_clear_effect,see_pdp_curve,128,3/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_RD_K,flat_no_clear_effect,see_pdp_curve,129,4/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+TOPSIN_ET_DC_SMALL_Vbgs1,flat_no_clear_effect,see_pdp_curve,130,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+THIN_ET_sh_f_hr_23,flat_no_clear_effect,see_pdp_curve,131,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_RF_Modeling_S22ang_10GHz,flat_no_clear_effect,see_pdp_curve,132,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+TOPSIN_ET_C175pf,flat_no_clear_effect,see_pdp_curve,133,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+SIN_GATE_ET_RGAN2,flat_no_clear_effect,see_pdp_curve,134,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_SEC_S_Id_mA_mm_at_Vg3_SD3p5,flat_no_clear_effect,see_pdp_curve,135,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_SEC_Id_gm_max,flat_no_clear_effect,see_pdp_curve,136,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+TOPSIN_ET_C100CapPARCAP,flat_no_clear_effect,see_pdp_curve,137,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_RF_CF_S21_Mag_L1018,flat_no_clear_effect,see_pdp_curve,138,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_RF_Modeling_Ls,flat_no_clear_effect,see_pdp_curve,139,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+TFRP_ET_Rc_TF_AB_2,flat_no_clear_effect,see_pdp_curve,140,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+TOPSIN_ET_R_f_hr_2,flat_no_clear_effect,see_pdp_curve,141,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_SEC_X_Vboff_Id,flat_no_clear_effect,see_pdp_curve,142,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_SEC_X_Ids_max_norm_FPSD3p2,flat_no_clear_effect,see_pdp_curve,143,4/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_R_f_tn_1,flat_no_clear_effect,see_pdp_curve,144,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_RF_Vg_Vbon_min,flat_no_clear_effect,see_pdp_curve,145,4/5,4/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+TOPSIN_ET_DC_RF_Vt_gd,flat_no_clear_effect,see_pdp_curve,146,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_RF2_S11dB_26GHz,flat_no_clear_effect,see_pdp_curve,147,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_RF_Modeling_Fmax,flat_no_clear_effect,see_pdp_curve,148,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_RF_Vt_gd,flat_no_clear_effect,see_pdp_curve,149,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_SMALL_Vdg_max_0p1,flat_no_clear_effect,see_pdp_curve,150,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_SEC_S_Ig_mAmm_at_Vg_cond_pos_SD3p5,flat_no_clear_effect,see_pdp_curve,152,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+THIN_ET_DC_RF_Vbgs_0p01,flat_no_clear_effect,see_pdp_curve,154,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_C20_0,flat_no_clear_effect,see_pdp_curve,157,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).
+MEASURE_ET_DC_RF_S11dB_26GHz,flat_no_clear_effect,see_pdp_curve,160,5/5,5/5,INCONCLUSIVE,Main model shows no clear PDP effect (range below flat threshold).

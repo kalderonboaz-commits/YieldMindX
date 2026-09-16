@@ -1,0 +1,152 @@
+STAGE 2 RUN B v2 -- GROUND TRUTH VALIDATION SUMMARY
+==================================================================
+
+Validation-only checkpoint. No retraining, no pipeline changes, no
+threshold tuning. Ground-truth document read only here, after the v2
+discovery outputs were already frozen.
+
+------------------------------------------------------------------
+PER-RELATIONSHIP RESULTS (full detail in stage2_runB_v2_ground_truth_validation.csv)
+------------------------------------------------------------------
+
+# | Relationship                  | V1 classification        | V2 classification    | Improved?
+1 | Gate CD optimum               | MISSED                    | PARTIALLY FOUND       | YES
+2 | PAE benefit                   | PARTIALLY FOUND           | MISSED                | NO (regression)
+3 | Drain-lag penalty             | APPROXIMATELY FOUND       | APPROXIMATELY FOUND   | YES (stronger basis, same label)
+4 | Gate CD x SiN thickness       | NOT TESTABLE              | NOT TESTABLE          | NO CHANGE
+5 | Rc x Rsh                      | NOT TESTABLE              | NOT TESTABLE          | PARTIAL (infra only)
+6 | Leakage threshold             | EXACTLY FOUND             | APPROXIMATELY FOUND   | NO (regression)
+7 | Alignment process window      | MISSED                    | MISSED                | NO CHANGE (stronger negative result)
+8 | Gm stage degradation          | NOT TESTABLE              | EXACTLY FOUND         | YES (clearest win)
+9 | Rc x Drain Lag x low PAE      | NOT TESTABLE              | NOT TESTABLE          | PARTIAL (infra only)
+
+------------------------------------------------------------------
+SUMMARY METRICS
+------------------------------------------------------------------
+                         V1        V2
+Strict recovery rate:    11.1%     11.1%   (UNCHANGED)
+Practical recovery rate: 22.2%     33.3%   (+11.1 points)
+
+Exact discoveries:       1/9    -> 1/9
+Approximate:             1/9    -> 2/9
+Partial:                 0/9    -> 1/9
+Missed:                  2/9    -> 2/9
+Not testable:            4/9    -> 3/9
+
+Previously "not testable" cases that became genuinely testable in v2:
+1 of 4 (relationship #8, Gm stage degradation) -- and it was not just
+testable but EXACTLY FOUND. The other 3 (#4, #5, #9) remain not testable:
+verified directly against the frozen candidate-pool/confirmation/3-way
+files, not assumed.
+
+------------------------------------------------------------------
+FALSE POSITIVE / EXTRA-FINDING REVIEW
+------------------------------------------------------------------
+
+Strongest v2 finding NOT explained by any of the 9 planted relationships,
+with an assessment of what it plausibly represents:
+
+- Confirmed 2-way interactions involving EBCR2_Ali_Litho_Gate_to_ohmic_
+  alignment (paired with THIN_ET_lkg_100_at20V and TOPSIN_ET_lkg_C450pf,
+  both STRONG, 5/5 fold-reproducible): this is a DIFFERENT alignment
+  parameter than the planted GATE2_Ali_Litho_Gate_to_recess_alignment, but
+  shares the same "Ali_Litho_Gate_to_X_alignment" naming family (gate-to-
+  ohmic vs. gate-to-recess). PLAUSIBLE CORRELATED PROXY OR RELATED
+  ADDITIONAL ALIGNMENT STRUCTURE -- worth flagging for engineering review,
+  not dismissing as unrelated noise, given the close naming/semantic
+  relationship to relationship #7 (which itself was MISSED).
+
+- MEASURE_ET_DC_RF_S11ang_10GHz x SIN_GATE_ET_lkg_SY8_80 (the single
+  strongest confirmed interaction overall, 5/5 fold-reproducible, both
+  methods agreeing): an RF S-parameter interacting with a leakage-family
+  measurement. No connection to any of the 9 planted relationships'
+  named parameters. Given the leakage family's known dominance (#6), this
+  could be a genuine additional interaction involving that family, or a
+  standalone synthetic-generator structure not covered by the 9-item
+  reference table. Cannot be classified as spurious purely from evidence
+  -- it is real and reproducible.
+
+- Cross-stage findings beyond Gm_max and Drain_Lag_1: 58 STRONG cross-
+  stage pairs were found in total, spanning many different measurement
+  families (capacitance, threshold voltage, resistance, thickness
+  measurements across ANODE/THIN/TFRP/BRGM/SIN/TOPSIN modules). This is a
+  SYSTEMATIC, family-wide pattern, not an isolated finding. Two
+  competing, currently-indistinguishable explanations: (a) the synthetic
+  generator plants a broader "stage-to-stage consistency matters"
+  principle beyond the single documented Gm_max example, or (b) many
+  columns across modules are correlated noisy proxies of a small number
+  of true latent yield drivers, so almost ANY two-stage pair sharing
+  exposure to those drivers would show a spurious "cross-stage difference
+  correlates with yield" pattern by construction, independent of any
+  genuine "consistency effect." This cannot be resolved from the
+  available evidence and is flagged as genuinely uncertain rather than
+  asserted either way.
+
+- The TOPSIN_ET_DC_PIV_Drain_Lag_1 "hub" pattern in 3-way findings (common
+  member in the large majority of 112 STRONG triples): most plausibly
+  reflects DUPLICATED/RELATED MEASUREMENT-FAMILY EFFECTS -- i.e. this one
+  genuinely important, correctly-planted parameter (#3) participating in
+  many statistically real but partially redundant 3-way patterns with
+  different third variables, rather than 112 independent 3-way phenomena.
+  Should be read as strong evidence for ONE robust conditional effect
+  involving this parameter, not 112 separate discoveries.
+
+------------------------------------------------------------------
+FINAL INTERPRETATION
+------------------------------------------------------------------
+
+1. Did v2 materially improve recovery of the planted relationships?
+   Mixed, not uniform. Practical recovery rate improved materially
+   (22.2% -> 33.3%), driven almost entirely by ONE clean win (#8). Strict
+   recovery rate is UNCHANGED (11.1% both). Two relationships genuinely
+   REGRESSED (#2, #6) -- this is reported honestly rather than only
+   highlighting the improvement.
+
+2. Which relationship classes improved most?
+   Cross-stage / derived-delta relationships: the ENTIRE point of the new
+   cross-stage module, and it delivered exactly the intended result (#8,
+   NOT TESTABLE -> EXACTLY FOUND, STRONG, 5/5-fold-stable, correct
+   direction). Previously-zero-LightGBM-importance nonlinear single-
+   parameter relationships also improved partially (#1, MISSED ->
+   PARTIALLY FOUND).
+
+3. Which planted relationships are still missed?
+   #2 (PAE benefit) and #7 (Alignment process window) -- both show zero
+   stable evidence under v2's model-free method, in addition to being
+   incompletely characterized under v1's LightGBM-based method.
+
+4. Are any misses now true model/method failures rather than coverage
+   failures?
+   YES, and this is the most important methodological finding of this
+   checkpoint. #7 (Alignment) had real (if modest) LightGBM importance in
+   v1 but fell outside the screening threshold -- a coverage failure. In
+   v2, with 100% coverage and a completely different, model-free
+   detection method, it STILL shows zero stable evidence. Two
+   methodologically distinct approaches now agree in failing on this
+   relationship -- meaningfully stronger evidence of a genuine detection
+   limitation (plausibly the true relationship's narrow functional form)
+   rather than a fixable coverage gap. The same logic applies to #2 (PAE).
+   By contrast, #4, #5, and #9 remain COVERAGE failures, not method
+   failures -- verified directly: the relevant parameters/pairs never
+   reached the confirmable stage of the pipeline, so no method-capability
+   conclusion can be drawn about them yet.
+
+5. Is LightGBM + the improved discovery layer now sufficient for Stage 2,
+   or is there still a clear reason to test a second model?
+   There is a clear, evidence-based (not reflexive) reason to consider a
+   different detection approach for a SPECIFIC, narrow class of
+   relationships: #2 and #7 now show consistent, method-independent
+   non-detection (tree-based SHAP/PDP AND model-free quantile-binning
+   both fail). This narrow, specific failure pattern -- not general
+   dissatisfaction with LightGBM -- is the actual evidence basis for
+   considering a smoother/parametric detection method (e.g. spline-based
+   GAM fitting, or a differently-parameterized shape test) for these two
+   relationship types specifically. This would not necessarily require a
+   second full model for Stage 2 prediction/discovery generally -- it is
+   a targeted method question for a narrow, well-identified gap, not a
+   broad case for replacing LightGBM. Separately, #4, #5, and #9 remain
+   candidate-GENERATION coverage gaps that a different model would not
+   automatically fix without also changing the candidate-selection
+   strategy (e.g. a less lower-order-dependent 3-way/2-way candidate
+   generation approach). No further model changes are made in this
+   checkpoint pending explicit approval.

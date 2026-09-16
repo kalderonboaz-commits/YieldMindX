@@ -1,0 +1,192 @@
+STAGE 2 RUN B v4 -- EVIDENCE-GRAPH-DRIVEN CANDIDATE GENERATION
+==================================================================
+
+Purpose: v3's ground-truth validation identified candidate generation
+(not confirmation capability) as the remaining bottleneck for interaction
+discovery. This checkpoint is narrowly scoped to fixing HOW candidates are
+selected -- the confirmation tests themselves (additive-vs-joint 2-way,
+lower-order-vs-full 3-way) are REUSED UNCHANGED from v3 (literal function
+imports, not reimplementations). LightGBM, spline/GAM, Stage 1, and the
+Run B feature universe are untouched. No new model. Ground-truth document
+was not read anywhere in this pipeline; no known planted parameter name
+was hard-coded or prioritized.
+
+------------------------------------------------------------------
+FILES CREATED (no existing Stage 2 output overwritten)
+------------------------------------------------------------------
+src/explain/stage2_v4_evidence_graph.py
+src/explain/stage2_v4_pair_candidates.py
+src/explain/stage2_v4_confirm_2way.py
+src/explain/stage2_v4_three_way_candidates.py
+src/explain/stage2_v4_three_way_confirm.py
+src/explain/stage2_v4_negative_control.py
+outputs/reports/stage2_runB_v4_feature_evidence_graph.csv
+outputs/reports/stage2_runB_v4_pair_candidates.csv
+outputs/reports/stage2_runB_v4_confirmed_2way_interactions.csv
+outputs/reports/stage2_runB_v4_three_way_candidates.csv
+outputs/reports/stage2_runB_v4_three_way_interactions.csv
+outputs/reports/stage2_runB_v4_negative_control.txt
+outputs/reports/stage2_runB_v4_coverage.txt
+outputs/reports/stage2_runB_v4_summary.txt (this file)
+
+------------------------------------------------------------------
+1. FEATURE-EVIDENCE GRAPH METHODOLOGY
+------------------------------------------------------------------
+For all 1,405 numeric Run B predictors (100% coverage), 8 generic,
+independent "votes" were collected from already-frozen discovery outputs:
+  1. spline/GAM single-parameter evidence (STRONG/MODERATE)
+  2. v2 model-free univariate evidence (STRONG/MODERATE)
+  3. SHAP importance in the top decile (percentile >= 90)
+  4. permutation importance in the top decile (a separate importance
+     mechanism from SHAP, kept as its own vote)
+  5. participation in >=1 v3 confirmed STRONG/MODERATE 2-way interaction
+  6. presence in the v3 broad-screen top-300 shortlist (either score)
+  7. v3 tree-path co-occurrence channel participation
+  8. cross-stage STRONG/MODERATE evidence (v2 cross-stage analysis)
+
+("Conditional-dispersion" evidence from v1's internal candidate selection
+is not available as an independent frozen CSV -- only as an intermediate
+value inside a pickled internal state file -- so it is not re-derived
+here; its effect is already transitively present via v1's frozen
+interaction labels, which feed vote 5 through v3's own channel reuse.)
+
+n_independent_methods_supporting = count of TRUE votes (0-8). Tiering rule
+(generic, not ground-truth-derived):
+  HIGH_EVIDENCE:   >=3 methods, OR participates in >=1 CONFIRMED STRONG
+                   v3 interaction (being a proven real interaction
+                   participant is treated as sufficient on its own)
+  MEDIUM_EVIDENCE: exactly 2 methods, OR a MODERATE confirmed interaction,
+                   OR (broad-screen presence + any marginal evidence)
+  LOW_EVIDENCE:    exactly 1 method
+  UNSUPPORTED:     0 methods
+
+Result (100% coverage, 1,405/1,405 features):
+  HIGH_EVIDENCE:    364  (25.9%)
+  MEDIUM_EVIDENCE:  387  (27.5%)
+  LOW_EVIDENCE:     480  (34.2%)
+  UNSUPPORTED:      174  (12.4%)
+Evidence-character flags: marginal=1,137, nonlinear=1,298,
+  conditional=167, interaction-related=440, cross-stage=224.
+
+------------------------------------------------------------------
+2. PAIR CANDIDATE GENERATION (replaces v3's fixed top-N-per-channel gate)
+------------------------------------------------------------------
+5 evidence-graph-driven channels, union after dedup = 74,365 pairs (vs.
+v3's 219 -- a 339.6x expansion), covering 1,007/1,405 features (71.7%, vs.
+v3's 12.6%). Full channel/cap breakdown in stage2_runB_v4_coverage.txt.
+Because HIGH_EVIDENCE x HIGH_EVIDENCE alone (channel A, kept fully
+uncapped per instruction priority) already produces 66,066 pairs, and the
+additive-vs-joint confirmation test costs only ~2.4ms/pair (measured),
+the entire 74,365-pair pool was confirmed in 180 seconds -- no
+confirmation-side truncation was needed anywhere.
+
+------------------------------------------------------------------
+3. 2-WAY CONFIRMATION RESULTS (v3's additive-vs-joint test, UNCHANGED)
+------------------------------------------------------------------
+74,365 / 74,365 candidates tested (100%):
+  STRONG:        47,871  (64.4%)
+  MODERATE:      20,443  (27.5%)
+  WEAK:           5,560  (7.5%)
+  INCONCLUSIVE:     491  (0.7%)
+
+The much higher STRONG rate than v3 (64.4% vs. 80.4% -- actually LOWER
+than v3's rate, despite the pool being 339x larger) reflects that v4's
+pool intentionally reaches further into MEDIUM/LOW-evidence and
+"outlier"-only territory (channels B, C, E) rather than staying within
+v3's narrower, more heavily pre-filtered top-N-per-channel selection --
+exactly the intended effect of broader, less conservative candidate
+generation. The negative control (below) confirms this expansion did not
+come at the cost of false-discovery control.
+
+------------------------------------------------------------------
+4. 3-WAY CANDIDATE GENERATION (interaction graph, replaces v3's chaining)
+------------------------------------------------------------------
+Built from v4's own confirmed 2-way edges (47,871 STRONG + 20,443
+MODERATE over 1,007 nodes) -- far too dense for unrestricted motif
+enumeration (a near-complete graph on ~1,000 nodes has up to ~1.6e8
+possible triangles), so motif search runs on an explicit, disclosed,
+evidence-ranked top-3,000-STRONG-edge subgraph. 5 channels (triangle,
+shared-node chaining WITHOUT requiring the third edge, edge+HIGH-
+conditional, fresh tree-path mining, residual-conditional) produced 69,606
+unique candidate triples (vs. v3's 328 -- a 212.2x expansion), covering
+651/1,405 features (46.3%, vs. v3's 9.4%).
+
+Channel 2 (shared-node chaining without requiring the third pairwise edge)
+is the DIRECT fix for the v3 failure mode identified in the prior
+checkpoint: a real 3-way interaction whose third pairwise component was
+never itself confirmed could never be generated under v3's chaining rule
+(which required the THIRD member to already share a confirmed pair with
+BOTH other members via one of the top-N-chain STRONG pairs). Channel 2
+alone contributed 64,008 of the 69,606 triples.
+
+------------------------------------------------------------------
+5. 3-WAY CONFIRMATION RESULTS (v3's lower-order-vs-full test, UNCHANGED)
+------------------------------------------------------------------
+69,606 / 69,606 candidates tested (100%):
+  STRONG:        30,384  (43.7%)
+  MODERATE:      16,055  (23.1%)
+  WEAK:          22,017  (31.6%)
+  INCONCLUSIVE:   1,150  (1.7%)
+
+Notably, OHMIC_ET_Rc_an_ct2 (a Run B parameter with an unresolved
+ground-truth question from the v3 checkpoint) now appears in confirmed
+STRONG 3-way triples with capacitance-family partners
+(MEASURE_ET_Cap3pf x TOPSIN_ET_CapPARCAP_0, incremental R^2=0.129, 5/5
+folds) -- this is reported here purely as a candidate-generation/coverage
+fact, NOT as a ground-truth comparison; no interpretation against the
+planted relationships was performed in this checkpoint.
+
+------------------------------------------------------------------
+6. NEGATIVE CONTROL (ONE SHUFFLED-TARGET PERMUTATION, SAME CANDIDATES)
+------------------------------------------------------------------
+Pair pool (74,365 pairs, same candidates, unchanged confirmation logic):
+  Real STRONG+MODERATE rate:     91.9%  (68,314 / 74,365)
+  Shuffled STRONG+MODERATE rate:  0.31% (231 / 74,365, exact breakdown in
+    stage2_runB_v4_negative_control.txt)
+  -> CLEAN SEPARATION.
+
+3-way pool (69,606 triples, same candidates, unchanged confirmation logic):
+  Real STRONG+MODERATE rate:     66.7%  (46,439 / 69,606)
+  Shuffled STRONG+MODERATE rate:  0.16%
+  -> CLEAN SEPARATION.
+
+Expanding the candidate pool ~340x (pairs) / ~212x (triples) did NOT
+materially increase the false-discovery floor -- the shuffled rates remain
+far below 1% in both cases, essentially identical in character to v3's own
+clean negative-control results. No recalibration was needed or performed.
+
+------------------------------------------------------------------
+7. COMPUTATIONAL LIMITATIONS
+------------------------------------------------------------------
+- The evidence-graph vote thresholds (top-decile importance, >=3 methods
+  for HIGH_EVIDENCE, etc.) are generic, round-number cuts, not formally
+  optimized -- a different threshold choice would shift tier boundaries
+  and therefore channel sizes.
+- Pair channels B and E, and 3-way channels 1-2's underlying edge
+  subgraph, are explicitly capped by the non-additivity/incremental-R^2
+  score to keep candidate generation itself tractable -- some real
+  interactions outside these disclosed cutoffs remain untested (a smaller,
+  better-characterized version of the same coverage-boundary issue v2/v3
+  already documented, now with an 5.7x/4.9x larger tested feature
+  footprint).
+- The 2-bin (median-split) 3-way representation is unchanged from v3 and
+  carries the same resolution-vs-cell-stability tradeoff.
+- No SHAP-interaction or H-statistic corroboration was computed for V4
+  pairs (unlike v3's confirmation step) -- explicitly out of scope per
+  this checkpoint's instruction to test candidate-generation improvement,
+  not confirmation redesign; the core additive-vs-joint/lower-order-vs-
+  full evidence is unaffected.
+- No formal multiple-testing correction was applied across 74,365 pair
+  tests or 69,606 triple tests -- the shuffle-based negative control
+  (clean at both scales) is the false-discovery safeguard used, consistent
+  with every prior checkpoint in this project.
+- HIGH_EVIDENCE x HIGH_EVIDENCE (channel A) being both the single largest
+  channel AND fully uncapped means the STRONG/MODERATE counts are
+  dominated by that channel's own composition; per-channel confirmation
+  rates are not broken out in the confirmed-interactions CSV itself but
+  can be recovered by joining on the "channels" column.
+
+Ground-truth document was not read at any point in this checkpoint. No
+threshold, channel, or candidate was tuned or forced based on known
+planted relationships. Stopping here as instructed, pending explicit
+approval before ground-truth validation.

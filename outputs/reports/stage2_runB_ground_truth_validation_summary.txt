@@ -1,0 +1,164 @@
+STAGE 2 RUN B -- GROUND TRUTH VALIDATION SUMMARY
+==================================================================
+
+Purpose: measure how much of the known planted synthetic-relationship structure
+the blind LightGBM Run B discovery pipeline recovered, using ONLY the already-
+frozen discovery outputs. No retraining, no candidate-pool changes, no model
+changes were performed in this checkpoint. The ground-truth document was read
+only here, after discovery was already frozen.
+
+------------------------------------------------------------------
+RESULTS PER RELATIONSHIP (see stage2_runB_ground_truth_validation.csv for full detail)
+------------------------------------------------------------------
+
+1. Gate CD optimum (GATE2_CD_Gate_Leg_Length)              -> MISSED
+2. PAE benefit (TOPSIN_ET_Load_Pull_P.A.E_Last)             -> PARTIALLY FOUND
+3. Drain-lag penalty (TOPSIN_ET_DC_PIV_Drain_Lag_1)         -> APPROXIMATELY FOUND (via sibling column _0)
+4. Gate CD x SiN thickness (interaction)                     -> NOT TESTABLE UNDER CURRENT METHOD
+5. Rc x Rsh (interaction)                                    -> NOT TESTABLE UNDER CURRENT METHOD
+6. Leakage threshold (ET leakage family)                     -> EXACTLY FOUND
+7. Alignment process window (GATE2_Ali_Litho...)             -> MISSED
+8. Gm stage degradation (TOPSIN_ET_Gm_max, FIC_ET_Gm_max)    -> NOT TESTABLE UNDER CURRENT METHOD
+9. Rc x Drain Lag x low PAE (3-way interaction)               -> NOT TESTABLE UNDER CURRENT METHOD
+
+------------------------------------------------------------------
+SUMMARY METRICS
+------------------------------------------------------------------
+
+Exact discoveries:            1 / 9
+Exact + approximate:          2 / 9
+Partial discoveries:          1 / 9
+Missed:                       2 / 9
+Not testable under method:    4 / 9
+
+Strict recovery rate    (exact / 9)              = 11.1%
+Practical recovery rate ((exact+approx) / 9)     = 22.2%
+
+These numbers are NOT inflated: "approximately found" required a genuinely
+close proxy column with the correct relationship type, correct direction, and
+threshold in the same order of magnitude -- not merely "some related feature
+had importance." "Not testable" was reserved strictly for cases where the
+required parameter(s) never entered the candidate pool or screening set, so
+no test was ever actually attempted (verified directly against the frozen
+interactions/single-parameter tables in every case, not assumed).
+
+------------------------------------------------------------------
+FALSE POSITIVE / UNEXPECTED-FINDING REVIEW
+------------------------------------------------------------------
+
+Strongest single-parameter findings NOT explained by any of the 9 planted
+relationships (from the 7 STRONG-labeled single-parameter findings):
+
+- TOPSIN_ET_C100Cap1pf (threshold, negative, rank 3/1425, 4/5-fold stable):
+  the single strongest non-leakage-family finding in the whole discovery run.
+  No obvious connection to any planted relationship's named parameters. Could
+  be an additional, undocumented planted effect, or a genuinely strong
+  standalone process signal in the synthetic generator not covered by the
+  9-relationship reference table. Cannot be classified as a false positive
+  from evidence alone -- it is fold-stable and high-ranked, i.e. a real,
+  reproducible model finding regardless of whether it maps to a "known" answer.
+
+- ANODE_ET_Rc_an_ct2_OW_CR (threshold, negative, rank 13/1425, 5/5-fold
+  stable): plausibly a correlated proxy for the Rc/Rsh family (shares the
+  "Rc_an_ct2" naming root with the planted OHMIC_ET_Rc_an_ct2, just a
+  different module/"out-of-window" variant). This is a reasonable candidate
+  for "legitimately reflects the same underlying planted effect via a
+  correlated measurement," not a spurious finding -- worth flagging for
+  engineering review rather than dismissing.
+
+- MEASURE_ET_CapPARCAP_0 (threshold, negative, rank 16/1425, 4/5-fold
+  stable): unexplained by any planted relationship; real and stable.
+
+- MEASURE_ET_DC_RF_K_W (threshold, POSITIVE, rank 21/1425, 5/5-fold stable):
+  notable because it is one of very few STRONG findings with a POSITIVE
+  direction, and PAE is the only planted relationship expected to be
+  positive. "K_W" plausibly denotes an RF stability/gain factor -- a
+  domain-adjacent parameter to Load-Pull PAE (both power-amplifier RF
+  characterization metrics). This is a plausible but UNCONFIRMED hypothesis
+  that it may be a correlated proxy for the PAE effect; it is not the named
+  PAE parameter itself and should not be presented as confirming relationship
+  #2.
+
+Strongest interaction NOT explained by any of the 9 planted relationships:
+
+- MEASURE_ET_ABVIETCH x MEASURE_ET_DC_Big_S12dB_10GHz: the single strongest,
+  most stable interaction found in this entire analysis (top SHAP-interaction
+  strength, 5/5 fold reproducibility, corroborated independently by
+  H-statistic). No connection to any of the 9 planted parameter names.
+  Given the strength and reproducibility of this finding, it reads as a
+  genuine, reproducible structural signal in the data -- either an
+  additional planted relationship not included in the 9-item reference
+  table, or a real (if undocumented) synthetic-generator interaction. It
+  should NOT be dismissed as spurious; it is exactly the kind of finding
+  this discovery pipeline is designed to surface, and its extremely high
+  fold-stability argues against it being noise.
+
+Several other STRONG interactions share ABVIETCH or the Drain-Lag proxy as
+one leg, suggesting these two features act as structural "hub" parameters
+in the fitted model, independent of the 9-relationship reference set.
+
+------------------------------------------------------------------
+IMPORTANT INTERPRETATION
+------------------------------------------------------------------
+
+How much of the known synthetic relationship structure did LightGBM recover
+blindly? Strictly, very little (1/9 exact); allowing close, well-justified
+proxies, still modest (2/9 practical). This is an honest, not-inflated result.
+
+Which relationship types LightGBM handled well:
+  - Threshold-type relationships in DOMINANT, high-signal feature families
+    (the leakage-current family) were found cleanly, confidently, and
+    stably -- relationship #6 is the clearest success.
+  - When a parameter (or a close correlated sibling) has genuine importance,
+    threshold/negative shapes are reliably characterized with strong
+    fold-stability (#3 via proxy).
+
+Which relationship types LightGBM missed or could not test:
+  - Symmetric, non-monotonic effects (a true U-shape with near-zero net
+    linear correlation) received LITERALLY ZERO importance from the fitted
+    model in this run (#1, and the Rc/TOPSIN_Gm_max components of #5/#8) --
+    not merely excluded by screening, but never used by the full model at
+    all. This is the clearest capability gap.
+  - 2-way and 3-way interactions where one or more legs have low-to-zero
+    marginal importance were never tested, because interaction search here
+    only covers the 50-feature candidate pool (#4, #5, #9).
+  - A genuine 3-way interaction has no dedicated search method in this
+    pipeline at all -- it is structurally undetectable regardless of
+    candidate coverage (#9).
+  - A derived cross-stage delta, with engineered features excluded by
+    design, could only be reconstructed via an implicit two-feature
+    interaction -- which requires BOTH raw features to have real
+    importance; here one did not (#8).
+
+Did candidate-pool screening exclude important planted relationships?
+  Yes, demonstrably -- checked directly against the frozen pool file, not
+  inferred: SIN_Thickness_SiN_Thickness, GATE2_Ali_Litho_Gate_to_recess_
+  alignment, TOPSIN_ET_DC_PIV_Drain_Lag_1 (exact column), and
+  TOPSIN_ET_Load_Pull_P.A.E_Last (for interaction purposes) never entered
+  the 154-feature screening set or 50-feature candidate pool, despite two
+  of these (Alignment, Drain_Lag_1's proxy) having real underlying signal.
+
+Main limitation -- model capability, candidate coverage, explainability
+method, engineered-feature exclusion, or a combination?
+  A COMBINATION, with different relationships failing for different,
+  specific, verified reasons:
+  - MODEL CAPABILITY is the root cause for #1 (Gate CD) and the Rc/TOPSIN_Gm_max
+    legs of #5/#8: LightGBM assigned these features EXACTLY ZERO importance
+    across the full 1,425-feature fit -- no downstream method could have
+    recovered them without a different model or explicit feature engineering.
+  - CANDIDATE/SCREENING COVERAGE is the root cause for #4, #7, and the
+    interaction-testing gap in #3: real signal existed but fell outside the
+    ~150/50-feature thresholds used for deeper analysis.
+  - EXPLAINABILITY METHOD (the simple PDP-shape heuristic) is implicated in
+    #2: real importance was detected, but the shape classifier called it
+    "flat" -- a more sensitive or differently-parameterized shape method
+    might recover it.
+  - PAIRWISE-ONLY INTERACTION SEARCH is a structural, unconditional
+    limitation for #9 regardless of any other fix.
+  - ENGINEERED-FEATURE EXCLUSION (by design, per this project's Stage 2
+    scope rule) compounds with the TOPSIN_ET_Gm_max capability gap to make
+    #8 unrecoverable under the current design.
+
+No single fix addresses all nine misses/gaps -- they are genuinely
+heterogeneous failure modes, and this validation report distinguishes them
+rather than lumping them into one general "needs more work" conclusion.

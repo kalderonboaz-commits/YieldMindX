@@ -1,0 +1,27 @@
+STAGE 2 RUN B MLP -- NEGATIVE CONTROL (shuffled-target, one permutation)
+==========================================================================
+
+PART 1: PREDICTIVE PERFORMANCE (grouped 5-fold CV)
+--------------------------------------------------------------------------
+Real-target CV R^2 (mean): 0.2894
+Shuffled-target CV R^2 (mean): -1.1621
+-> CLEAN COLLAPSE
+
+PART 2: FEATURE-EVIDENCE STRONG RATE (permutation importance, 200-feature random sample)
+--------------------------------------------------------------------------
+Real-target STRONG rate (full 1,425-feature run): 93.0%
+Shuffled-target STRONG rate (this 200-feature sample, same procedure): 86.0%
+-> WARNING: a substantial fraction of features still register STRONG under a shuffled target. This confirms the near-universal real-target STRONG rate (93%) is inflated by the model's documented overfitting rather than reflecting genuinely widespread real structure -- MLP single-feature 'STRONG' labels should be read as heavily diluted by noise and are NOT comparable in reliability to the tree-based/spline STRONG rates elsewhere in this project.
+
+PART 3: 2-WAY H-STATISTIC MAGNITUDE UNDER SHUFFLE (same 100-pair pool, 1 shuffled-target fold model)
+--------------------------------------------------------------------------
+Real-target H-statistic: mean=0.0113, max=0.0259, STRONG count=20/100
+Shuffled-target H-statistic (same pairs): mean=0.0082, max=0.0501
+-> WARNING: shuffled-target H-statistic magnitude is comparable to real-target -- the 2-way interaction score itself may not be well-calibrated for this severely overparameterized model; reported as-is, not recalibrated against ground truth.
+
+PART 3b: 3-WAY CONTRAST MAGNITUDE UNDER SHUFFLE (top 30 |contrast| triples, 1 shuffled-target fold model)
+--------------------------------------------------------------------------
+Real-target top-30 mean |contrast_3way|: 0.00054
+Shuffled-target mean |contrast_3way| (same 30 triples): 0.00011
+-> Shuffled-target contrast magnitude is lower than real-target, consistent with genuine signal, but ALL contrast magnitudes in this analysis (real included) are extremely small in absolute yield-point terms (see stage2_runB_mlp_summary.txt) -- practical significance of even the 'real' 3-way findings is doubtful regardless of this check.
+

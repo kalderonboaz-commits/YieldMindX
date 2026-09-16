@@ -1,0 +1,248 @@
+STAGE 2 RUN B -- COMPLEMENTARY EBM (EXPLAINABLE BOOSTING MACHINE) CHECKPOINT
+==================================================================
+
+Purpose: test whether an explicitly additive + pairwise-interaction
+explainable model (GA2M-style: SortingYield ~ sum of single-feature shape
+functions + selected pairwise interaction functions) can recover
+relationships the existing Stage 2 methods characterize poorly. This is
+an ADDITIONAL evidence source -- LightGBM, spline/GAM, cross-stage
+analysis, and the v3/v4/v5 interaction machinery are all untouched. Stage
+1 is untouched. Ground-truth document was not read anywhere in this
+pipeline; no known planted parameter name guided configuration,
+interaction selection, or thresholds.
+
+HEADLINE RESULT: unlike the earlier MLP checkpoint, the EBM shows
+EXCELLENT, clean, well-generalizing predictive performance (holdout
+R^2=0.996, essentially matching LightGBM's 0.995) with a CLEAN predictive
+negative control. Its 16 STRONG single-feature findings are well-
+calibrated and show a genuinely reassuring "concentrated real signal vs.
+diffuse noise" negative-control pattern. However, its PAIRWISE INTERACTION
+layer is NOT reliable on this dataset: all 15 automatically-selected
+interactions show 0/5 fold-selection reproducibility AND shuffled-target
+interaction strengths that are ~190x LARGER than the real-target ones --
+strong, convergent evidence that EBM's interaction-detection mechanism is
+overfitting noise at this sample size, independent of and in addition to
+the reproducibility failure. This is reported prominently and without
+softening.
+
+------------------------------------------------------------------
+0. PACKAGE AVAILABILITY (SECTION 2)
+------------------------------------------------------------------
+`interpret` (InterpretML, providing ExplainableBoostingRegressor) was NOT
+present in the project .venv. Per instruction, this was reported and
+approval was explicitly requested before any installation; the user
+selected "install into .venv" (project-local, not global). Installed via
+`.venv/Scripts/python.exe -m pip install interpret` (interpret==0.7.8,
+interpret-core==0.7.8, plus their dependencies). No other Stage 2 tooling
+or environment was touched.
+
+------------------------------------------------------------------
+FILES CREATED (no existing Stage 2 output overwritten)
+------------------------------------------------------------------
+src/explain/stage2_ebm_common.py, stage2_ebm_train_eval.py,
+  stage2_ebm_main_effects.py, stage2_ebm_2way.py,
+  stage2_ebm_negative_control.py, stage2_ebm_vs_existing.py
+outputs/reports/stage2_runB_ebm_model_metrics.csv
+outputs/reports/stage2_runB_ebm_main_effects.csv
+outputs/reports/stage2_runB_ebm_2way_interactions.csv
+outputs/reports/stage2_runB_ebm_negative_control.txt
+outputs/reports/stage2_runB_ebm_vs_existing_methods.csv
+outputs/reports/stage2_runB_ebm_summary.txt (this file)
+
+------------------------------------------------------------------
+1. EXACT EBM CONFIGURATION (SECTION 5, deliberately conservative)
+------------------------------------------------------------------
+max_bins=128 (default 1024), max_interaction_bins=16 (default 64),
+interactions=15 (a small FIXED integer, not the "5x" adaptive default --
+explicitly bounds how many pairwise terms the model may select at all),
+outer_bags=8 (default 14), learning_rate=0.04 (default), min_samples_leaf=10
+(default 4), reg_lambda=1.0 (default 0.0 -- explicit L2 regularization
+added), random_state=42 (deterministic).
+
+Grouped validation: EBM's own internal per-outer-bag early-stopping
+validation split is normally RANDOM, not lot-aware. Fixed by constructing
+the `bags` array ourselves via GroupShuffleSplit (one lot-respecting
+train/validation assignment per outer bag) and passing it to
+fit(..., bags=bags) -- interpret's officially documented mechanism for
+exactly this purpose. This project's own outer grouped 5-fold CV (the SAME
+folds as every other Stage 2 method) sits on top of this as a separate,
+additional layer.
+
+------------------------------------------------------------------
+2. GROUPED-CV AND HOLDOUT PERFORMANCE (SECTION 6)
+------------------------------------------------------------------
+Grouped 5-fold CV:
+  Fold   train_RMSE   val_RMSE   val_R^2
+  0      0.0346       0.1583     0.9950
+  1      0.0364       0.1885     0.9947
+  2      0.0383       0.1732     0.9925
+  3      0.0334       0.1540     0.9961
+  4      0.0362       0.1698     0.9926
+  Mean val RMSE=0.169 (std=0.014), val MAE=0.132, val R^2=0.9942 (std=0.0016)
+
+Holdout (untouched 300-row test set): RMSE=0.1427, MAE=0.1136, R^2=0.9960
+-- fully consistent with the CV mean, no holdout-specific leakage evident.
+
+LightGBM sanity-check comparison (same locked split): holdout RMSE=0.1517,
+R^2=0.9954 -- EBM performs essentially on par with LightGBM, a striking
+result for an explicitly additive+pairwise (GA2M) model on this dataset.
+
+------------------------------------------------------------------
+3. OVERFITTING/GENERALIZATION ASSESSMENT -- CORRECTED
+------------------------------------------------------------------
+The automated metrics file's own "overfit_verdict" field reads
+"SUBSTANTIAL" (train-val RMSE gap = 0.133, ratio to train RMSE = 3.72).
+THIS IS A FALSE ALARM from the ratio-based heuristic, corrected here: that
+heuristic (train_val_gap / cv_train_rmse_mean) produces a large ratio
+whenever train RMSE is very small in absolute terms, REGARDLESS of
+validation performance -- exactly what happens here (train RMSE ~0.03-0.04
+is tiny simply because the model fits the training data almost perfectly).
+The ACTUAL, correct assessment, based on validation/holdout performance
+and fold stability (not the ratio): the EBM generalizes EXCELLENTLY.
+Grouped-CV R^2 is 0.99+ in every one of the 5 folds (std=0.0016 -- far
+more STABLE across folds than the earlier MLP checkpoint's 0.008-0.508
+range), holdout R^2 matches CV exactly, and the shuffled-target negative
+control collapses cleanly (below). This is NOT an overfit model in any
+practical sense -- the "SUBSTANTIAL" label in the raw CSV should be read
+as a heuristic artifact of near-zero train RMSE, not a real finding, and
+is explicitly corrected here rather than left standing uncommented.
+
+------------------------------------------------------------------
+4. TARGET-SHUFFLE NEGATIVE CONTROL (SECTION 7)
+------------------------------------------------------------------
+(Full detail, including a corrected interpretation of the automated
+script's own flawed threshold logic, in stage2_runB_ebm_negative_control.txt)
+
+PREDICTIVE PERFORMANCE: CLEAN COLLAPSE. Shuffled-target grouped-CV R^2 =
+-0.025 vs. real R^2 = 0.994.
+
+MAIN-EFFECT LAYER: clean and REASSURING, once correctly interpreted. Real-
+target: 22/1425 non-flat terms (a highly CONCENTRATED pattern -- boosting
+with reg_lambda=1.0 puts nearly all explained variance onto a handful of
+dominant terms, leaving ~98.5% of terms at exactly zero). Shuffled-target:
+~785/1425 non-flat terms on average across the 5 shuffled fold models -- a
+much more DIFFUSE pattern (many terms each capturing a small amount of
+noise, since there is no real structure to concentrate on). Concentrated-
+few-large-terms is the signature of real signal; diffuse-many-small-terms
+is the signature of noise -- the real-target result matches the former,
+which supports (not undermines) trusting the 16 STRONG main-effect
+findings.
+
+INTERACTION LAYER: FAILS, IMPORTANT WARNING. Shuffled-target interaction
+strengths (mean=0.060, from interaction terms independently selected by
+the 5 shuffled fold models) are ~190x LARGER on average than the real-
+target's own 15 selected interactions (mean=0.0003). Combined with the
+0/5 fold-selection-reproducibility already found for those same real
+interactions (section 5 below), this is strong, convergent evidence that
+EBM's automatic interaction-detection mechanism is overfitting noise at
+this sample size -- the pairwise-interaction layer should NOT be treated
+as a reliable evidence source on this dataset under this configuration.
+
+------------------------------------------------------------------
+5. STRONGEST SINGLE-FEATURE RELATIONSHIPS (SECTION 8)
+------------------------------------------------------------------
+100% coverage (all 1,425 terms). 16 STRONG, 1 WEAK, 1,408 INCONCLUSIVE
+(the vast majority correctly classified FLAT/negligible by the boosting
+process itself, per the concentrated-signal pattern above). ALL 16 STRONG
+terms are categorical process-identity dummies, NOT continuous ET
+measurements: Customer_Customer_A (MONOTONIC_NEGATIVE, importance=0.0475),
+MaskSetName_MS_D (MONOTONIC_POSITIVE, 0.0349), Customer_Internal
+(MONOTONIC_POSITIVE, 0.0293), MaskSetName_MS_A (MONOTONIC_NEGATIVE,
+0.0239), Customer_Customer_B, Technology_PHEMT_0.25um, VendorName_EPI_B/A,
+Sort_Yield_target[%]_88/90, Technology_PHEMT_0.15um, Lot_type_ENG/PROD,
+MaskSetName_MS_B/C. Direction is monotonic for all 16 (simple mean-shift
+effects, as expected for one-hot categorical terms) -- no U-shapes,
+thresholds, or process windows emerged among the STRONG set (unsurprising:
+those richer shapes require a continuous numeric feature, and none reached
+STRONG confidence here).
+
+INTERPRETATION NOTE (important, not a contradiction): this heavily favors
+categorical/process-identity features over continuous ET measurements --
+a genuinely different picture from spline/v2's rankings (dominated by
+continuous ET/leakage-family columns). This reflects a real methodological
+difference, not disagreement: spline/v2 measure MARGINAL (univariate, no
+control for confounders) association; EBM's regularized additive fit
+measures CONDITIONAL contribution within a model where all 1,425 terms
+compete for a shared, L2-penalized "gain budget" -- once lot/customer/
+technology/vendor identity is available to explain a chunk of variance,
+many individual ET measurements' marginal contribution shrinks toward
+zero because they are redundant with those categorical drivers or with
+each other. Both views are legitimate; they simply answer different
+questions.
+
+------------------------------------------------------------------
+6. STRONGEST PAIRWISE INTERACTIONS (SECTION 9) -- NONE CONFIRMED
+------------------------------------------------------------------
+EBM's own interaction-selection mechanism (generic, FAST/greedy, no
+hard-coded pairs) selected exactly 15 pairwise terms (the configured cap).
+Strongest by raw importance: ANODE_ET_Rsh_an_ct2 x SIN_CAPACITOR_
+ThicknessGN1_RefractiveIndex (0.000415), MEASURE_ET_DC_SEC_X_Vp_1_mA_mm_
+second x SIN_Thickness_RefractiveIndex (0.000365), FIC_ET_DC_PIV_Ids0_QP1
+x SIN_GATE_ET_Ran_con_2 (0.000355). ALL 15 pairs show 0/5 fold-selection
+reproducibility (none of the 5 independently-fit grouped-CV fold models
+selected ANY of these same 15 pairs as their own interaction terms) AND,
+per the negative control above, interaction-strength magnitudes far
+smaller than what pure noise produces in this same test. ALL 15 are
+therefore labeled INCONCLUSIVE -- per instruction ("do not call a pair an
+interaction merely because both main effects are strong"), no pair here
+is reported as a confirmed EBM interaction finding.
+
+------------------------------------------------------------------
+7. AGREEMENT/DISAGREEMENT WITH EXISTING STAGE 2 METHODS (SECTION 10)
+------------------------------------------------------------------
+(Full detail in stage2_runB_ebm_vs_existing_methods.csv, 1,440 rows)
+
+Single-parameter: SUPPORTED_BY_BOTH=0, EBM_ONLY=16, EXISTING_ONLY=1,109,
+INCONCLUSIVE_BOTH=300. The 16 EBM_ONLY findings are ALL the categorical
+dummies discussed above -- spline/v2 do not test categorical predictors at
+all (scope difference, not disagreement). The 1,109 EXISTING_ONLY features
+are continuous ET measurements spline/v2 found STRONG/MODERATE that EBM's
+regularized, competing-for-shared-gain-budget fit shrank to FLAT --
+consistent with the marginal-vs-conditional distinction above, not a
+contradiction to be resolved in this checkpoint.
+
+2-way: INCONCLUSIVE_BOTH=15 (all 15). None of EBM's selected pairs are
+confirmed in either system -- consistent with EBM's own interaction layer
+already being labeled entirely INCONCLUSIVE above.
+
+------------------------------------------------------------------
+8. LIMITATIONS
+------------------------------------------------------------------
+- Sample-to-feature ratio remains the dominant structural constraint:
+  1,200 training rows / 80 lots against 1,425 predictors, same as every
+  other Stage 2 method built on this universe.
+- The pairwise-interaction layer is NOT reliable on this dataset at this
+  configuration -- confirmed by TWO independent, convergent checks (0/5
+  fold-selection reproducibility, and a ~190x noise-vs-real interaction-
+  strength inversion under shuffle). This should be read as an honest
+  negative result about EBM's interaction-detection capability HERE, not
+  a general claim about GA2M-style interaction detection.
+- The main-effect layer's strong concentration on categorical identity
+  variables means this checkpoint contributes essentially NOTHING new to
+  the continuous-parameter single-feature relationship picture already
+  built by spline/GAM and v2 -- its main-effect value-add is specifically
+  in the categorical-predictor space, which those methods do not cover.
+- interactions=15 is a small, fixed, disclosed cap (not the adaptive "5x"
+  default) -- a real interaction outside this cap's reach by EBM's own
+  FAST-detection ranking would not have been tested at all.
+- The automated overfit_verdict field in the frozen model-metrics CSV
+  reads "SUBSTANTIAL" due to a ratio-based heuristic artifact (train RMSE
+  near zero inflates the ratio) -- corrected in section 3 above rather
+  than left as a misleading raw number; readers of the CSV directly should
+  be aware of this caveat.
+- No formal multiple-testing correction was applied across the 1,425
+  main-effect and 15 interaction tests -- the shuffle-based negative
+  controls (clean for main effects, a clear fail for interactions) are the
+  false-discovery safeguard used, consistent with every other checkpoint
+  in this project.
+- Fold-selection reproducibility for main effects used shape-consistency
+  (does the classified SHAPE match across folds); for interactions it used
+  a stricter bar (was the SAME PAIR even selected at all) -- these are not
+  directly comparable stringency levels, though both are defensible given
+  the different nature of a continuous main-effect curve vs. a discrete
+  interaction-selection decision.
+
+Ground-truth document was not read at any point in this checkpoint. No
+configuration, threshold, or interaction-cap choice was tuned based on
+known planted relationships. Stopping here as instructed, pending explicit
+approval before ground-truth validation.

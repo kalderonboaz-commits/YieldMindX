@@ -1,0 +1,25 @@
+STAGE 2 RUN B v4 -- NEGATIVE CONTROL (shuffled-target, expanded candidate pools)
+==============================================================================
+
+1. V4 PAIR CANDIDATES (evidence-graph-driven, 74,365 pairs)
+------------------------------------------------------------------------------
+Pairs re-tested under shuffled target: 74365 / 74365
+  STRONG:       55 (0.07%)
+  MODERATE:     173 (0.23%)
+  WEAK:         31694 (42.62%)
+  INCONCLUSIVE: 42443 (57.07%)
+Real-target STRONG+MODERATE rate: 91.9% (68314/74365)
+Shuffled-target STRONG+MODERATE rate: 0.31%
+-> CLEAN SEPARATION: shuffled rate is a small fraction of the real rate (0.31% vs 91.9%). Candidate-pool expansion did not increase the false-discovery floor.
+
+2. V4 3-WAY CANDIDATES (interaction-graph-driven, 69,606 triples)
+------------------------------------------------------------------------------
+Triples re-tested under shuffled target: 69606 / 69606
+  STRONG:       54 (0.08%)
+  MODERATE:     54 (0.08%)
+  WEAK:         57763 (82.99%)
+  INCONCLUSIVE: 11735 (16.86%)
+Real-target STRONG+MODERATE rate: 66.7% (46439/69606)
+Shuffled-target STRONG+MODERATE rate: 0.16%
+-> CLEAN SEPARATION: shuffled rate is a small fraction of the real rate (0.16% vs 66.7%). Candidate-pool expansion did not increase the false-discovery floor.
+
