@@ -1,42 +1,30 @@
-# Virtual environment
-.venv/
-venv/
-env/
+# Strict Python-source-only repository policy.
+# Ignore everything by default, then explicitly re-allow only:
+#   - this .gitignore file
+#   - *.py files (in any directory, including nested ones)
+*
 
-# Raw dataset (not published)
-data/
+!.gitignore
+!*.py
+!*/
 
-# Python bytecode / caches
+# Explicit call-outs (already covered by the blanket "*" rule above,
+# listed for clarity/documentation of intent). Root-anchored ("/name") so
+# these only match the top-level directory of that name, never a same-named
+# source subpackage elsewhere in the tree (e.g. src/data/ must stay tracked).
+/.venv/
+/venv/
+/env/
+/data/
+.git/
 __pycache__/
-*.py[cod]
+*.pyc
+*.pyo
 *.pyd
 .pytest_cache/
 .mypy_cache/
-.ruff_cache/
 .ipynb_checkpoints/
-
-# Secrets / credentials
 .env
 .env.*
-*.pem
-*.key
-*credentials*
-*secret*
-
-# OS-generated
 .DS_Store
 Thumbs.db
-desktop.ini
-
-# Microsoft Office lock/owner files
-~$*
-
-# Editor/IDE local state
-.vscode/
-.idea/
-*.swp
-
-# Build/packaging artifacts
-build/
-dist/
-*.egg-info/

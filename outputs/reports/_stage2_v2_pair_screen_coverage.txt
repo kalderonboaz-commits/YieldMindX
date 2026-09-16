@@ -1,6 +1,0 @@
-numeric_predictors_screened=1405
-total_unique_pairs=986310
-pairs_with_broad_score=100%
-top_k_selected_for_confirmation=200
-union_features_in_confirmation=122
-pairs_confirmed=200
