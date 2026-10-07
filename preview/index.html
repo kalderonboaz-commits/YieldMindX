@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>YieldMindX — Synthetic Results Preview</title>
+<style>
+:root{--navy:#071523;--ink:#142a3b;--muted:#667d8e;--line:#cfdee5;--bg:#f5f9fa;--cyan:#13c3d5;--amber:#f0ae36;--violet:#8a6fe8;--green:#35b879;--actual:#2a8f4f}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Aptos,Arial,sans-serif}
+.shell{max-width:1320px;margin:auto;padding:28px}
+.hero{background:var(--navy);color:#fff;padding:28px 32px;border-radius:20px}
+.hero h1{margin:0;font:700 32px Arial}
+.hero p{color:#bad0da;font-size:16px;margin:8px 0 0}
+.banner{margin:18px 0;padding:16px 18px;border:2px solid #c98f2e;background:#fffaf1;border-radius:14px;color:#8a5a0f;font-size:14px;line-height:1.5}
+.banner strong{text-transform:uppercase;letter-spacing:.03em}
+.disabled-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+.disabled-ctrl{flex:1;min-width:220px;border:2px dashed #c9c9c9;border-radius:12px;padding:14px;background:#f4f4f4;color:#8a8a8a;font-size:13px}
+.disabled-ctrl strong{display:block;color:#6b6b6b;margin-bottom:4px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:22px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}
+.card h3{margin:0 0 6px;font-size:20px}
+.card .sub{color:var(--muted);font-size:13px;margin:0 0 10px}
+.chart{width:100%;height:auto;display:block}
+.legend{color:var(--muted);font-size:13px;margin-top:8px}
+.legend .dash{display:inline-block;width:21px;border-top:3px dashed currentColor;vertical-align:middle;margin-right:6px}
+.legend .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+footer{margin:28px 0 10px;color:var(--muted);font-size:12px;text-align:center}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="hero">
+    <h1>YieldMindX</h1>
+    <p>Four-checkpoint yield prediction — synthetic results preview</p>
+  </div>
+
+  <div class="banner">
+    <strong>Saved synthetic results — not live.</strong> This page shows a fixed snapshot
+    (<code>synthetic_results_snapshot.json</code>) of predictions already produced by the locked
+    checkpoint models and already-recorded synthetic actual-yield values, both from a prior run of
+    the connected dashboard's IT-flow simulation feature. Nothing on this page is computed, predicted,
+    or fetched when you open it — it only reads the bundled JSON file and draws it. No Python, no
+    backend, and no trained model files are required or used here, including when opened directly
+    from disk (<code>file://</code>).
+  </div>
+
+  <div class="disabled-row">
+    <div class="disabled-ctrl"><strong>Measurements CSV upload — disabled in this preview</strong>This page cannot run new predictions. It has no backend and no trained model files. To run real predictions, use the connected dashboard (<code>dashboard/Launch_Dashboard.bat</code>) with trained model artifacts supplied separately — see the project README.</div>
+    <div class="disabled-ctrl"><strong>Checkpoint selection — disabled in this preview</strong>All four checkpoints below show their full saved snapshot already; there is nothing to select or run.</div>
+  </div>
+
+  <div class="grid" id="chart-grid">
+    <article class="card"><h3>OHMIC yield trend</h3><p class="sub">Saved synthetic simulation — predicted vs. actual</p><div id="chart-OHMIC"></div></article>
+    <article class="card"><h3>BFIC yield trend</h3><p class="sub">Saved synthetic simulation — predicted vs. actual</p><div id="chart-FIC"></div></article>
+    <article class="card"><h3>SIN yield trend</h3><p class="sub">Saved synthetic simulation — predicted vs. actual</p><div id="chart-SIN"></div></article>
+    <article class="card"><h3>THIN yield trend</h3><p class="sub">Saved synthetic simulation — predicted vs. actual</p><div id="chart-THIN"></div></article>
+  </div>
+
+  <footer>Static offline preview. Labeled synthetic results only — not a claim of production accuracy. See README.md for the connected dashboard and full pipeline.</footer>
+</div>
+
+<script>const SNAPSHOT_DATA = {"predictions": {"OHMIC": [{"lot_name": "L260001", "wafer_num": "W01", "predicted_yield": 88.88523832120073, "simulation_date": "2026-06-03"}, {"lot_name": "L260001", "wafer_num": "W02", "predicted_yield": 90.81020467750001, "simulation_date": "2026-06-04"}, {"lot_name": "L260001", "wafer_num": "W03", "predicted_yield": 89.94104219564022, "simulation_date": "2026-06-05"}, {"lot_name": "L260001", "wafer_num": "W04", "predicted_yield": 92.56908103000048, "simulation_date": "2026-06-06"}, {"lot_name": "L260001", "wafer_num": "W05", "predicted_yield": 91.09954414638082, "simulation_date": "2026-06-07"}, {"lot_name": "L260001", "wafer_num": "W06", "predicted_yield": 92.96693914724037, "simulation_date": "2026-06-08"}, {"lot_name": "L260001", "wafer_num": "W07", "predicted_yield": 92.93736562711962, "simulation_date": "2026-06-09"}, {"lot_name": "L260001", "wafer_num": "W08", "predicted_yield": 88.41816791992015, "simulation_date": "2026-06-10"}, {"lot_name": "L260001", "wafer_num": "W09", "predicted_yield": 90.95298087839987, "simulation_date": "2026-06-11"}, {"lot_name": "L260001", "wafer_num": "W10", "predicted_yield": 87.18722994536036, "simulation_date": "2026-06-12"}, {"lot_name": "L260001", "wafer_num": "W11", "predicted_yield": 93.73387439238026, "simulation_date": "2026-06-13"}, {"lot_name": "L260001", "wafer_num": "W12", "predicted_yield": 91.41437300717942, "simulation_date": "2026-06-14"}, {"lot_name": "L260001", "wafer_num": "W13", "predicted_yield": 93.18086409060035, "simulation_date": "2026-06-15"}, {"lot_name": "L260001", "wafer_num": "W14", "predicted_yield": 93.27389738403977, "simulation_date": "2026-06-16"}, {"lot_name": "L260001", "wafer_num": "W15", "predicted_yield": 90.03745189923983, "simulation_date": "2026-06-17"}, {"lot_name": "L260005", "wafer_num": "W01", "predicted_yield": 93.64708440593925, "simulation_date": "2026-06-18"}, {"lot_name": "L260005", "wafer_num": "W02", "predicted_yield": 93.0597518247195, "simulation_date": "2026-06-19"}, {"lot_name": "L260005", "wafer_num": "W03", "predicted_yield": 93.35171441694013, "simulation_date": "2026-06-20"}, {"lot_name": "L260005", "wafer_num": "W04", "predicted_yield": 92.24341582238007, "simulation_date": "2026-06-21"}, {"lot_name": "L260005", "wafer_num": "W05", "predicted_yield": 88.11444426638045, "simulation_date": "2026-06-22"}], "FIC": [{"lot_name": "L260001", "wafer_num": "W01", "predicted_yield": 88.87253916117973, "simulation_date": "2026-07-03"}, {"lot_name": "L260001", "wafer_num": "W02", "predicted_yield": 90.45620351576149, "simulation_date": "2026-07-04"}, {"lot_name": "L260001", "wafer_num": "W03", "predicted_yield": 89.238314586739, "simulation_date": "2026-07-05"}, {"lot_name": "L260001", "wafer_num": "W04", "predicted_yield": 92.84666049718184, "simulation_date": "2026-07-06"}, {"lot_name": "L260001", "wafer_num": "W05", "predicted_yield": 90.76236733465576, "simulation_date": "2026-07-07"}, {"lot_name": "L260001", "wafer_num": "W06", "predicted_yield": 92.89022278233884, "simulation_date": "2026-07-08"}, {"lot_name": "L260001", "wafer_num": "W07", "predicted_yield": 92.9372135865894, "simulation_date": "2026-07-09"}, {"lot_name": "L260001", "wafer_num": "W08", "predicted_yield": 88.43788682553011, "simulation_date": "2026-07-10"}, {"lot_name": "L260001", "wafer_num": "W09", "predicted_yield": 90.96679415006753, "simulation_date": "2026-07-11"}, {"lot_name": "L260001", "wafer_num": "W10", "predicted_yield": 86.43333111150692, "simulation_date": "2026-07-12"}, {"lot_name": "L260001", "wafer_num": "W11", "predicted_yield": 94.213209946309, "simulation_date": "2026-07-13"}, {"lot_name": "L260001", "wafer_num": "W12", "predicted_yield": 91.45625718480854, "simulation_date": "2026-07-14"}, {"lot_name": "L260001", "wafer_num": "W13", "predicted_yield": 93.23514583665087, "simulation_date": "2026-07-15"}, {"lot_name": "L260001", "wafer_num": "W14", "predicted_yield": 94.08721993159557, "simulation_date": "2026-07-16"}, {"lot_name": "L260001", "wafer_num": "W15", "predicted_yield": 89.39829376120545, "simulation_date": "2026-07-17"}, {"lot_name": "L260005", "wafer_num": "W01", "predicted_yield": 93.6234619674251, "simulation_date": "2026-07-18"}, {"lot_name": "L260005", "wafer_num": "W02", "predicted_yield": 92.4345171875687, "simulation_date": "2026-07-19"}, {"lot_name": "L260005", "wafer_num": "W03", "predicted_yield": 93.30996810088257, "simulation_date": "2026-07-20"}, {"lot_name": "L260005", "wafer_num": "W04", "predicted_yield": 91.84458926722388, "simulation_date": "2026-07-21"}, {"lot_name": "L260005", "wafer_num": "W05", "predicted_yield": 88.73093657787781, "simulation_date": "2026-07-22"}], "SIN": [{"lot_name": "L260001", "wafer_num": "W01", "predicted_yield": 88.98028535059603, "simulation_date": "2026-08-03"}, {"lot_name": "L260001", "wafer_num": "W02", "predicted_yield": 90.86586884900011, "simulation_date": "2026-08-04"}, {"lot_name": "L260001", "wafer_num": "W03", "predicted_yield": 88.87550485521786, "simulation_date": "2026-08-05"}, {"lot_name": "L260001", "wafer_num": "W04", "predicted_yield": 92.4735643050077, "simulation_date": "2026-08-06"}, {"lot_name": "L260001", "wafer_num": "W05", "predicted_yield": 90.93692124158964, "simulation_date": "2026-08-07"}, {"lot_name": "L260001", "wafer_num": "W06", "predicted_yield": 93.08797569977031, "simulation_date": "2026-08-08"}, {"lot_name": "L260001", "wafer_num": "W07", "predicted_yield": 92.87401921951798, "simulation_date": "2026-08-09"}, {"lot_name": "L260001", "wafer_num": "W08", "predicted_yield": 88.52000895813646, "simulation_date": "2026-08-10"}, {"lot_name": "L260001", "wafer_num": "W09", "predicted_yield": 91.06554615009732, "simulation_date": "2026-08-11"}, {"lot_name": "L260001", "wafer_num": "W10", "predicted_yield": 86.24306976169407, "simulation_date": "2026-08-12"}, {"lot_name": "L260001", "wafer_num": "W11", "predicted_yield": 94.30425867409423, "simulation_date": "2026-08-13"}, {"lot_name": "L260001", "wafer_num": "W12", "predicted_yield": 91.34973715143255, "simulation_date": "2026-08-14"}, {"lot_name": "L260001", "wafer_num": "W13", "predicted_yield": 93.26648898802765, "simulation_date": "2026-08-15"}, {"lot_name": "L260001", "wafer_num": "W14", "predicted_yield": 94.33176026429787, "simulation_date": "2026-08-16"}, {"lot_name": "L260001", "wafer_num": "W15", "predicted_yield": 89.36919468263385, "simulation_date": "2026-08-17"}, {"lot_name": "L260005", "wafer_num": "W01", "predicted_yield": 93.53479955359063, "simulation_date": "2026-08-18"}, {"lot_name": "L260005", "wafer_num": "W02", "predicted_yield": 92.68516704301955, "simulation_date": "2026-08-19"}, {"lot_name": "L260005", "wafer_num": "W03", "predicted_yield": 93.18271703378775, "simulation_date": "2026-08-20"}, {"lot_name": "L260005", "wafer_num": "W04", "predicted_yield": 91.28293113843776, "simulation_date": "2026-08-21"}, {"lot_name": "L260005", "wafer_num": "W05", "predicted_yield": 88.7527666441459, "simulation_date": "2026-08-22"}], "THIN": [{"lot_name": "L260001", "wafer_num": "W01", "predicted_yield": 89.05425909726358, "simulation_date": "2026-09-03"}, {"lot_name": "L260001", "wafer_num": "W02", "predicted_yield": 90.42699439760918, "simulation_date": "2026-09-04"}, {"lot_name": "L260001", "wafer_num": "W03", "predicted_yield": 89.1543590965151, "simulation_date": "2026-09-05"}, {"lot_name": "L260001", "wafer_num": "W04", "predicted_yield": 92.8864179120588, "simulation_date": "2026-09-06"}, {"lot_name": "L260001", "wafer_num": "W05", "predicted_yield": 91.0429835849547, "simulation_date": "2026-09-07"}, {"lot_name": "L260001", "wafer_num": "W06", "predicted_yield": 93.21943651491648, "simulation_date": "2026-09-08"}, {"lot_name": "L260001", "wafer_num": "W07", "predicted_yield": 92.85693531385736, "simulation_date": "2026-09-09"}, {"lot_name": "L260001", "wafer_num": "W08", "predicted_yield": 88.86142423606304, "simulation_date": "2026-09-10"}, {"lot_name": "L260001", "wafer_num": "W09", "predicted_yield": 91.47010232233178, "simulation_date": "2026-09-11"}, {"lot_name": "L260001", "wafer_num": "W10", "predicted_yield": 86.55286963069592, "simulation_date": "2026-09-12"}, {"lot_name": "L260001", "wafer_num": "W11", "predicted_yield": 94.34345342098713, "simulation_date": "2026-09-13"}, {"lot_name": "L260001", "wafer_num": "W12", "predicted_yield": 91.34849296890248, "simulation_date": "2026-09-14"}, {"lot_name": "L260001", "wafer_num": "W13", "predicted_yield": 92.8934003542916, "simulation_date": "2026-09-15"}, {"lot_name": "L260001", "wafer_num": "W14", "predicted_yield": 93.98073428840497, "simulation_date": "2026-09-16"}, {"lot_name": "L260001", "wafer_num": "W15", "predicted_yield": 89.87637931090649, "simulation_date": "2026-09-17"}, {"lot_name": "L260005", "wafer_num": "W01", "predicted_yield": 93.59178970487905, "simulation_date": "2026-09-18"}, {"lot_name": "L260005", "wafer_num": "W02", "predicted_yield": 92.98348410604677, "simulation_date": "2026-09-19"}, {"lot_name": "L260005", "wafer_num": "W03", "predicted_yield": 93.04586395302454, "simulation_date": "2026-09-20"}, {"lot_name": "L260005", "wafer_num": "W04", "predicted_yield": 91.47710965609187, "simulation_date": "2026-09-21"}, {"lot_name": "L260005", "wafer_num": "W05", "predicted_yield": 88.51242457994292, "simulation_date": "2026-09-22"}]}, "actuals": [{"lot_name": "L260001", "wafer_num": "W01", "sorting_yield": 88.95238128, "result_date": "2026-10-03"}, {"lot_name": "L260001", "wafer_num": "W02", "sorting_yield": 90.3817846, "result_date": "2026-10-04"}, {"lot_name": "L260001", "wafer_num": "W03", "sorting_yield": 89.15220845, "result_date": "2026-10-05"}, {"lot_name": "L260001", "wafer_num": "W04", "sorting_yield": 92.55932354, "result_date": "2026-10-06"}, {"lot_name": "L260001", "wafer_num": "W05", "sorting_yield": 90.83175666, "result_date": "2026-10-07"}, {"lot_name": "L260001", "wafer_num": "W06", "sorting_yield": 93.23212356, "result_date": "2026-10-08"}, {"lot_name": "L260001", "wafer_num": "W07", "sorting_yield": 92.92992879, "result_date": "2026-10-09"}, {"lot_name": "L260001", "wafer_num": "W08", "sorting_yield": 88.46277113, "result_date": "2026-10-10"}, {"lot_name": "L260001", "wafer_num": "W09", "sorting_yield": 90.89544968, "result_date": "2026-10-11"}, {"lot_name": "L260001", "wafer_num": "W10", "sorting_yield": 86.48996933, "result_date": "2026-10-12"}, {"lot_name": "L260001", "wafer_num": "W11", "sorting_yield": 94.36156574, "result_date": "2026-10-13"}, {"lot_name": "L260001", "wafer_num": "W12", "sorting_yield": 91.37396849, "result_date": "2026-10-14"}, {"lot_name": "L260001", "wafer_num": "W13", "sorting_yield": 93.22552431, "result_date": "2026-10-15"}, {"lot_name": "L260001", "wafer_num": "W14", "sorting_yield": 94.22103329, "result_date": "2026-10-16"}, {"lot_name": "L260001", "wafer_num": "W15", "sorting_yield": 89.69532164, "result_date": "2026-10-17"}, {"lot_name": "L260005", "wafer_num": "W01", "sorting_yield": 93.64584549, "result_date": "2026-10-18"}, {"lot_name": "L260005", "wafer_num": "W02", "sorting_yield": 92.7064931, "result_date": "2026-10-19"}, {"lot_name": "L260005", "wafer_num": "W03", "sorting_yield": 93.30464052, "result_date": "2026-10-20"}, {"lot_name": "L260005", "wafer_num": "W04", "sorting_yield": 90.62093271, "result_date": "2026-10-21"}, {"lot_name": "L260005", "wafer_num": "W05", "sorting_yield": 87.99575786, "result_date": "2026-10-22"}]};</script>
+<script>
+(function(){
+  const d = document;
+  const CHART_LABEL = {OHMIC:'OHMIC', FIC:'BFIC', SIN:'SIN', THIN:'THIN'};
+  const CHART_COLOR = {OHMIC:'#13c3d5', FIC:'#f0ae36', SIN:'#8a6fe8', THIN:'#35b879'};
+  const ACTUAL_COLOR = '#2a8f4f';
+  const MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const esc = x => String(x).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function fmtDate(iso){ const dt=new Date(iso+'T00:00:00Z'); if(isNaN(dt.getTime())) return iso; return dt.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'2-digit',timeZone:'UTC'}); }
+
+  function render(modelCheckpoint, records, actualByWafer){
+    const wrap = d.getElementById('chart-'+modelCheckpoint);
+    const color = CHART_COLOR[modelCheckpoint], label = CHART_LABEL[modelCheckpoint];
+    if(!records.length){ wrap.innerHTML = '<p>No saved results for '+esc(label)+'.</p>'; return; }
+
+    const sorted = [...records].sort((a,b)=>{
+      const da=new Date(a.simulation_date), db=new Date(b.simulation_date);
+      if(da-db!==0) return da-db;
+      if(a.lot_name!==b.lot_name) return a.lot_name<b.lot_name?-1:1;
+      return a.wafer_num<b.wafer_num?-1:(a.wafer_num>b.wafer_num?1:0);
+    });
+    const joined = sorted.map(r=>({pred:r, actual:actualByWafer[r.lot_name+'\u0000'+r.wafer_num]||null}));
+
+    const W=560,H=300,L=64,R=20,T=35,B=46;
+    const predY = joined.map(j=>j.pred.predicted_yield);
+    const actY = joined.filter(j=>j.actual).map(j=>j.actual.sorting_yield);
+    const all = predY.concat(actY);
+    let yMin=Math.min(...all), yMax=Math.max(...all);
+    if(yMin===yMax){yMin-=1;yMax+=1;}
+    const pad=(yMax-yMin)*0.15||1; yMin-=pad; yMax+=pad;
+    const y = v => T + (yMax-v)/(yMax-yMin)*(H-T-B);
+
+    const times = joined.map(j=>new Date(j.pred.simulation_date).getTime());
+    const tMin=Math.min(...times), tMax=Math.max(...times);
+    const x = t => tMax===tMin ? (L+W-R)/2 : L + (t-tMin)/(tMax-tMin)*(W-L-R);
+
+    let grid='';
+    for(let i=0;i<=4;i++){
+      const yy=T+(H-T-B)*i/4, val=yMax-(yMax-yMin)*i/4;
+      grid += `<path d="M${L} ${yy.toFixed(1)}H${W-R}" stroke="#e5eef2"/><text x="${L-8}" y="${(yy+4).toFixed(1)}" text-anchor="end" font-size="12" fill="#667d8e">${val.toFixed(1)}%</text>`;
+    }
+    const nTicks = Math.min(5, joined.length);
+    for(let i=0;i<nTicks;i++){
+      const t = tMin + (tMax-tMin)*(nTicks>1?i/(nTicks-1):0);
+      const dt = new Date(t);
+      const label2 = MONTH_NAMES[dt.getUTCMonth()]+' '+String(dt.getUTCDate()).padStart(2,'0');
+      grid += `<text x="${x(t).toFixed(1)}" y="${H-10}" text-anchor="middle" font-size="11" fill="#667d8e">${esc(label2)}</text>`;
+    }
+
+    const predPts = joined.map(j=>`${x(new Date(j.pred.simulation_date).getTime()).toFixed(1)},${y(j.pred.predicted_yield).toFixed(1)}`);
+    const predLine = `<polyline points="${predPts.join(' ')}" fill="none" stroke="${color}" stroke-width="3" stroke-dasharray="8 6"/>`;
+
+    let segs=[], cur=[];
+    joined.forEach(j=>{
+      if(j.actual){ cur.push(`${x(new Date(j.pred.simulation_date).getTime()).toFixed(1)},${y(j.actual.sorting_yield).toFixed(1)}`); }
+      else if(cur.length){ segs.push(cur); cur=[]; }
+    });
+    if(cur.length) segs.push(cur);
+    const actLine = segs.filter(s=>s.length>1).map(s=>`<polyline points="${s.join(' ')}" fill="none" stroke="${ACTUAL_COLOR}" stroke-width="3"/>`).join('');
+
+    let predCircles='', actCircles='';
+    joined.forEach(j=>{
+      const cx = x(new Date(j.pred.simulation_date).getTime());
+      const pTitle = `Lot ${j.pred.lot_name} · Wafer ${j.pred.wafer_num} · Stage ${label} · Predicted yield ${j.pred.predicted_yield.toFixed(2)}% · ${fmtDate(j.pred.simulation_date)} [SAVED SYNTHETIC]`;
+      predCircles += `<circle cx="${cx.toFixed(1)}" cy="${y(j.pred.predicted_yield).toFixed(1)}" r="4" fill="#fff" stroke="${color}" stroke-width="2.5"><title>${esc(pTitle)}</title></circle>`;
+      if(j.actual){
+        const aTitle = `Lot ${j.pred.lot_name} · Wafer ${j.pred.wafer_num} · Stage ${label} · Actual yield ${j.actual.sorting_yield.toFixed(2)}% · Result ${fmtDate(j.actual.result_date)} [SAVED SYNTHETIC]`;
+        actCircles += `<circle cx="${cx.toFixed(1)}" cy="${y(j.actual.sorting_yield).toFixed(1)}" r="5.5" fill="${ACTUAL_COLOR}" stroke="#fff" stroke-width="2"><title>${esc(aTitle)}</title></circle>`;
+      }
+    });
+
+    const svg = `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(label)} saved synthetic predicted vs actual yield">` +
+      `<path d="M${L} ${T}V${H-B}M${L} ${H-B}H${W-R}" stroke="#a6bdc7"/>` +
+      `<text x="18" y="${(H-B)/2}" transform="rotate(-90 18 ${(H-B)/2})" fill="#526c7d" font-size="13">Yield (%)</text>` +
+      `<text x="${(L+W-R)/2}" y="${H-1}" text-anchor="middle" fill="#526c7d" font-size="12">Date</text>` +
+      grid + predLine + actLine + predCircles + actCircles + `</svg>`;
+    const legend = `<div class="legend"><span class="dash" style="color:${color}"></span>Predicted yield (saved)&nbsp;&nbsp;<span class="dot" style="background:${ACTUAL_COLOR}"></span>Actual yield (saved)</div>`;
+    wrap.innerHTML = svg + legend;
+  }
+
+  // Data is embedded inline (not fetched) so this page works from a plain
+  // double-click / file:// open, with no server and no network request.
+  // The identical content also ships separately as synthetic_results_snapshot.json
+  // for inspection/reuse -- this inline copy is what the page actually renders.
+  try{
+    const data = SNAPSHOT_DATA;
+    const actualByWafer = {};
+    data.actuals.forEach(a=>{ actualByWafer[a.lot_name+'\u0000'+a.wafer_num] = a; });
+    ['OHMIC','FIC','SIN','THIN'].forEach(cp => render(cp, data.predictions[cp]||[], actualByWafer));
+  }catch(err){
+    document.getElementById('chart-grid').innerHTML =
+      '<p style="color:#8b2020">Could not render the embedded snapshot (' + esc(err.message) + ').</p>';
+  }
+})();
+</script>
+</body>
+</html>

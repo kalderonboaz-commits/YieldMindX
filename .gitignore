@@ -28,3 +28,29 @@ __pycache__/
 .env.*
 .DS_Store
 Thumbs.db
+
+# --- Added for the checkpoint-pipeline / dashboard update ---
+# The original policy above tracks only .py files. This update also ships a
+# dashboard (HTML/JS/JSON), a static preview, YAML/Markdown config and docs,
+# and small result files (JSON/CSV/PNG/TXT) -- none of which are .py. These
+# rules re-allow exactly those new paths; they do not change what the
+# original policy does to any other path (e.g. assets/, output/ at repo
+# root remain governed by the rules above, untouched).
+!/config/**
+!/requirements.txt
+!/README.md
+!/documents/**
+!/dashboard/**
+!/preview/**
+!/outputs/checkpoint_training/**
+!/outputs/checkpoint_overfitting_assessment/**
+!/outputs/eda_checkpoints/**
+
+# Still excluded even inside the re-allowed paths above: trained model
+# binaries, the dashboard's local SQLite history, and any raw dataset.
+*.joblib
+*.db
+*.sqlite
+*.sqlite3
+/data/*.csv
+

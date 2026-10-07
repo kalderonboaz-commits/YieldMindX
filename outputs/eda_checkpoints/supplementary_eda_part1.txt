@@ -1,0 +1,34 @@
+Train partition: 1200 rows, 80 lots. Test partition (300 rows, 20 lots) NEVER accessed.
+
+========================================================================
+SENTINEL / INVALID-VALUE SCAN (train partition, all 4-prefix columns)
+========================================================================
+No column has any candidate sentinel value (-999,-9999,-1,9999,99999,0) in >=5% of rows.
+Negative-value scan (legitimate for signed electrical quantities -- NOT itself evidence of an error):
+  Columns containing at least one negative value: 14 / 317 (expected for signed ET quantities; not flagged as an error by itself)
+
+========================================================================
+DUPLICATE-ROW CHECK (full predictor-row duplicates, train partition)
+========================================================================
+Fully duplicated predictor rows (all 317 columns identical across two rows): 0
+
+========================================================================
+TARGET (SortingYield) VARIATION: WITHIN-LOT vs BETWEEN-LOT (train partition)
+========================================================================
+Grand mean SortingYield: 91.9920
+Between-lot variance (variance of the 80 lot means): 0.28149
+Within-lot variance (mean of the 80 lot-level variances): 5.21424
+Total variance: 5.14888
+Between/(Between+Within) ratio (ICC-like): 0.0512
+Interpretation (descriptive only): a ratio above ~0.5 would indicate lot identity explains more
+variance than within-lot wafer-to-wafer variation; this is reported as a number, not a causal claim.
+Plot saved: target_within_between_lot.png
+
+========================================================================
+TIME-TREND DIAGNOSTIC (Sorting Date -- DIAGNOSTIC METADATA ONLY, not a model input)
+========================================================================
+Pearson(date rank, SortingYield) across the train partition: -0.0328
+(weak/near-zero expected for a synthetic, non-time-dependent generator; a nonzero value here
+would be a hypothesis-generating signal only, not a causal time effect, given no process-drift
+mechanism is documented for this synthetic dataset.)
+Plot saved: time_trend.png

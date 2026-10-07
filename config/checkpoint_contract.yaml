@@ -1,0 +1,74 @@
+# Configuration contract for the four-checkpoint final-yield prediction
+# pipeline (OHMIC -> +FIC -> +SIN -> +THIN). This file is the single
+# source of truth for: which input file to read, which column/value
+# identifies "real" vs "synthetic" rows, and which raw-column prefixes
+# belong to each cumulative checkpoint.
+#
+# Switching to real data = changing `mode`, `input_csv_path`, and
+# `process_value` below (and nothing else, provided real data uses the
+# same column names as the synthetic data -- see the project README /
+# chat record for the explicit "same column names" assumption this
+# pipeline relies on).
+
+mode: "synthetic"   # "synthetic" or "real" -- controls which process_value below is enforced
+
+target: "SortingYield"
+group_column: "LotName"
+secondary_id_column: "WaferNum"
+
+# One raw CSV path per mode. Never point both modes at the same file.
+input_csv_path:
+  synthetic: "data/correlation_data_table.csv"
+  real: "data/real_production_data.csv"   # placeholder -- update when real data is supplied
+
+# The column used to filter rows to the intended process, and the exact
+# value each mode must filter to. Do NOT relabel synthetic rows as the
+# real process value -- these must stay different.
+process_column: "Process"
+process_value:
+  synthetic: "GaAs_pHEMT_MMIC"
+  real: "0.25 HP"
+
+# Cumulative checkpoint definition. Each checkpoint's predictor set is
+# every raw numeric column whose name starts with one of its listed
+# prefixes (checked against "<prefix>_", so e.g. "OHMIC_" matches
+# OHMIC_ET_Rc_an_ct2 but not an unrelated column that merely contains
+# "OHMIC" mid-name). Categorical columns and columns outside these
+# prefixes are never included as predictors in this pipeline.
+checkpoints:
+  - name: "OHMIC"
+    order: 1
+    prefixes: ["OHMIC_"]
+  - name: "FIC"
+    order: 2
+    prefixes: ["OHMIC_", "FIC_"]
+  - name: "SIN"
+    order: 3
+    prefixes: ["OHMIC_", "FIC_", "SIN_"]
+  - name: "THIN"
+    order: 4
+    prefixes: ["OHMIC_", "FIC_", "SIN_", "THIN_"]
+
+# Columns that must never appear as predictors regardless of checkpoint
+# (reuses the same leakage list already approved in config/data_contract.yaml;
+# duplicated here, not imported, so this file is independently auditable).
+leakage_columns:
+  - "Actual Sorting Yield (%)"
+  - "LineYield"
+  - "BackEndYield"
+  - "VIYield"
+  - "LTYield"
+  - "TotalYield"
+  - "EstimatedSupplyChipsCount"
+
+# Candidate chronological-ordering columns, in preference order, used only
+# to ASSESS (not force) a chronological split. The pipeline checks each for
+# missingness/uniqueness before using it.
+chronological_candidates:
+  - "Sorting Date"
+  - "Year_WW"
+  - "Sort_WW"
+
+holdout_test_size: 0.2
+random_state: 42
+n_cv_splits: 5

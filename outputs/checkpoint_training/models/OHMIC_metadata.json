@@ -1,0 +1,111 @@
+{
+  "checkpoint": "OHMIC",
+  "label": "SYNTHETIC DATA RESULT",
+  "winning_model": "random_forest",
+  "feature_mode": "selected",
+  "candidate_prefixes": [
+    "OHMIC_"
+  ],
+  "n_candidate_features": 16,
+  "n_features_retained_final": 15,
+  "best_hyperparameters": {
+    "model__max_depth": null,
+    "model__min_samples_leaf": 1.0,
+    "model__n_estimators": 500.0
+  },
+  "lock_refit_seconds": 4.548092365264893,
+  "cv_summary_all_candidates": {
+    "elasticnet|full": {
+      "mean_rmse": 1.7858849059710444,
+      "std_rmse": 0.1735851326231905,
+      "mean_mae": 1.4442504193704722,
+      "mean_r2": 0.36504767261105886,
+      "mean_n_features": 16.0,
+      "mean_fit_seconds": 0.6715684413909913,
+      "n_folds": 5
+    },
+    "elasticnet|selected": {
+      "mean_rmse": 1.7817845788321762,
+      "std_rmse": 0.16394019334069965,
+      "mean_mae": 1.4436944204985163,
+      "mean_r2": 0.36738740791586044,
+      "mean_n_features": 15.0,
+      "mean_fit_seconds": 0.25181307792663576,
+      "n_folds": 5
+    },
+    "random_forest|full": {
+      "mean_rmse": 0.605755614751884,
+      "std_rmse": 0.08584872479698234,
+      "mean_mae": 0.4143698975839497,
+      "mean_r2": 0.927298046870877,
+      "mean_n_features": 16.0,
+      "mean_fit_seconds": 3.416511869430542,
+      "n_folds": 5
+    },
+    "random_forest|selected": {
+      "mean_rmse": 0.6101847935099427,
+      "std_rmse": 0.0853576787801158,
+      "mean_mae": 0.4190860766117723,
+      "mean_r2": 0.9263654736211411,
+      "mean_n_features": 15.0,
+      "mean_fit_seconds": 3.3295058250427245,
+      "n_folds": 5
+    },
+    "lightgbm|full": {
+      "mean_rmse": 0.6006066022623121,
+      "std_rmse": 0.13978994749557622,
+      "mean_mae": 0.406607503023335,
+      "mean_r2": 0.9281686261901676,
+      "mean_n_features": 16.0,
+      "mean_fit_seconds": 5.795752382278442,
+      "n_folds": 5
+    },
+    "lightgbm|selected": {
+      "mean_rmse": 0.5997399720936243,
+      "std_rmse": 0.1420292984503795,
+      "mean_mae": 0.4110295898937454,
+      "mean_r2": 0.9282707802959245,
+      "mean_n_features": 15.0,
+      "mean_fit_seconds": 6.106790208816529,
+      "n_folds": 5
+    }
+  },
+  "test_metrics": {
+    "rmse": 0.4716115847429319,
+    "mae": 0.29020010146345476,
+    "r2": 0.9559000808116507
+  },
+  "split_provenance": {
+    "random_state": 42,
+    "holdout_test_size": 0.2,
+    "n_cv_splits": 5,
+    "n_inner_splits": 3,
+    "train_rows": 1200,
+    "train_lots": 80,
+    "test_rows": 300,
+    "test_lots": 20,
+    "chronological_column_assessed": "Sorting Date",
+    "mode": "synthetic",
+    "input_csv_path": "D:\\MS.c\\MS.c\\Gal-El\\correlation_data_table\\correlation_data_table\\data\\correlation_data_table.csv",
+    "process_column": "Process",
+    "process_value": "GaAs_pHEMT_MMIC"
+  },
+  "candidate_feature_names": [
+    "OHMIC_ET_lkg_5",
+    "OHMIC_ET_OHMC",
+    "OHMIC_ET_OHMIC_conc",
+    "OHMIC_ET_Probe_Number",
+    "OHMIC_ET_R114",
+    "OHMIC_ET_R214",
+    "OHMIC_ET_R314",
+    "OHMIC_ET_Ran_con_1",
+    "OHMIC_ET_Ran_con_2",
+    "OHMIC_ET_Ran_con_3",
+    "OHMIC_ET_Rc_an_ct2",
+    "OHMIC_ET_Rc_OG142",
+    "OHMIC_ET_Rsh_an_ct2",
+    "OHMIC_ET_sh_GA142",
+    "OHMIC_CD_Ohmic_CD_litho",
+    "OHMIC_Thickness_SiN_Thickness"
+  ]
+}

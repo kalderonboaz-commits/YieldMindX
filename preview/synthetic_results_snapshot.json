@@ -1,0 +1,614 @@
+{
+ "predictions": {
+  "OHMIC": [
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W01",
+    "predicted_yield": 88.88523832120073,
+    "simulation_date": "2026-06-03"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W02",
+    "predicted_yield": 90.81020467750001,
+    "simulation_date": "2026-06-04"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W03",
+    "predicted_yield": 89.94104219564022,
+    "simulation_date": "2026-06-05"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W04",
+    "predicted_yield": 92.56908103000048,
+    "simulation_date": "2026-06-06"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W05",
+    "predicted_yield": 91.09954414638082,
+    "simulation_date": "2026-06-07"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W06",
+    "predicted_yield": 92.96693914724037,
+    "simulation_date": "2026-06-08"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W07",
+    "predicted_yield": 92.93736562711962,
+    "simulation_date": "2026-06-09"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W08",
+    "predicted_yield": 88.41816791992015,
+    "simulation_date": "2026-06-10"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W09",
+    "predicted_yield": 90.95298087839987,
+    "simulation_date": "2026-06-11"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W10",
+    "predicted_yield": 87.18722994536036,
+    "simulation_date": "2026-06-12"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W11",
+    "predicted_yield": 93.73387439238026,
+    "simulation_date": "2026-06-13"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W12",
+    "predicted_yield": 91.41437300717942,
+    "simulation_date": "2026-06-14"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W13",
+    "predicted_yield": 93.18086409060035,
+    "simulation_date": "2026-06-15"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W14",
+    "predicted_yield": 93.27389738403977,
+    "simulation_date": "2026-06-16"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W15",
+    "predicted_yield": 90.03745189923983,
+    "simulation_date": "2026-06-17"
+   },
+   {
+    "lot_name": "L260005",
+    "wafer_num": "W01",
+    "predicted_yield": 93.64708440593925,
+    "simulation_date": "2026-06-18"
+   },
+   {
+    "lot_name": "L260005",
+    "wafer_num": "W02",
+    "predicted_yield": 93.0597518247195,
+    "simulation_date": "2026-06-19"
+   },
+   {
+    "lot_name": "L260005",
+    "wafer_num": "W03",
+    "predicted_yield": 93.35171441694013,
+    "simulation_date": "2026-06-20"
+   },
+   {
+    "lot_name": "L260005",
+    "wafer_num": "W04",
+    "predicted_yield": 92.24341582238007,
+    "simulation_date": "2026-06-21"
+   },
+   {
+    "lot_name": "L260005",
+    "wafer_num": "W05",
+    "predicted_yield": 88.11444426638045,
+    "simulation_date": "2026-06-22"
+   }
+  ],
+  "FIC": [
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W01",
+    "predicted_yield": 88.87253916117973,
+    "simulation_date": "2026-07-03"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W02",
+    "predicted_yield": 90.45620351576149,
+    "simulation_date": "2026-07-04"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W03",
+    "predicted_yield": 89.238314586739,
+    "simulation_date": "2026-07-05"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W04",
+    "predicted_yield": 92.84666049718184,
+    "simulation_date": "2026-07-06"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W05",
+    "predicted_yield": 90.76236733465576,
+    "simulation_date": "2026-07-07"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W06",
+    "predicted_yield": 92.89022278233884,
+    "simulation_date": "2026-07-08"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W07",
+    "predicted_yield": 92.9372135865894,
+    "simulation_date": "2026-07-09"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W08",
+    "predicted_yield": 88.43788682553011,
+    "simulation_date": "2026-07-10"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W09",
+    "predicted_yield": 90.96679415006753,
+    "simulation_date": "2026-07-11"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W10",
+    "predicted_yield": 86.43333111150692,
+    "simulation_date": "2026-07-12"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W11",
+    "predicted_yield": 94.213209946309,
+    "simulation_date": "2026-07-13"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W12",
+    "predicted_yield": 91.45625718480854,
+    "simulation_date": "2026-07-14"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W13",
+    "predicted_yield": 93.23514583665087,
+    "simulation_date": "2026-07-15"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W14",
+    "predicted_yield": 94.08721993159557,
+    "simulation_date": "2026-07-16"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W15",
+    "predicted_yield": 89.39829376120545,
+    "simulation_date": "2026-07-17"
+   },
+   {
+    "lot_name": "L260005",
+    "wafer_num": "W01",
+    "predicted_yield": 93.6234619674251,
+    "simulation_date": "2026-07-18"
+   },
+   {
+    "lot_name": "L260005",
+    "wafer_num": "W02",
+    "predicted_yield": 92.4345171875687,
+    "simulation_date": "2026-07-19"
+   },
+   {
+    "lot_name": "L260005",
+    "wafer_num": "W03",
+    "predicted_yield": 93.30996810088257,
+    "simulation_date": "2026-07-20"
+   },
+   {
+    "lot_name": "L260005",
+    "wafer_num": "W04",
+    "predicted_yield": 91.84458926722388,
+    "simulation_date": "2026-07-21"
+   },
+   {
+    "lot_name": "L260005",
+    "wafer_num": "W05",
+    "predicted_yield": 88.73093657787781,
+    "simulation_date": "2026-07-22"
+   }
+  ],
+  "SIN": [
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W01",
+    "predicted_yield": 88.98028535059603,
+    "simulation_date": "2026-08-03"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W02",
+    "predicted_yield": 90.86586884900011,
+    "simulation_date": "2026-08-04"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W03",
+    "predicted_yield": 88.87550485521786,
+    "simulation_date": "2026-08-05"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W04",
+    "predicted_yield": 92.4735643050077,
+    "simulation_date": "2026-08-06"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W05",
+    "predicted_yield": 90.93692124158964,
+    "simulation_date": "2026-08-07"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W06",
+    "predicted_yield": 93.08797569977031,
+    "simulation_date": "2026-08-08"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W07",
+    "predicted_yield": 92.87401921951798,
+    "simulation_date": "2026-08-09"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W08",
+    "predicted_yield": 88.52000895813646,
+    "simulation_date": "2026-08-10"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W09",
+    "predicted_yield": 91.06554615009732,
+    "simulation_date": "2026-08-11"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W10",
+    "predicted_yield": 86.24306976169407,
+    "simulation_date": "2026-08-12"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W11",
+    "predicted_yield": 94.30425867409423,
+    "simulation_date": "2026-08-13"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W12",
+    "predicted_yield": 91.34973715143255,
+    "simulation_date": "2026-08-14"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W13",
+    "predicted_yield": 93.26648898802765,
+    "simulation_date": "2026-08-15"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W14",
+    "predicted_yield": 94.33176026429787,
+    "simulation_date": "2026-08-16"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W15",
+    "predicted_yield": 89.36919468263385,
+    "simulation_date": "2026-08-17"
+   },
+   {
+    "lot_name": "L260005",
+    "wafer_num": "W01",
+    "predicted_yield": 93.53479955359063,
+    "simulation_date": "2026-08-18"
+   },
+   {
+    "lot_name": "L260005",
+    "wafer_num": "W02",
+    "predicted_yield": 92.68516704301955,
+    "simulation_date": "2026-08-19"
+   },
+   {
+    "lot_name": "L260005",
+    "wafer_num": "W03",
+    "predicted_yield": 93.18271703378775,
+    "simulation_date": "2026-08-20"
+   },
+   {
+    "lot_name": "L260005",
+    "wafer_num": "W04",
+    "predicted_yield": 91.28293113843776,
+    "simulation_date": "2026-08-21"
+   },
+   {
+    "lot_name": "L260005",
+    "wafer_num": "W05",
+    "predicted_yield": 88.7527666441459,
+    "simulation_date": "2026-08-22"
+   }
+  ],
+  "THIN": [
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W01",
+    "predicted_yield": 89.05425909726358,
+    "simulation_date": "2026-09-03"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W02",
+    "predicted_yield": 90.42699439760918,
+    "simulation_date": "2026-09-04"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W03",
+    "predicted_yield": 89.1543590965151,
+    "simulation_date": "2026-09-05"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W04",
+    "predicted_yield": 92.8864179120588,
+    "simulation_date": "2026-09-06"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W05",
+    "predicted_yield": 91.0429835849547,
+    "simulation_date": "2026-09-07"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W06",
+    "predicted_yield": 93.21943651491648,
+    "simulation_date": "2026-09-08"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W07",
+    "predicted_yield": 92.85693531385736,
+    "simulation_date": "2026-09-09"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W08",
+    "predicted_yield": 88.86142423606304,
+    "simulation_date": "2026-09-10"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W09",
+    "predicted_yield": 91.47010232233178,
+    "simulation_date": "2026-09-11"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W10",
+    "predicted_yield": 86.55286963069592,
+    "simulation_date": "2026-09-12"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W11",
+    "predicted_yield": 94.34345342098713,
+    "simulation_date": "2026-09-13"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W12",
+    "predicted_yield": 91.34849296890248,
+    "simulation_date": "2026-09-14"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W13",
+    "predicted_yield": 92.8934003542916,
+    "simulation_date": "2026-09-15"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W14",
+    "predicted_yield": 93.98073428840497,
+    "simulation_date": "2026-09-16"
+   },
+   {
+    "lot_name": "L260001",
+    "wafer_num": "W15",
+    "predicted_yield": 89.87637931090649,
+    "simulation_date": "2026-09-17"
+   },
+   {
+    "lot_name": "L260005",
+    "wafer_num": "W01",
+    "predicted_yield": 93.59178970487905,
+    "simulation_date": "2026-09-18"
+   },
+   {
+    "lot_name": "L260005",
+    "wafer_num": "W02",
+    "predicted_yield": 92.98348410604677,
+    "simulation_date": "2026-09-19"
+   },
+   {
+    "lot_name": "L260005",
+    "wafer_num": "W03",
+    "predicted_yield": 93.04586395302454,
+    "simulation_date": "2026-09-20"
+   },
+   {
+    "lot_name": "L260005",
+    "wafer_num": "W04",
+    "predicted_yield": 91.47710965609187,
+    "simulation_date": "2026-09-21"
+   },
+   {
+    "lot_name": "L260005",
+    "wafer_num": "W05",
+    "predicted_yield": 88.51242457994292,
+    "simulation_date": "2026-09-22"
+   }
+  ]
+ },
+ "actuals": [
+  {
+   "lot_name": "L260001",
+   "wafer_num": "W01",
+   "sorting_yield": 88.95238128,
+   "result_date": "2026-10-03"
+  },
+  {
+   "lot_name": "L260001",
+   "wafer_num": "W02",
+   "sorting_yield": 90.3817846,
+   "result_date": "2026-10-04"
+  },
+  {
+   "lot_name": "L260001",
+   "wafer_num": "W03",
+   "sorting_yield": 89.15220845,
+   "result_date": "2026-10-05"
+  },
+  {
+   "lot_name": "L260001",
+   "wafer_num": "W04",
+   "sorting_yield": 92.55932354,
+   "result_date": "2026-10-06"
+  },
+  {
+   "lot_name": "L260001",
+   "wafer_num": "W05",
+   "sorting_yield": 90.83175666,
+   "result_date": "2026-10-07"
+  },
+  {
+   "lot_name": "L260001",
+   "wafer_num": "W06",
+   "sorting_yield": 93.23212356,
+   "result_date": "2026-10-08"
+  },
+  {
+   "lot_name": "L260001",
+   "wafer_num": "W07",
+   "sorting_yield": 92.92992879,
+   "result_date": "2026-10-09"
+  },
+  {
+   "lot_name": "L260001",
+   "wafer_num": "W08",
+   "sorting_yield": 88.46277113,
+   "result_date": "2026-10-10"
+  },
+  {
+   "lot_name": "L260001",
+   "wafer_num": "W09",
+   "sorting_yield": 90.89544968,
+   "result_date": "2026-10-11"
+  },
+  {
+   "lot_name": "L260001",
+   "wafer_num": "W10",
+   "sorting_yield": 86.48996933,
+   "result_date": "2026-10-12"
+  },
+  {
+   "lot_name": "L260001",
+   "wafer_num": "W11",
+   "sorting_yield": 94.36156574,
+   "result_date": "2026-10-13"
+  },
+  {
+   "lot_name": "L260001",
+   "wafer_num": "W12",
+   "sorting_yield": 91.37396849,
+   "result_date": "2026-10-14"
+  },
+  {
+   "lot_name": "L260001",
+   "wafer_num": "W13",
+   "sorting_yield": 93.22552431,
+   "result_date": "2026-10-15"
+  },
+  {
+   "lot_name": "L260001",
+   "wafer_num": "W14",
+   "sorting_yield": 94.22103329,
+   "result_date": "2026-10-16"
+  },
+  {
+   "lot_name": "L260001",
+   "wafer_num": "W15",
+   "sorting_yield": 89.69532164,
+   "result_date": "2026-10-17"
+  },
+  {
+   "lot_name": "L260005",
+   "wafer_num": "W01",
+   "sorting_yield": 93.64584549,
+   "result_date": "2026-10-18"
+  },
+  {
+   "lot_name": "L260005",
+   "wafer_num": "W02",
+   "sorting_yield": 92.7064931,
+   "result_date": "2026-10-19"
+  },
+  {
+   "lot_name": "L260005",
+   "wafer_num": "W03",
+   "sorting_yield": 93.30464052,
+   "result_date": "2026-10-20"
+  },
+  {
+   "lot_name": "L260005",
+   "wafer_num": "W04",
+   "sorting_yield": 90.62093271,
+   "result_date": "2026-10-21"
+  },
+  {
+   "lot_name": "L260005",
+   "wafer_num": "W05",
+   "sorting_yield": 87.99575786,
+   "result_date": "2026-10-22"
+  }
+ ]
+}

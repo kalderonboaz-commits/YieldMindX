@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>YieldMindX Workspace</title><style>
+:root{--navy:#071523;--ink:#142a3b;--muted:#667d8e;--line:#cfdee5;--bg:#f5f9fa;--cyan:#13c3d5;--amber:#f0ae36;--violet:#8a6fe8;--green:#35b879;--low:#faece9}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Aptos,Arial,sans-serif}.shell{max-width:1320px;margin:auto;padding:28px}.hero{background:var(--navy);color:#fff;padding:32px 36px;border-radius:20px}.hero h1{margin:0;font:700 40px Arial}.hero p{color:#bad0da;font-size:18px}.nav{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0 26px}.nav a{color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:999px;padding:9px 13px;font-size:14px;font-weight:600;text-decoration:none}.section{margin-top:28px}.head{display:flex;justify-content:space-between;align-items:baseline;gap:18px;margin-bottom:14px}h2{margin:0;font:700 27px Arial}.head p{margin:5px 0;color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}.card h3{margin:0 0 8px;font-size:21px}.chart{width:100%;height:auto;display:block}.legend{color:var(--muted);font-size:13px}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}.dash{display:inline-block;width:21px;border-top:3px dashed currentColor;vertical-align:middle;margin:0 5px 2px 14px}.status,.pill{display:inline-block;border-radius:999px;padding:4px 8px;font-size:12px;font-weight:700}.status{color:#176c49;background:#e8f7ef}.table-wrap{overflow-x:auto}.tbl{width:100%;border-collapse:collapse;min-width:620px}.tbl th{text-align:left;padding:12px 14px;background:#f8fbfc;color:var(--muted);font-size:13px;text-transform:uppercase;border-bottom:1px solid var(--line)}.tbl td{padding:13px 14px;border-bottom:1px solid #e8f0f3;vertical-align:top}.tbl tr:last-child td{border:0}.yield{color:#af3d33;font-weight:700}.pill{background:var(--low);color:#9f3c32}.comment{width:100%;min-width:170px;min-height:46px;padding:9px;border:1px solid #b9ccd5;border-radius:8px;resize:vertical;font:inherit}.comment:focus{outline:3px solid #b8edf2;border-color:var(--cyan)}.save{color:#267353;font-size:12px;min-height:16px}.upload{display:flex;align-items:center;justify-content:center;min-height:120px;border:2px dashed #7aaab7;border-radius:14px;background:#f7fcfd;cursor:pointer}.upload:hover,.upload:focus-within{border-color:var(--cyan);background:#eefbfd}.upload input{position:absolute;width:1px;height:1px;opacity:0}.upload strong{font-size:20px;color:#1b6170}.note{color:var(--muted)}.placeholder{border:1px dashed #a8c1cc;min-height:130px}@media(max-width:760px){.shell{padding:18px}.grid{grid-template-columns:1fr}.head{display:block}}
+.ckpt-controls{margin-bottom:18px}.ckpt-controls-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.ckpt-upload{min-height:96px;box-sizing:border-box}.ckpt-upload span{display:block;margin-top:7px;color:#60677d;font-size:13px}.ckpt-select-wrap{display:flex;flex-direction:column;gap:8px;justify-content:center}.ckpt-select-wrap label{font-size:13px;color:var(--muted);font-weight:600}.ckpt-select-wrap select{min-height:40px;border:1px solid #cfd4eb;border-radius:8px;padding:8px;background:#fff;color:#242b44;font:inherit}.ckpt-run{min-height:44px;border:0;border-radius:10px;padding:10px 16px;background:#5d56cf;color:#fff;font:800 14px Aptos,Arial;cursor:pointer}.ckpt-run:disabled{background:#b8b5dc;cursor:not-allowed}.ckpt-chart-wrap{min-height:260px}.ckpt-empty{color:var(--muted);font-size:14px;padding:30px 10px;text-align:center}.ckpt-empty.gvb-error{color:#8b2020}@media(max-width:760px){.ckpt-controls-grid{grid-template-columns:1fr}}
+.sim-panel{margin-bottom:18px;border:1px dashed #c98f2e;background:#fffaf1}.sim-panel-title{font-weight:800;color:#8a5a0f;font-size:14px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px}.sim-controls-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}.sim-upload{min-height:90px;box-sizing:border-box;border-color:#c98f2e}.sim-upload span{display:block;margin-top:6px;color:#8a6f45;font-size:12px}.sim-actuals{display:flex;flex-direction:column;gap:8px;justify-content:center}.sim-actuals label{font-size:13px;color:#8a5a0f;font-weight:600}.sim-run{min-height:40px;border:0;border-radius:8px;padding:8px 14px;background:#c98f2e;color:#fff;font:800 13px Aptos,Arial;cursor:pointer}.sim-run:disabled{background:#e4cda0;cursor:not-allowed}.view-toggle{display:flex;gap:8px;margin:14px 0}.view-toggle button{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:8px 16px;font:700 13px Aptos,Arial;cursor:pointer}.view-toggle button.active{background:var(--navy);color:#fff;border-color:var(--navy)}.sim-badge{display:inline-block;margin-left:8px;padding:3px 8px;border-radius:999px;background:#fff0d6;color:#8a5a0f;font-size:11px;font-weight:800;text-transform:uppercase}@media(max-width:900px){.sim-controls-grid{grid-template-columns:1fr}}
+</style></head><body><main class="shell"><header class="hero"><h1>YieldMindX</h1><p>Yield analysis workspace. Trend values are illustrative placeholders until production data is connected.</p></header><nav class="nav"><a href="#trends">1. Yield trends</a><a href="#lots">2. Low yield lots</a><a href="#routes">3. Golden/Dog routes</a><a href="#params">4. Golden/Dog parameters</a><a href="#gvb">5. GVB Autopilot</a></nav>
+<section class="section" id="trends"><div class="head"><div><h2>1. Yield trends: predicted final yield by checkpoint</h2><p>Predicted yield: from the locked synthetic-data checkpoint models, connected below. Actual yield: pending IT integration, not connected. X-axis = prediction date (year-month) -- not a measurement-completion date. Hover a point for Lot, Wafer, predicted yield and prediction date.</p></div><span class="status">Synthetic models -- not production accuracy</span></div>
+<div class="card ckpt-controls">
+  <div class="ckpt-controls-grid">
+    <label class="upload ckpt-upload" for="ckpt-csv"><input id="ckpt-csv" type="file" accept=".csv,text/csv"><strong>Measurements CSV</strong><span>Required: LotName, WaferNum, plus the selected checkpoint's own cumulative measurement columns. SortingYield, FinishLineDate and later-stage columns are never required.</span></label>
+    <div class="ckpt-select-wrap">
+      <label for="ckpt-select">Checkpoint</label>
+      <select id="ckpt-select"><option value="OHMIC">OHMIC</option><option value="FIC">BFIC</option><option value="SIN">SIN</option><option value="THIN">THIN</option></select>
+      <button type="button" class="ckpt-run" id="ckpt-run" disabled>Run checkpoint prediction</button>
+    </div>
+  </div>
+  <p class="save" id="ckpt-status" role="status" aria-live="polite">Select a checkpoint and a measurements CSV to begin.</p>
+</div>
+<div class="card sim-panel">
+  <div class="sim-panel-title">IT data-flow simulation -- synthetic demo, not real production data</div>
+  <div class="sim-controls-grid">
+    <label class="upload sim-upload" for="sim-csv"><input id="sim-csv" type="file" accept=".csv,text/csv"><strong>Simulation measurements CSV</strong><span>Required: LotName, WaferNum, SimulationDate, plus the selected checkpoint's cumulative columns. See dashboard/simulation_data/README.md.</span></label>
+    <div class="sim-actuals">
+      <label for="sim-checkpoint">Checkpoint</label>
+      <select id="sim-checkpoint"><option value="OHMIC">OHMIC</option><option value="FIC">BFIC</option><option value="SIN">SIN</option><option value="THIN">THIN</option></select>
+      <button type="button" class="sim-run" id="sim-run" disabled>Run simulation prediction</button>
+    </div>
+    <div class="sim-actuals">
+      <label class="upload sim-upload" for="sim-actual-csv" style="min-height:52px"><input id="sim-actual-csv" type="file" accept=".csv,text/csv"><strong>Actual results CSV</strong><span>LotName, WaferNum, SortingYield, ResultDate</span></label>
+      <button type="button" class="sim-run" id="sim-actual-run" disabled>Upload actual results</button>
+    </div>
+  </div>
+  <p class="save" id="sim-status" role="status" aria-live="polite">Upload simulation measurements and/or actual results above.</p>
+</div>
+<div class="view-toggle">
+  <button type="button" id="view-live" class="active">Live predictions</button>
+  <button type="button" id="view-sim">IT-flow simulation<span class="sim-badge">demo</span></button>
+</div>
+<div class="grid">
+<article class="card" id="ckpt-card-OHMIC"><h3>OHMIC yield trend</h3><div class="ckpt-chart-wrap" id="ckpt-chart-OHMIC"><p class="ckpt-empty">Loading predictions…</p></div></article>
+<article class="card" id="ckpt-card-FIC"><h3>BFIC yield trend</h3><div class="ckpt-chart-wrap" id="ckpt-chart-FIC"><p class="ckpt-empty">Loading predictions…</p></div></article>
+<article class="card" id="ckpt-card-SIN"><h3>SIN yield trend</h3><div class="ckpt-chart-wrap" id="ckpt-chart-SIN"><p class="ckpt-empty">Loading predictions…</p></div></article>
+<article class="card" id="ckpt-card-THIN"><h3>THIN yield trend</h3><div class="ckpt-chart-wrap" id="ckpt-chart-THIN"><p class="ckpt-empty">Loading predictions…</p></div></article>
+</div></section>
+<section class="section" id="lots"><div class="head"><div><h2>2. Low yield lots</h2><p>Examples only. Comments save automatically in this browser.</p></div></div><div class="card table-wrap"><table class="tbl"><thead><tr><th>Lot</th><th>Yield</th><th>Potential Root cause</th><th>Confidence level</th><th>Comment</th></tr></thead><tbody><tr><td>YM-24-0817</td><td class="yield">72.4%</td><td>OHMIC resistance drift</td><td><span class="pill">High · 86%</span></td><td><textarea class="comment" data-key="lot-0817" placeholder="Add note…"></textarea></td></tr><tr><td>YM-24-0821</td><td class="yield">74.1%</td><td>BFIC thermal excursion</td><td><span class="pill">Medium · 71%</span></td><td><textarea class="comment" data-key="lot-0821" placeholder="Add note…"></textarea></td></tr><tr><td>YM-24-0828</td><td class="yield">76.8%</td><td>SIN uniformity shift</td><td><span class="pill">Medium · 65%</span></td><td><textarea class="comment" data-key="lot-0828" placeholder="Add note…"></textarea></td></tr></tbody></table><p class="save" id="save" role="status"></p></div></section>
+<section class="section" id="routes"><div class="head"><div><h2>3. Golden/Dog routes</h2><p>Illustrative route ranking. Comments save automatically.</p></div></div><div class="grid"><article class="card table-wrap"><h3>Golden routes</h3><table class="tbl"><thead><tr><th>Route</th><th>Median yield</th><th>Comment</th></tr></thead><tbody><tr><td>R-14A</td><td>94.8%</td><td><textarea class="comment" data-key="gr14" placeholder="Add note…"></textarea></td></tr><tr><td>R-09C</td><td>93.6%</td><td><textarea class="comment" data-key="gr09" placeholder="Add note…"></textarea></td></tr><tr><td>R-22B</td><td>92.9%</td><td><textarea class="comment" data-key="gr22" placeholder="Add note…"></textarea></td></tr></tbody></table></article><article class="card table-wrap"><h3>Dog routes</h3><table class="tbl"><thead><tr><th>Route</th><th>Median yield</th><th>Comment</th></tr></thead><tbody><tr><td>R-03D</td><td class="yield">71.3%</td><td><textarea class="comment" data-key="dr03" placeholder="Add note…"></textarea></td></tr><tr><td>R-18F</td><td class="yield">73.0%</td><td><textarea class="comment" data-key="dr18" placeholder="Add note…"></textarea></td></tr><tr><td>R-07E</td><td class="yield">74.5%</td><td><textarea class="comment" data-key="dr07" placeholder="Add note…"></textarea></td></tr></tbody></table></article></div></section>
+<section class="section" id="params"><div class="head"><div><h2>4. Golden/Dog parameters</h2><p>Illustrative parameter ranking. Comments save automatically.</p></div></div><div class="grid"><article class="card table-wrap"><h3>Golden parameters</h3><table class="tbl"><thead><tr><th>Route</th><th>Median yield</th><th>Comment</th></tr></thead><tbody><tr><td>OHMIC-R&lt;12mΩ</td><td>95.1%</td><td><textarea class="comment" data-key="gp1" placeholder="Add note…"></textarea></td></tr><tr><td>SIN-Rate 1.08</td><td>94.3%</td><td><textarea class="comment" data-key="gp2" placeholder="Add note…"></textarea></td></tr><tr><td>BFIC-Temp 178°C</td><td>93.8%</td><td><textarea class="comment" data-key="gp3" placeholder="Add note…"></textarea></td></tr></tbody></table></article><article class="card table-wrap"><h3>Dog parameters</h3><table class="tbl"><thead><tr><th>Route</th><th>Median yield</th><th>Comment</th></tr></thead><tbody><tr><td>OHMIC-R&gt;22mΩ</td><td class="yield">70.8%</td><td><textarea class="comment" data-key="dp1" placeholder="Add note…"></textarea></td></tr><tr><td>THIN-Var &gt;4.0%</td><td class="yield">72.2%</td><td><textarea class="comment" data-key="dp2" placeholder="Add note…"></textarea></td></tr><tr><td>BFIC-Temp 164°C</td><td class="yield">73.4%</td><td><textarea class="comment" data-key="dp3" placeholder="Add note…"></textarea></td></tr></tbody></table></article></div></section>
+<section class="section" id="gvb">
+  <div class="head"><div><h2>5. Good vs Bad parameter analysis</h2><p>Upload one classification file. YieldMindX joins it to the validated parameter snapshot and runs the analysis locally.</p></div></div>
+  <div class="card gvb-workspace">
+    <div class="gvb-source-grid">
+      <label class="upload gvb-upload" for="gvb-csv"><input id="gvb-csv" type="file" accept=".csv,text/csv"><strong>GVB CSV</strong><span>Required: LotName, WaferNum, GVB (Good / Bad)</span></label>
+      <div class="gvb-fixed" aria-label="Fixed parameter dataset"><strong>Commnality_paramters.csv</strong><span class="gvb-ready">Ready · KING DAVID validated</span><small id="gvb-parameter-meta">Loading validated parameter snapshot…</small></div>
+    </div>
+    <p class="save" id="gvb-file-status" role="status" aria-live="polite">Select a GVB CSV to begin.</p>
+    <button type="button" class="gvb-run" id="gvb-run-analysis" disabled>Run GVB analysis</button>
+    <div class="gvb-progress" id="gvb-progress" role="status" aria-live="polite" hidden><div class="gvb-progress-head"><strong id="gvb-progress-label">Preparing analysis…</strong><span id="gvb-progress-count">0 / 6</span></div><progress id="gvb-progress-bar" max="6" value="0"></progress><ol id="gvb-progress-steps"></ol></div>
+    <div id="gvb-results" hidden></div>
+  </div>
+</section></main>
+<script src="yieldmindx-commonality-parameters.js"></script>
+<script>
+(function(){
+  const d=document;
+  const style=d.createElement('style');style.textContent=`
+    .gvb-workspace{overflow:hidden}.gvb-source-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.gvb-upload,.gvb-fixed{min-height:126px;box-sizing:border-box}.gvb-upload span,.gvb-fixed span,.gvb-fixed small{display:block}.gvb-upload span,.gvb-fixed small{margin-top:7px;color:#60677d;font-size:13px}.gvb-fixed{padding:18px;border:1px solid #cfd4eb;border-radius:12px;background:#fafbff}.gvb-fixed strong{font-size:16px}.gvb-ready{width:max-content;margin-top:10px;padding:5px 9px;border-radius:999px;background:#e6f7ed;color:#14663d;font-size:12px;font-weight:800}.gvb-run,.gvb-download{min-height:48px;border:0;border-radius:10px;padding:11px 18px;background:#5d56cf;color:#fff;font:800 15px Aptos,Arial;cursor:pointer}.gvb-run{width:100%;margin-top:10px}.gvb-run:disabled{background:#b8b5dc;cursor:not-allowed}.gvb-progress{margin:18px 0;padding:16px;border:1px solid #cfd4eb;border-radius:12px;background:#f8f8ff}.gvb-progress-head{display:flex;justify-content:space-between;gap:12px}.gvb-progress progress{width:100%;height:14px;margin:10px 0;accent-color:#5d56cf}.gvb-progress ol{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:4px 0 0;padding:0;list-style:none;font-size:12px;color:#687087}.gvb-progress li.done{color:#14663d;font-weight:800}.gvb-progress li.active{color:#423ca8;font-weight:800}.gvb-error{margin-top:14px;padding:12px;border-left:4px solid #b43131;background:#fff0f0;color:#8b2020;font-weight:700}.gvb-complete{display:inline-block;margin:12px 0 0;padding:5px 10px;border-radius:999px;background:#e6f7ed;color:#14663d;font-size:12px;font-weight:800}.gvb-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}.gvb-stat{padding:14px;border-radius:11px;background:#f1f1ff;color:#37318f}.gvb-stat strong{display:block;font-size:22px}.gvb-note{padding:12px;border-left:4px solid #f0ad39;background:#fff8ea;color:#664a12}.gvb-charts{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}.gvb-chart{min-width:0;padding:14px;border:1px solid #e1e4ef;border-radius:12px;background:#fff}.gvb-chart h3{margin:0 0 4px}.gvb-chart p{margin:0 0 12px;color:#687087;font-size:12px}.gvb-bars{max-height:440px;overflow:auto}.gvb-bar{display:grid;grid-template-columns:minmax(110px,1fr) 2fr 58px;gap:8px;align-items:center;width:100%;border:0;border-bottom:1px solid #eef0f6;padding:7px 3px;background:#fff;color:#27304c;text-align:left;cursor:pointer}.gvb-bar:hover,.gvb-bar.selected{background:#f2f1ff}.gvb-bar-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.gvb-bar-track{position:relative;height:14px;border-radius:4px;background:linear-gradient(to right,#f3b9ad 0 49.5%,#d8dbeb 49.5% 50.5%,#b9d4ff 50.5% 100%)}.gvb-bar-fill{position:absolute;top:2px;height:10px;border-radius:3px}.gvb-bar-fill.good{left:50%;background:#397ed1}.gvb-bar-fill.bad{right:50%;background:#dd6b55}.gvb-scatter{width:100%;height:440px}.gvb-scatter circle{cursor:pointer;stroke:#fff;stroke-width:1}.gvb-scatter circle.selected{stroke:#25206f;stroke-width:3}.gvb-detail{padding:14px;border-radius:12px;background:#f6f7fb}.gvb-detail h3{margin:0 0 8px}.gvb-detail-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.gvb-detail-grid div{padding:8px;border-radius:8px;background:#fff}.gvb-detail-grid strong,.gvb-detail-grid span{display:block}.gvb-detail-grid span{font-size:11px;color:#6a7185}.gvb-controls{display:grid;grid-template-columns:minmax(180px,1fr) repeat(3,auto);gap:8px;margin:16px 0}.gvb-controls input,.gvb-controls select{min-height:40px;border:1px solid #cfd4eb;border-radius:8px;padding:8px;background:#fff;color:#242b44}.gvb-table-wrap{max-height:560px;overflow:auto;border:1px solid #e1e4ef;border-radius:10px}.gvb-table{border-collapse:collapse;width:100%;font-size:13px}.gvb-table th,.gvb-table td{padding:9px;text-align:left;white-space:nowrap;border-bottom:1px solid #e8eaf2}.gvb-table th{position:sticky;top:0;z-index:1;background:#eeeff9;color:#343084;cursor:pointer}.gvb-table tbody tr{cursor:pointer}.gvb-table tbody tr:hover,.gvb-table tbody tr.selected{background:#f2f1ff}.gvb-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px}.gvb-footer small{color:#687087}@media(max-width:900px){.gvb-source-grid,.gvb-charts{grid-template-columns:1fr}.gvb-stats{grid-template-columns:repeat(2,1fr)}.gvb-detail-grid{grid-template-columns:repeat(2,1fr)}.gvb-controls{grid-template-columns:1fr 1fr}.gvb-progress ol{grid-template-columns:1fr 1fr}}@media(max-width:560px){.gvb-controls,.gvb-stats{grid-template-columns:1fr}.gvb-scatter{height:340px}}
+  `;d.head.append(style);
+  const P='ymx-note:';d.querySelectorAll('.comment').forEach(x=>{const k=P+x.dataset.key;x.value=localStorage.getItem(k)||'';x.addEventListener('input',()=>{localStorage.setItem(k,x.value);const save=d.getElementById('save');if(save)save.textContent='Comment saved locally.'})});
+  const input=d.getElementById('gvb-csv'),run=d.getElementById('gvb-run-analysis'),fileStatus=d.getElementById('gvb-file-status'),metaEl=d.getElementById('gvb-parameter-meta'),progress=d.getElementById('gvb-progress'),progressLabel=d.getElementById('gvb-progress-label'),progressCount=d.getElementById('gvb-progress-count'),progressBar=d.getElementById('gvb-progress-bar'),stepsEl=d.getElementById('gvb-progress-steps'),results=d.getElementById('gvb-results');
+  const fixed=window.YMX_PARAMETER_DATA;
+  if(fixed?.meta?.validated){const m=fixed.meta;metaEl.textContent=`${m.rows.toLocaleString()} rows · ${m.columns.toLocaleString()} columns · ${m.missingKeys} missing keys · ${m.duplicateKeys} duplicate keys`;}
+  else{metaEl.textContent='Validated parameter snapshot is unavailable.';run.disabled=true;fileStatus.textContent='Reload the dashboard with yieldmindx-commonality-parameters.js in the same folder.';fileStatus.className='save gvb-error';}
+  input.addEventListener('change',()=>{const file=input.files[0];run.disabled=!file||!fixed?.meta?.validated;fileStatus.textContent=file?`Selected: ${file.name}`:'Select a GVB CSV to begin.';results.hidden=true;results.innerHTML='';progress.hidden=true;});
+  const trim=x=>String(x??'').trim(),esc=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const number=x=>{const n=Number(String(x??'').replace(/,/g,''));return trim(x)!==''&&Number.isFinite(n)?n:null},mean=a=>a.reduce((s,x)=>s+x,0)/a.length,variance=(a,m)=>a.reduce((s,x)=>s+(x-m)**2,0)/(a.length-1);
+  function csv(text){const rows=[],row=[];let value='',quoted=false;for(let i=0;i<text.length;i++){const c=text[i];if(quoted){if(c==='"'&&text[i+1]==='"'){value+='"';i++}else if(c==='"')quoted=false;else value+=c}else if(c==='"')quoted=true;else if(c===','){row.push(value);value=''}else if(c==='\n'){row.push(value.replace(/\r$/,''));if(row.some(Boolean))rows.push(row.splice(0));value=''}else value+=c}row.push(value.replace(/\r$/,''));if(row.some(Boolean))rows.push(row);if(quoted||rows.length<2)throw Error('The CSV needs a header and at least one data row.');const headers=rows.shift().map((x,i)=>trim(x).replace(/^\uFEFF/,'')||`Column ${i+1}`);if(new Set(headers).size!==headers.length)throw Error('CSV headers must be unique.');return{headers,rows:rows.map(row=>Object.fromEntries(headers.map((header,i)=>[header,trim(row[i])])))}};
+  function keyed(table,label){const map=new Map();table.rows.forEach((row,i)=>{if(!trim(row.LotName)||!trim(row.WaferNum))throw Error(`${label} is missing LotName or WaferNum at row ${i+2}.`);const key=`${trim(row.LotName)}\0${trim(row.WaferNum)}`;if(map.has(key))throw Error(`${label} has a duplicate LotName + WaferNum at row ${i+2}.`);map.set(key,row)});return map}
+  function logGamma(z){const c=[676.5203681218851,-1259.1392167224028,771.3234287776531,-176.6150291621406,12.507343278686905,-.13857109526572012,9.9843695780195716e-6,1.5056327351493116e-7];if(z<.5)return Math.log(Math.PI)-Math.log(Math.sin(Math.PI*z))-logGamma(1-z);z-=1;let x=.9999999999998099;for(let i=0;i<c.length;i++)x+=c[i]/(z+i+1);const q=z+c.length-.5;return .5*Math.log(2*Math.PI)+(z+.5)*Math.log(q)-q+Math.log(x)}
+  function betaFraction(a,b,x){const tiny=1e-300,limit=200,eps=3e-14;let qab=a+b,qap=a+1,qam=a-1,c=1,den=1-qab*x/qap;if(Math.abs(den)<tiny)den=tiny;den=1/den;let h=den;for(let m=1;m<=limit;m++){const m2=2*m;let aa=m*(b-m)*x/((qam+m2)*(a+m2));den=1+aa*den;if(Math.abs(den)<tiny)den=tiny;c=1+aa/c;if(Math.abs(c)<tiny)c=tiny;den=1/den;h*=den*c;aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));den=1+aa*den;if(Math.abs(den)<tiny)den=tiny;c=1+aa/c;if(Math.abs(c)<tiny)c=tiny;den=1/den;const delta=den*c;h*=delta;if(Math.abs(delta-1)<eps)break}return h}
+  function regularizedBeta(x,a,b){if(x<=0)return 0;if(x>=1)return 1;const front=Math.exp(logGamma(a+b)-logGamma(a)-logGamma(b)+a*Math.log(x)+b*Math.log1p(-x));return x<(a+1)/(a+b+2)?front*betaFraction(a,b,x)/a:1-front*betaFraction(b,a,1-x)/b}
+  function studentCdf(x,df){if(!Number.isFinite(x)||!Number.isFinite(df)||df<=0)return NaN;const z=df/(df+x*x),tail=.5*regularizedBeta(z,df/2,.5);return x>=0?1-tail:tail}
+  function studentQuantile(prob,df){let lo=-1,hi=1;while(studentCdf(lo,df)>prob)lo*=2;while(studentCdf(hi,df)<prob)hi*=2;for(let i=0;i<80;i++){const mid=(lo+hi)/2;if(studentCdf(mid,df)<prob)lo=mid;else hi=mid}return(lo+hi)/2}
+function boxSummary(values){const a=[...values].sort((x,y)=>x-y);const quantile=p=>{const pos=(a.length-1)*p,i=Math.floor(pos);return a[i]+(a[Math.min(i+1,a.length-1)]-a[i])*(pos-i)};const q1=quantile(.25),median=quantile(.5),q3=quantile(.75),iqr=q3-q1,inside=a.filter(x=>x>=q1-1.5*iqr&&x<=q3+1.5*iqr);return{n:a.length,q1,median,q3,low:inside[0],high:inside.at(-1),min:a[0],max:a.at(-1),outliers:a.filter(x=>x<q1-1.5*iqr||x>q3+1.5*iqr)}}
+function boxPlot(row){const groups=[['Good',row.boxGood,'#397ed1'],['Bad',row.boxBad,'#dd6b55']],W=480,H=350,L=88,R=22,T=25,B=55;let min=Math.min(row.boxGood.min,row.boxBad.min),max=Math.max(row.boxGood.max,row.boxBad.max);const margin=(max-min||Math.abs(max)||1)*.08;min-=margin;max+=margin;const y=v=>T+(max-v)/(max-min)*(H-T-B),label=v=>Number(v.toPrecision(5)).toString();let marks='';for(let i=0;i<=5;i++){const v=min+(max-min)*i/5,yy=y(v);marks+=`<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" stroke="#e3e7ef"/><text x="${L-8}" y="${yy+4}" text-anchor="end" font-size="12">${label(v)}</text>`}groups.forEach(([name,s,color],i)=>{const x=L+(W-L-R)*(i+.5)/2;marks+=`<g><title>${name}: n=${s.n}, median=${s.median}, Q1=${s.q1}, Q3=${s.q3}, whiskers=${s.low} to ${s.high}, outliers=${s.outliers.length}</title><line x1="${x}" y1="${y(s.high)}" x2="${x}" y2="${y(s.low)}" stroke="${color}" stroke-width="2"/><path d="M${x-18} ${y(s.high)}h36 M${x-18} ${y(s.low)}h36" stroke="${color}" stroke-width="2"/><rect x="${x-35}" y="${y(s.q3)}" width="70" height="${Math.max(1,y(s.q1)-y(s.q3))}" fill="${color}" fill-opacity=".22" stroke="${color}" stroke-width="2"/><line x1="${x-35}" y1="${y(s.median)}" x2="${x+35}" y2="${y(s.median)}" stroke="#172a43" stroke-width="3"/>${s.outliers.map((v,j)=>`<circle cx="${x+((j%7)-3)*2}" cy="${y(v)}" r="2.5" fill="${color}" fill-opacity=".55"><title>${name} outlier: ${v}</title></circle>`).join('')}<text x="${x}" y="${H-28}" text-anchor="middle" font-size="15" font-weight="700">${name}</text><text x="${x}" y="${H-10}" text-anchor="middle" font-size="11">n=${s.n}</text></g>`});return`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block;color:#27304c" role="img" aria-label="${esc(row.parameter)}: Good and Bad box plots, numeric parameter values on the y-axis"><title>${esc(row.parameter)} — Good median ${row.boxGood.median}; Bad median ${row.boxBad.median}</title><line x1="${L}" y1="${T}" x2="${L}" y2="${H-B}" stroke="#79869b"/><text transform="translate(17 ${H/2}) rotate(-90)" text-anchor="middle" font-size="12">Parameter value</text>${marks}</svg>`}
+  function analyse(gvb,parameters){for(const [table,required,label] of [[gvb,['LotName','WaferNum','GVB'],'GVB CSV'],[parameters,['LotName','WaferNum'],'parameter snapshot']]){const missing=required.filter(x=>!table.headers.includes(x));if(missing.length)throw Error(`${label} is missing: ${missing.join(', ')}.`)}const gi=keyed(gvb,'GVB CSV'),pi=keyed(parameters,'Parameter snapshot'),joined=[];for(const [key,row] of pi)if(gi.has(key))joined.push({parameter:row,gvb:gi.get(key)});if(!joined.length)throw Error('No rows matched on LotName + WaferNum.');const good=joined.filter(x=>/^good$/i.test(trim(x.gvb.GVB))),bad=joined.filter(x=>/^bad$/i.test(trim(x.gvb.GVB)));if(!good.length||!bad.length)throw Error('Matched rows must include both Good and Bad GVB values.');const anchor=parameters.headers.indexOf('MaskSetName_group'),excluded=/yield|target|outcome|result|pass|fail|good|bad|gvb|lot|wafer|mask|date|year|version|customer|technology|process|vendor|line|bin|group|type/i,candidates=anchor>=0?parameters.headers.slice(anchor+1):parameters.headers.filter(h=>!excluded.test(h));const out=[];for(const parameter of candidates){const ga=good.map(x=>number(x.parameter[parameter])).filter(x=>x!==null),ba=bad.map(x=>number(x.parameter[parameter])).filter(x=>x!==null);if(ga.length<2||ba.length<2)continue;const mg=mean(ga),mb=mean(ba),vg=variance(ga,mg),vb=variance(ba,mb),sg=Math.sqrt(vg),sb=Math.sqrt(vb),se2=vg/ga.length+vb/ba.length;if(!Number.isFinite(se2)||se2<=0)continue;const se=Math.sqrt(se2),df=se2**2/((vg/ga.length)**2/(ga.length-1)+(vb/ba.length)**2/(ba.length-1));if(!Number.isFinite(df)||df<=0)continue;const diff=mg-mb,t=diff/se,p=Math.min(1,2*studentCdf(-Math.abs(t),df)),critical=studentQuantile(.975,df),pooled=Math.sqrt(((ga.length-1)*vg+(ba.length-1)*vb)/(ga.length+ba.length-2));out.push({parameter,boxGood:boxSummary(ga),boxBad:boxSummary(ba),ng:ga.length,nb:ba.length,mg,mb,sg,sb,diff,lo:diff-critical*se,hi:diff+critical*se,t,df,d:pooled?diff/pooled:NaN,p,q:1})}if(!out.length)throw Error('No numeric measurement columns had at least two Good and two Bad observations.');const ranked=[...out].sort((a,b)=>a.p-b.p);let last=1;for(let i=ranked.length-1;i>=0;i--){last=Math.min(last,ranked[i].p*out.length/(i+1));ranked[i].q=last}out.sort((a,b)=>a.q-b.q||a.p-b.p);return{out,matched:joined.length,good:good.length,bad:bad.length,gvbOnly:gi.size-joined.length,parameterOnly:pi.size-joined.length}}
+  const stages=['Reading GVB CSV','Validating LotName + WaferNum','Joining GVB and parameter data','Running Welch t-tests','Building interactive charts','Analysis complete'];
+  const yieldUi=()=>new Promise(resolve=>setTimeout(resolve,35));
+  function setStage(n){progress.hidden=false;progressBar.value=n;progressCount.textContent=`${n} / ${stages.length}`;progressLabel.textContent=stages[Math.max(0,n-1)]||'Preparing analysis…';stepsEl.innerHTML=stages.map((s,i)=>`<li class="${i<n-1?'done':i===n-1?'active':''}">${i<n-1?'✓ ':''}${esc(s)}</li>`).join('')}
+  const fmt=(v,n=3)=>Number.isFinite(v)?v.toFixed(n):'—';
+  function download(rows){const headers=['parameter','n_good','n_bad','good_mean','good_sd','bad_mean','bad_sd','good_minus_bad','ci_95_low','ci_95_high','welch_t','welch_df','cohen_d','p','q'];const line=r=>[r.parameter,r.ng,r.nb,r.mg,r.sg,r.mb,r.sb,r.diff,r.lo,r.hi,r.t,r.df,r.d,r.p,r.q].map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',');const url=URL.createObjectURL(new Blob([[headers.join(','),...rows.map(line)].join('\r\n')],{type:'text/csv'}));const a=d.createElement('a');a.href=url;a.download='yieldmindx-gvb-results.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+  function render(result){const significant=result.out.filter(x=>x.q<.05).length;results.hidden=false;results.innerHTML=`<span class="gvb-complete">Analysis complete</span><div class="gvb-stats"><div class="gvb-stat"><strong>${result.matched}</strong>matched wafers</div><div class="gvb-stat"><strong>${result.good} / ${result.bad}</strong>Good / Bad</div><div class="gvb-stat"><strong>${result.out.length}</strong>tested parameters</div><div class="gvb-stat"><strong>${significant}</strong>q &lt; .05</div></div><p>Join key: <b>LotName + WaferNum</b>. Unmatched: ${result.gvbOnly} GVB-only; ${result.parameterOnly} parameter-only.</p><p class="gvb-note">${significant?'Ranked evidence is shown below.':'No parameter passed q < .05 after multiple-testing correction; treat the rankings as exploratory.'} Welch comparisons, 95% confidence intervals, Cohen’s d, and Benjamini–Hochberg q-values describe associations, not causation.</p><div class="gvb-charts"><section class="gvb-chart"><h3>Good vs Bad box plots</h3><p>Each chart uses its own numeric parameter scale. Select a parameter to inspect it. Boxes: Q1–Q3; line: median; whiskers: 1.5 × IQR; dots: outliers.</p><div id="gvb-box-list" style="max-height:650px;overflow:auto"></div></section><section class="gvb-chart"><h3 id="gvb-box-title">Selected parameter</h3><p>X-axis: Good / Bad. Y-axis: numeric parameter value.</p><div id="gvb-box-selected"></div></section></div><section class="gvb-detail" id="gvb-detail" aria-live="polite"></section><div class="gvb-controls"><input id="gvb-search" type="search" placeholder="Search parameter" aria-label="Search parameter"><select id="gvb-evidence" aria-label="Evidence filter"><option value="all">All evidence</option><option value="q">q &lt; .05</option><option value="p">p &lt; .05</option></select><select id="gvb-rank" aria-label="Rank results"><option value="q">Rank: q-value</option><option value="p">Rank: p-value</option><option value="d">Rank: |Cohen d|</option></select><select id="gvb-limit" aria-label="Rows shown"><option value="25">Top 25</option><option value="50">Top 50</option><option value="100">Top 100</option><option value="all">All ${result.out.length}</option></select></div><div class="gvb-table-wrap"><table class="gvb-table"><thead><tr><th data-sort="parameter">Parameter</th><th data-sort="ng">Good/Bad n</th><th data-sort="mg">Good mean</th><th data-sort="sg">Good SD</th><th data-sort="mb">Bad mean</th><th data-sort="sb">Bad SD</th><th data-sort="diff">Good − Bad</th><th data-sort="lo">95% CI</th><th data-sort="t">Welch t</th><th data-sort="df">df</th><th data-sort="d">Cohen d</th><th data-sort="p">p</th><th data-sort="q">q</th></tr></thead><tbody id="gvb-tbody"></tbody></table></div><div class="gvb-footer"><small id="gvb-shown"></small><button class="gvb-download" id="gvb-download">Download full results CSV</button></div>`;
+    const state={selected:[...result.out].sort((a,b)=>Math.abs(b.d)-Math.abs(a.d))[0]?.parameter,sort:'q',direction:1};
+    const find=name=>result.out.find(x=>x.parameter===name);
+    function select(name){state.selected=name;const row=find(name);if(!row)return;d.getElementById('gvb-box-title').textContent=row.parameter;d.getElementById('gvb-box-selected').innerHTML=boxPlot(row);d.querySelectorAll('[data-parameter]').forEach(el=>el.classList.toggle('selected',el.dataset.parameter===name));d.getElementById('gvb-detail').innerHTML=`<h3 title="${esc(row.parameter)}">${esc(row.parameter)}</h3><div class="gvb-detail-grid"><div><strong>${fmt(row.mg)}</strong><span>Good mean (n=${row.ng})</span></div><div><strong>${fmt(row.sg)}</strong><span>Good sample SD</span></div><div><strong>${fmt(row.mb)}</strong><span>Bad mean (n=${row.nb})</span></div><div><strong>${fmt(row.sb)}</strong><span>Bad sample SD</span></div><div><strong>${fmt(row.diff)}</strong><span>Good − Bad</span></div><div><strong>${fmt(row.lo)} to ${fmt(row.hi)}</strong><span>95% CI</span></div><div><strong>${fmt(row.t)}</strong><span>Welch t</span></div><div><strong>${fmt(row.df,1)}</strong><span>Welch df</span></div><div><strong>${fmt(row.d)}</strong><span>Cohen d</span></div><div><strong>${fmt(row.p,4)}</strong><span>p-value</span></div><div><strong>${fmt(row.q,4)}</strong><span>BH q-value</span></div></div>`}
+    const top=[...result.out].filter(x=>Number.isFinite(x.d)).sort((a,b)=>Math.abs(b.d)-Math.abs(a.d)).slice(0,20);d.getElementById("gvb-box-list").innerHTML=top.map(row=>`<button type="button" data-parameter="${esc(row.parameter)}" style="display:block;width:100%;background:white;border:1px solid #dde3ee;border-radius:10px;padding:10px;margin:8px 0;text-align:left;cursor:pointer"><strong style="display:block;overflow-wrap:anywhere">${esc(row.parameter)}</strong>${boxPlot(row)}</button>`).join("");d.querySelectorAll("#gvb-box-list button").forEach(button=>button.onclick=()=>select(button.dataset.parameter));
+
+    const search=d.getElementById('gvb-search'),evidence=d.getElementById('gvb-evidence'),rank=d.getElementById('gvb-rank'),limit=d.getElementById('gvb-limit'),tbody=d.getElementById('gvb-tbody'),shown=d.getElementById('gvb-shown');function drawTable(){let rows=result.out.filter(x=>x.parameter.toLowerCase().includes(search.value.trim().toLowerCase()));if(evidence.value==='q')rows=rows.filter(x=>x.q<.05);if(evidence.value==='p')rows=rows.filter(x=>x.p<.05);const sort=rank.value;rows.sort(sort==='d'?(a,b)=>Math.abs(b.d)-Math.abs(a.d):(a,b)=>a[sort]-b[sort]);if(state.sort&&!['q','p','d'].includes(state.sort)||state.sort!==sort){const key=state.sort;rows.sort((a,b)=>{const av=a[key],bv=b[key];return(typeof av==='string'?av.localeCompare(bv):(av-bv))*state.direction})}const total=rows.length,visible=limit.value==='all'?rows:rows.slice(0,Number(limit.value));tbody.innerHTML=visible.map(x=>`<tr data-parameter="${esc(x.parameter)}"><td title="${esc(x.parameter)}">${esc(x.parameter)}</td><td>${x.ng}/${x.nb}</td><td>${fmt(x.mg)}</td><td>${fmt(x.sg)}</td><td>${fmt(x.mb)}</td><td>${fmt(x.sb)}</td><td>${fmt(x.diff)}</td><td>${fmt(x.lo)} to ${fmt(x.hi)}</td><td>${fmt(x.t)}</td><td>${fmt(x.df,1)}</td><td>${fmt(x.d)}</td><td>${fmt(x.p,4)}</td><td>${fmt(x.q,4)}</td></tr>`).join('');shown.textContent=`Showing ${visible.length} of ${total} matching parameters`;tbody.querySelectorAll('tr').forEach(x=>x.onclick=()=>select(x.dataset.parameter));select(state.selected)}search.oninput=drawTable;evidence.onchange=drawTable;rank.onchange=()=>{state.sort=rank.value;state.direction=1;drawTable()};limit.onchange=drawTable;d.querySelectorAll('.gvb-table th').forEach(th=>th.onclick=()=>{const key=th.dataset.sort;state.direction=state.sort===key?-state.direction:1;state.sort=key;drawTable()});d.getElementById('gvb-download').onclick=()=>download(result.out);drawTable();select(state.selected);results.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  run.addEventListener('click',async()=>{if(!input.files[0]||!fixed?.csv)return;run.disabled=true;results.hidden=true;results.innerHTML='';fileStatus.className='save';try{setStage(1);await yieldUi();const gvb=csv(await input.files[0].text());setStage(2);await yieldUi();keyed(gvb,'GVB CSV');setStage(3);await yieldUi();const parameters=csv(fixed.csv);setStage(4);await yieldUi();const analysis=analyse(gvb,parameters);setStage(5);await yieldUi();render(analysis);setStage(6);fileStatus.textContent='Analysis complete. Results are shown below.'}catch(error){progress.hidden=true;results.hidden=false;results.innerHTML=`<p class="gvb-error" role="alert">${esc(error.message||'Analysis could not be completed.')}</p>`;fileStatus.textContent='Analysis stopped. Review the message below.'}finally{run.disabled=false}});
+})();
+</script>
+<script>
+(function(){
+  // Connects section 1's charts to the four locked checkpoint models via the
+  // local backend (dashboard/backend/server.py). Predicted yield only --
+  // this script never fabricates or displays an "actual yield" series for
+  // LIVE predictions; that stays explicitly unconnected pending IT
+  // integration. The separate, explicitly-labeled "IT-flow simulation" view
+  // additionally shows actual yield ONLY once a matching actual-results
+  // record has been uploaded, joined client-side by LotName+WaferNum -- it
+  // is never fabricated and never fed back into any model.
+  const d = document;
+  const CHECKPOINTS = ['OHMIC', 'FIC', 'SIN', 'THIN'];
+  const CHART_LABEL = {OHMIC: 'OHMIC', FIC: 'BFIC', SIN: 'SIN', THIN: 'THIN'};
+  const CHART_COLOR = {OHMIC: '#13c3d5', FIC: '#f0ae36', SIN: '#8a6fe8', THIN: '#35b879'};
+  const MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  const esc = x => String(x).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+  let currentView = 'live'; // 'live' | 'sim' -- normal-mode (live) behavior is unaffected by this toggle's existence
+
+  const select = d.getElementById('ckpt-select');
+  const fileInput = d.getElementById('ckpt-csv');
+  const runBtn = d.getElementById('ckpt-run');
+  const statusEl = d.getElementById('ckpt-status');
+  function updateRunEnabled(){ runBtn.disabled = !(fileInput.files && fileInput.files[0]); }
+  fileInput.addEventListener('change', updateRunEnabled);
+
+  const simSelect = d.getElementById('sim-checkpoint');
+  const simFileInput = d.getElementById('sim-csv');
+  const simRunBtn = d.getElementById('sim-run');
+  const simActualInput = d.getElementById('sim-actual-csv');
+  const simActualRunBtn = d.getElementById('sim-actual-run');
+  const simStatusEl = d.getElementById('sim-status');
+  simFileInput.addEventListener('change', () => { simRunBtn.disabled = !simFileInput.files[0]; });
+  simActualInput.addEventListener('change', () => { simActualRunBtn.disabled = !simActualInput.files[0]; });
+
+  const viewLiveBtn = d.getElementById('view-live');
+  const viewSimBtn = d.getElementById('view-sim');
+
+  function fmtDate(iso){
+    const dt = new Date(iso);
+    if (isNaN(dt.getTime())) return iso;
+    return dt.toLocaleString(undefined, {year:'numeric', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit'});
+  }
+  function fmtSimpleDate(dateStr){
+    const dt = new Date(dateStr + 'T00:00:00Z');
+    if (isNaN(dt.getTime())) return dateStr;
+    return dt.toLocaleDateString(undefined, {year:'numeric', month:'short', day:'2-digit', timeZone:'UTC'});
+  }
+  function yearMonthKey(dateStr){
+    const dt = new Date(dateStr);
+    return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}`;
+  }
+  function yearMonthLabel(key){
+    const [y, m] = key.split('-');
+    return `${MONTH_NAMES[Number(m)-1]} ${y}`;
+  }
+
+  function renderChart(modelCheckpoint, records, opts){
+    opts = opts || {};
+    if (opts.isSimulation) { renderSimulationChart(modelCheckpoint, records, opts.actualByWafer || {}); return; }
+    renderLiveChart(modelCheckpoint, records);
+  }
+
+  // ---- LIVE view: unchanged scatter-by-month-bucket rendering (normal-mode
+  // date behavior is untouched by simulation mode's existence). ----
+  function renderLiveChart(modelCheckpoint, records){
+    const wrap = d.getElementById('ckpt-chart-' + modelCheckpoint);
+    const color = CHART_COLOR[modelCheckpoint];
+    const label = CHART_LABEL[modelCheckpoint];
+    const actualNote = '<div class="legend" style="margin-top:8px"><span class="dot" style="background:' + color + '"></span>Predicted yield (synthetic model)<br><span style="color:#9aa3b2">Actual yield: pending IT integration -- not connected</span></div>';
+
+    if (!records.length){
+      wrap.innerHTML = `<p class="ckpt-empty">No predictions yet for ${esc(label)}. Upload a measurements CSV above, select ${esc(label)}, and run a prediction to populate this chart.</p>` + actualNote;
+      return;
+    }
+
+    const W=560, H=300, L=64, R=20, T=35, B=42;
+    const values = records.map(r => r.predicted_yield);
+    let yMin = Math.min(...values), yMax = Math.max(...values);
+    if (yMin === yMax) { yMin -= 1; yMax += 1; }
+    const pad = (yMax - yMin) * 0.15 || 1;
+    yMin -= pad; yMax += pad;
+
+    const months = [...new Set(records.map(r => yearMonthKey(r.created_at_utc)))].sort();
+    const monthX = {};
+    months.forEach((m, i) => { monthX[m] = months.length > 1 ? L + (W-L-R) * i/(months.length-1) : (L+W-R)/2; });
+    const byMonth = {};
+    records.forEach(r => { const k = yearMonthKey(r.created_at_utc); (byMonth[k] = byMonth[k] || []).push(r); });
+
+    const y = v => T + (yMax - v) / (yMax - yMin) * (H - T - B);
+
+    let grid = '';
+    for (let i=0; i<=4; i++){
+      const yy = T + (H-T-B) * i/4;
+      const val = yMax - (yMax-yMin) * i/4;
+      grid += `<path d="M${L} ${yy.toFixed(1)}H${W-R}" stroke="#e5eef2"/><text x="${L-8}" y="${(yy+4).toFixed(1)}" text-anchor="end" font-size="12" fill="#667d8e">${val.toFixed(1)}%</text>`;
+    }
+    months.forEach(m => { grid += `<text x="${monthX[m].toFixed(1)}" y="${H-10}" text-anchor="middle" font-size="12" fill="#667d8e">${esc(yearMonthLabel(m))}</text>`; });
+
+    let circles = '';
+    Object.entries(byMonth).forEach(([m, rows]) => {
+      const baseX = monthX[m];
+      const n = rows.length;
+      const slot = Math.min(14, (W-L-R) / Math.max(months.length,1) / (n+1));
+      rows.forEach((r, idx) => {
+        const jitter = n > 1 ? (idx - (n-1)/2) * slot : 0;
+        const cx = Math.max(L+4, Math.min(W-R-4, baseX + jitter));
+        const cy = y(r.predicted_yield);
+        const title = `Lot ${r.lot_name} · Wafer ${r.wafer_num} · Predicted yield ${r.predicted_yield.toFixed(2)}% · Predicted ${fmtDate(r.created_at_utc)}`;
+        circles += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="5.5" fill="${color}" stroke="#fff" stroke-width="2"><title>${esc(title)}</title></circle>`;
+      });
+    });
+
+    const svg = `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(label)} predicted yield by prediction date">` +
+      `<path d="M${L} ${T}V${H-B}M${L} ${H-B}H${W-R}" stroke="#a6bdc7"/>` +
+      `<text x="18" y="${(H-B)/2}" transform="rotate(-90 18 ${(H-B)/2})" fill="#526c7d" font-size="13">Predicted yield (%)</text>` +
+      `<text x="${(L+W-R)/2}" y="${H-1}" text-anchor="middle" fill="#526c7d" font-size="12">Prediction date (year-month)</text>` +
+      grid + circles + `</svg>`;
+    wrap.innerHTML = svg + actualNote;
+  }
+
+  // ---- SIMULATION view: predicted = dashed line, actual = solid line with
+  // points, both on a true date-linear X axis. Actual points are placed at
+  // their MATCHING predicted point's SimulationDate (never at ResultDate --
+  // ResultDate is kept separately, tooltip-only). Both series share the
+  // exact same sort order (by SimulationDate, then LotName, then WaferNum),
+  // so index i of one series is always the same wafer as index i of the
+  // other. No actual point/segment is drawn where no result exists. ----
+  function renderSimulationChart(modelCheckpoint, records, actualByWafer){
+    const wrap = d.getElementById('ckpt-chart-' + modelCheckpoint);
+    const color = CHART_COLOR[modelCheckpoint];
+    const actualColor = '#2a8f4f';
+    const label = CHART_LABEL[modelCheckpoint];
+    const simBanner = '<div class="sim-badge" style="margin-bottom:6px">SIMULATION -- synthetic demo dates, not real production dates</div>';
+    const legend = '<div class="legend" style="margin-top:8px">' +
+      '<span class="dash" style="color:' + color + '"></span>Predicted yield (simulated)' +
+      '<br><span class="dot" style="background:' + actualColor + '"></span>Actual yield (uploaded results only -- line breaks where a result is missing)' +
+      '</div>';
+
+    if (!records.length){
+      wrap.innerHTML = simBanner + `<p class="ckpt-empty">No simulation predictions yet for ${esc(label)}. Upload a simulation measurements CSV above, select ${esc(label)}, and run a simulation prediction.</p>` + legend;
+      return;
+    }
+
+    // Consistent sort for BOTH series: SimulationDate, then LotName, then WaferNum.
+    const sorted = [...records].sort((a, b) => {
+      const da = new Date(a.simulation_date), db = new Date(b.simulation_date);
+      if (da - db !== 0) return da - db;
+      if (a.lot_name !== b.lot_name) return a.lot_name < b.lot_name ? -1 : 1;
+      return a.wafer_num < b.wafer_num ? -1 : (a.wafer_num > b.wafer_num ? 1 : 0);
+    });
+
+    const joined = sorted.map(r => ({
+      pred: r,
+      actual: actualByWafer[r.lot_name + '\u0000' + r.wafer_num] || null,
+    }));
+
+    const W=560, H=300, L=64, R=20, T=35, B=46;
+
+    const predYields = joined.map(j => j.pred.predicted_yield);
+    const actualYields = joined.filter(j => j.actual).map(j => j.actual.sorting_yield);
+    const allYields = predYields.concat(actualYields);
+    let yMin = Math.min(...allYields), yMax = Math.max(...allYields);
+    if (yMin === yMax) { yMin -= 1; yMax += 1; }
+    const yPad = (yMax - yMin) * 0.15 || 1;
+    yMin -= yPad; yMax += yPad;
+    const y = v => T + (yMax - v) / (yMax - yMin) * (H - T - B);
+
+    // True linear date scale (not month-bucket+jitter): x reflects each
+    // wafer's own SimulationDate position within the min..max date range.
+    const times = joined.map(j => new Date(j.pred.simulation_date).getTime());
+    const tMin = Math.min(...times), tMax = Math.max(...times);
+    const x = t => tMax === tMin ? (L+W-R)/2 : L + (t - tMin) / (tMax - tMin) * (W-L-R);
+
+    let grid = '';
+    for (let i=0; i<=4; i++){
+      const yy = T + (H-T-B) * i/4;
+      const val = yMax - (yMax-yMin) * i/4;
+      grid += `<path d="M${L} ${yy.toFixed(1)}H${W-R}" stroke="#e5eef2"/><text x="${L-8}" y="${(yy+4).toFixed(1)}" text-anchor="end" font-size="12" fill="#667d8e">${val.toFixed(1)}%</text>`;
+    }
+    const nTicks = Math.min(5, joined.length);
+    for (let i=0; i<nTicks; i++){
+      const t = tMin + (tMax - tMin) * (nTicks > 1 ? i/(nTicks-1) : 0);
+      const xx = x(t);
+      grid += `<text x="${xx.toFixed(1)}" y="${H-10}" text-anchor="middle" font-size="11" fill="#667d8e">${esc(fmtSimpleDate(new Date(t).toISOString().slice(0,10)))}</text>`;
+    }
+
+    // Dashed predicted line through every point, in sorted date order.
+    const predPoints = joined.map(j => `${x(new Date(j.pred.simulation_date).getTime()).toFixed(1)},${y(j.pred.predicted_yield).toFixed(1)}`);
+    const predLine = `<polyline points="${predPoints.join(' ')}" fill="none" stroke="${color}" stroke-width="3" stroke-dasharray="8 6"/>`;
+
+    // Solid actual line: broken into separate segments wherever a result is
+    // missing, so missing wafers are never bridged across.
+    let actualSegments = [];
+    let current = [];
+    joined.forEach(j => {
+      if (j.actual){
+        current.push(`${x(new Date(j.pred.simulation_date).getTime()).toFixed(1)},${y(j.actual.sorting_yield).toFixed(1)}`);
+      } else if (current.length){
+        actualSegments.push(current); current = [];
+      }
+    });
+    if (current.length) actualSegments.push(current);
+    const actualLine = actualSegments
+      .filter(seg => seg.length > 1)
+      .map(seg => `<polyline points="${seg.join(' ')}" fill="none" stroke="${actualColor}" stroke-width="3"/>`)
+      .join('');
+
+    let predCircles = '', actualCircles = '';
+    joined.forEach(j => {
+      const cx = x(new Date(j.pred.simulation_date).getTime());
+      const predTitle = `Lot ${j.pred.lot_name} · Wafer ${j.pred.wafer_num} · Stage ${label} · Predicted yield ${j.pred.predicted_yield.toFixed(2)}% · Simulated date ${fmtSimpleDate(j.pred.simulation_date)} [SIMULATION]`;
+      predCircles += `<circle cx="${cx.toFixed(1)}" cy="${y(j.pred.predicted_yield).toFixed(1)}" r="4" fill="#fff" stroke="${color}" stroke-width="2.5"><title>${esc(predTitle)}</title></circle>`;
+      if (j.actual){
+        const actualTitle = `Lot ${j.pred.lot_name} · Wafer ${j.pred.wafer_num} · Stage ${label} · Actual yield ${j.actual.sorting_yield.toFixed(2)}% · Simulated date ${fmtSimpleDate(j.pred.simulation_date)} · Result available ${fmtSimpleDate(j.actual.result_date)} [SIMULATION]`;
+        actualCircles += `<circle cx="${cx.toFixed(1)}" cy="${y(j.actual.sorting_yield).toFixed(1)}" r="5.5" fill="${actualColor}" stroke="#fff" stroke-width="2"><title>${esc(actualTitle)}</title></circle>`;
+      }
+    });
+
+    const svg = `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(label)} simulated predicted vs actual yield">` +
+      `<path d="M${L} ${T}V${H-B}M${L} ${H-B}H${W-R}" stroke="#a6bdc7"/>` +
+      `<text x="18" y="${(H-B)/2}" transform="rotate(-90 18 ${(H-B)/2})" fill="#526c7d" font-size="13">Yield (%)</text>` +
+      `<text x="${(L+W-R)/2}" y="${H-1}" text-anchor="middle" fill="#526c7d" font-size="12">Simulated checkpoint date</text>` +
+      grid + predLine + actualLine + predCircles + actualCircles + `</svg>`;
+    wrap.innerHTML = simBanner + svg + legend;
+  }
+
+  async function fetchActualResultsByWafer(){
+    try{
+      const res = await fetch('/api/actual-results');
+      if (!res.ok) return {};
+      const rows = await res.json();
+      const map = {};
+      rows.forEach(r => { map[r.lot_name + '\u0000' + r.wafer_num] = r; });
+      return map;
+    }catch(_err){ return {}; }
+  }
+
+  async function loadChart(modelCheckpoint){
+    const wrap = d.getElementById('ckpt-chart-' + modelCheckpoint);
+    const isSim = currentView === 'sim';
+    try{
+      const res = await fetch(`/api/predictions/${modelCheckpoint}?simulation=${isSim}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const records = await res.json();
+      const actualByWafer = isSim ? await fetchActualResultsByWafer() : {};
+      renderChart(modelCheckpoint, records, {isSimulation: isSim, actualByWafer});
+    }catch(err){
+      wrap.innerHTML = `<p class="ckpt-empty gvb-error">Could not load predictions for ${esc(CHART_LABEL[modelCheckpoint])}: ${esc(err.message)}</p>`;
+    }
+  }
+  function loadAllCharts(){ CHECKPOINTS.forEach(loadChart); }
+
+  viewLiveBtn.addEventListener('click', () => {
+    currentView = 'live'; viewLiveBtn.classList.add('active'); viewSimBtn.classList.remove('active'); loadAllCharts();
+  });
+  viewSimBtn.addEventListener('click', () => {
+    currentView = 'sim'; viewSimBtn.classList.add('active'); viewLiveBtn.classList.remove('active'); loadAllCharts();
+  });
+
+  loadAllCharts();
+
+  runBtn.addEventListener('click', async () => {
+    const file = fileInput.files[0];
+    const checkpoint = select.value;
+    if (!file) return;
+    runBtn.disabled = true;
+    statusEl.className = 'save';
+    statusEl.textContent = `Running ${CHART_LABEL[checkpoint]} prediction…`;
+    try{
+      const fd = new FormData();
+      fd.append('checkpoint', checkpoint);
+      fd.append('file', file);
+      const res = await fetch('/api/predict', {method: 'POST', body: fd});
+      const body = await res.json();
+      if (!res.ok) throw new Error(body.error || `HTTP ${res.status}`);
+      statusEl.className = 'save';
+      statusEl.textContent = `Predicted ${body.n_predicted} wafer(s) for ${CHART_LABEL[checkpoint]} (synthetic model, ${body.predictions[0] ? body.predictions[0].model_name + '/' + body.predictions[0].feature_mode : ''}). Chart updated below.`;
+      if (currentView === 'live') await loadChart(checkpoint);
+    }catch(err){
+      statusEl.className = 'save gvb-error';
+      statusEl.textContent = err.message || 'Prediction failed.';
+    }finally{
+      updateRunEnabled();
+    }
+  });
+
+  simRunBtn.addEventListener('click', async () => {
+    const file = simFileInput.files[0];
+    const checkpoint = simSelect.value;
+    if (!file) return;
+    simRunBtn.disabled = true;
+    simStatusEl.className = 'save';
+    simStatusEl.textContent = `Running simulated ${CHART_LABEL[checkpoint]} prediction…`;
+    try{
+      const fd = new FormData();
+      fd.append('checkpoint', checkpoint);
+      fd.append('is_simulation', 'true');
+      fd.append('file', file);
+      const res = await fetch('/api/predict', {method: 'POST', body: fd});
+      const body = await res.json();
+      if (!res.ok) throw new Error(body.error || `HTTP ${res.status}`);
+      simStatusEl.className = 'save';
+      simStatusEl.textContent = `Simulated ${body.n_predicted} wafer(s) for ${CHART_LABEL[checkpoint]}. Switch to "IT-flow simulation" view below to see it.`;
+      if (currentView === 'sim') await loadChart(checkpoint);
+    }catch(err){
+      simStatusEl.className = 'save gvb-error';
+      simStatusEl.textContent = err.message || 'Simulation prediction failed.';
+    }finally{
+      simRunBtn.disabled = !simFileInput.files[0];
+    }
+  });
+
+  simActualRunBtn.addEventListener('click', async () => {
+    const file = simActualInput.files[0];
+    if (!file) return;
+    simActualRunBtn.disabled = true;
+    simStatusEl.className = 'save';
+    simStatusEl.textContent = 'Uploading actual results…';
+    try{
+      const fd = new FormData();
+      fd.append('file', file);
+      const res = await fetch('/api/actual-results', {method: 'POST', body: fd});
+      const body = await res.json();
+      if (!res.ok) throw new Error(body.error || `HTTP ${res.status}`);
+      const s = body.summary;
+      simStatusEl.className = 'save';
+      simStatusEl.textContent = `Actual results: ${s.new} new, ${s.duplicate} unchanged repeats, ${s.updated} updated (conflicting value replaced; full history kept). Switch to "IT-flow simulation" view to see them in tooltips.`;
+      if (currentView === 'sim') loadAllCharts();
+    }catch(err){
+      simStatusEl.className = 'save gvb-error';
+      simStatusEl.textContent = err.message || 'Actual-results upload failed.';
+    }finally{
+      simActualRunBtn.disabled = !simActualInput.files[0];
+    }
+  });
+})();
+</script>
+</body></html>

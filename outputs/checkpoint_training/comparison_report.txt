@@ -1,0 +1,35 @@
+FOUR-CHECKPOINT MODEL TRAINING -- COMPARISON REPORT
+ALL RESULTS ARE SYNTHETIC-DATA RESULTS (Process == 'GaAs_pHEMT_MMIC').
+====================================================================================================
+Total run time: 1421.3s (23.7 min)
+Shared split: 1200 train rows / 80 lots, 300 test rows / 20 lots. Test set untouched until final eval.
+
+Checkpoint Model          Mode        CV RMSE   CV std   CV MAE   CV R2  n_feat  Test RMSE  Test MAE  Test R2  Winner
+----------------------------------------------------------------------------------------------------------------------------------
+OHMIC      lightgbm       selected     0.5997   0.1420   0.4110  0.9283    15.0        nan       nan      nan           
+OHMIC      lightgbm       full         0.6006   0.1398   0.4066  0.9282    16.0        nan       nan      nan           
+OHMIC      random_forest  full         0.6058   0.0858   0.4144  0.9273    16.0        nan       nan      nan           
+OHMIC      random_forest  selected     0.6102   0.0854   0.4191  0.9264    15.0     0.4716    0.2902   0.9559 <-- WINNER
+OHMIC      elasticnet     selected     1.7818   0.1639   1.4437  0.3674    15.0        nan       nan      nan           
+OHMIC      elasticnet     full         1.7859   0.1736   1.4443  0.3650    16.0        nan       nan      nan           
+
+FIC        lightgbm       full         0.3719   0.0346   0.2556  0.9712   109.0     0.3214    0.2044   0.9795 <-- WINNER
+FIC        lightgbm       selected     0.4034   0.0419   0.2902  0.9658    84.0        nan       nan      nan           
+FIC        random_forest  full         0.4250   0.0389   0.2985  0.9638   109.0        nan       nan      nan           
+FIC        random_forest  selected     0.4774   0.0489   0.3279  0.9549    84.0        nan       nan      nan           
+FIC        elasticnet     full         1.1983   0.0730   0.9559  0.7098   109.0        nan       nan      nan           
+FIC        elasticnet     selected     1.4794   0.1228   1.1680  0.5630    84.0        nan       nan      nan           
+
+SIN        lightgbm       selected     0.3747   0.0371   0.2619  0.9710   142.0     0.3111    0.2096   0.9808 <-- WINNER
+SIN        lightgbm       full         0.3877   0.1417   0.2406  0.9632   195.0        nan       nan      nan           
+SIN        random_forest  full         0.4582   0.1115   0.3026  0.9526   195.0        nan       nan      nan           
+SIN        random_forest  selected     0.4695   0.0722   0.3232  0.9548   142.0        nan       nan      nan           
+SIN        elasticnet     full         0.6763   0.0387   0.5404  0.9057   195.0        nan       nan      nan           
+SIN        elasticnet     selected     0.8938   0.0625   0.7095  0.8362   142.0        nan       nan      nan           
+
+THIN       lightgbm       full         0.3081   0.0303   0.2090  0.9798   317.0     0.2480    0.1683   0.9878 <-- WINNER
+THIN       lightgbm       selected     0.3583   0.0198   0.2406  0.9733   224.8        nan       nan      nan           
+THIN       random_forest  full         0.3690   0.0348   0.2570  0.9717   317.0        nan       nan      nan           
+THIN       elasticnet     full         0.3856   0.0034   0.3062  0.9696   317.0        nan       nan      nan           
+THIN       random_forest  selected     0.4395   0.0880   0.3031  0.9597   224.8        nan       nan      nan           
+THIN       elasticnet     selected     0.5925   0.0435   0.4671  0.9277   224.8        nan       nan      nan           

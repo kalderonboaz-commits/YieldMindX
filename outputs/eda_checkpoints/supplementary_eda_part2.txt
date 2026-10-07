@@ -1,0 +1,52 @@
+========================================================================
+NOTABLE RELATIONSHIP SCATTERPLOTS (newly-introduced features per checkpoint)
+========================================================================
+OHMIC: saved notable_scatter_OHMIC.png for newly-introduced top features ['OHMIC_ET_lkg_5', 'OHMIC_ET_sh_GA142']
+FIC: saved notable_scatter_FIC.png for newly-introduced top features ['FIC_ET_lkg_SY8_80', 'FIC_ET_lkg_5']
+SIN: saved notable_scatter_SIN.png for newly-introduced top features ['SIN_GATE_ET_lkg_5', 'SIN_ET_lkg_SY07_10']
+THIN: saved notable_scatter_THIN.png for newly-introduced top features ['THIN_ET_lkg_10', 'THIN_ET_lkg_C300']
+
+========================================================================
+CHECKPOINT COMPARISON SUMMARY (train partition)
+========================================================================
+Checkpoint Candidates Redund.ratio Pearson>=0.5 Pearson 0.3-0.5  IQR outlier cols z-score outlier cols
+------------------------------------------------------------------------------------------------------
+OHMIC              16       0.0625            1               1                 1                    9
+FIC               109       0.2294            1               8                 4                   55
+SIN               195       0.2718            3              13                 9                   97
+THIN              317       0.2871            8              20                18                  167
+
+========================================================================
+EVIDENCE-BASED PREPROCESSING / FEATURE-SELECTION RECOMMENDATION PER CHECKPOINT
+========================================================================
+(Recommendations only -- NOT globally-fitted preprocessing. Any learned step named
+below is re-fit fold-local during actual training, per the pipeline already built.)
+
+--- OHMIC (16 candidates) ---
+  Redundancy ratio 0.062 is low -- little evidence a redundancy-based
+  reduction would meaningfully shrink this checkpoint's feature count. Recommend evaluating
+  'Full' and 'Selected' anyway (per the predefined comparison plan), but do not expect a large gap.
+  No missing values, no near-constant columns, no sentinel values found at this checkpoint (train partition).
+  1 column(s) show IQR-flagged outliers -- treated as a statistical
+  flag only; no column is recommended for removal on this basis alone (unverified-cause).
+
+--- FIC (109 candidates) ---
+  Redundancy ratio 0.229 indicates real clustering structure -- the
+  'Selected' arm (redundancy-cluster representatives) is a reasonable candidate to test against 'Full'.
+  No missing values, no near-constant columns, no sentinel values found at this checkpoint (train partition).
+  4 column(s) show IQR-flagged outliers -- treated as a statistical
+  flag only; no column is recommended for removal on this basis alone (unverified-cause).
+
+--- SIN (195 candidates) ---
+  Redundancy ratio 0.272 indicates real clustering structure -- the
+  'Selected' arm (redundancy-cluster representatives) is a reasonable candidate to test against 'Full'.
+  No missing values, no near-constant columns, no sentinel values found at this checkpoint (train partition).
+  9 column(s) show IQR-flagged outliers -- treated as a statistical
+  flag only; no column is recommended for removal on this basis alone (unverified-cause).
+
+--- THIN (317 candidates) ---
+  Redundancy ratio 0.287 indicates real clustering structure -- the
+  'Selected' arm (redundancy-cluster representatives) is a reasonable candidate to test against 'Full'.
+  No missing values, no near-constant columns, no sentinel values found at this checkpoint (train partition).
+  18 column(s) show IQR-flagged outliers -- treated as a statistical
+  flag only; no column is recommended for removal on this basis alone (unverified-cause).

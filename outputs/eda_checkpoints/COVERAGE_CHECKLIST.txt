@@ -1,0 +1,86 @@
+EDA COVERAGE CHECKLIST -- four-checkpoint pipeline (OHMIC / FIC / SIN / THIN)
+Scope: training partition only (1,200 rows, 80 lots). Test partition (300 rows,
+20 lots) was never accessed by any script referenced in this checklist.
+Synthetic data (mode=synthetic, Process == "GaAs_pHEMT_MMIC"). All findings
+below describe THIS synthetic dataset; none are claimed to transfer to real
+production data without re-running this same EDA once real data is supplied.
+
+SWEETVIZ STATUS: ALL FOUR checkpoints now complete. OHMIC and FIC completed
+in the original run. SIN and THIN were initially blocked when generated
+together with other jobs in one process (killed by the system's own
+low-memory protection, not a code/compatibility error). Both were
+successfully regenerated afterward, each in its own fresh standalone
+process with pairwise associations kept enabled throughout:
+  - SIN:  195 features, runtime 460.5s,  peak python working-set 4.89 GB
+  - THIN: 317 features, runtime 933.2s,  peak python working-set 8.17 GB
+Both verified to contain every expected candidate column, the target
+(SortingYield), LotName/WaferNum, and association-graph content; both
+files close with a valid </html> tag (not truncated).
+
+COMPLETED
+---------
+[x] Sweetviz HTML report for ALL FOUR checkpoints -- OHMIC, FIC, SIN, THIN
+    (target=SortingYield, LotName/WaferNum forced categorical/identifier,
+    not treated as numeric predictors; pairwise associations enabled for
+    all four, never disabled to work around memory pressure)
+[x] Per-feature type/quantile/distribution summary (quantile_table, describe)
+[x] Missingness check (0 missing cells, all checkpoints, train partition)
+[x] Near-constant check, two independent methods (dominant-value-fraction>=98%;
+    std/range<1%) -- 0 found, all checkpoints
+[x] Duplicate-row check: LotName+WaferNum (0) AND full-predictor-row duplicates
+    across all 317 columns (0)
+[x] Sentinel/invalid-value scan (-999,-9999,-1,9999,99999,0 at >=5% prevalence)
+    -- none found; negative-value presence noted separately as expected/legitimate
+    for signed electrical quantities, not flagged as an error
+[x] Outlier rates, two independent methods (IQR x3; |z|>3), with explicit
+    disagreement between methods reported (z-score flags far more columns on
+    skewed distributions -- methodological artifact, documented)
+[x] Skewness (|skew|>2 count per checkpoint)
+[x] Pearson AND Spearman feature-target correlation (both reported; prior
+    over-interpretation of their gap corrected and downgraded to hypothesis)
+[x] Feature-feature redundancy via Spearman + hierarchical clustering
+    (threshold justified by the actual pairwise-correlation distribution, not
+    asserted)
+[x] Scatterplots for notable relationships (newly-introduced top-correlated
+    features per checkpoint, plus the three original gap-feature scatterplots
+    from the prior review round)
+[x] Sensitivity analysis: Pearson/Spearman recomputed after removing top-K
+    most extreme points (K=1,3,5,10,20) -- evidence that the Pearson-Spearman
+    gap is not explained by a small number of leverage points alone
+[x] Target variation within vs between lots (variance decomposition, ICC-like
+    ratio = 0.051 -- most target variance is within-lot, not between-lot)
+[x] Time-trend diagnostic using Sorting Date (kept strictly as metadata, not
+    a predictor) -- near-zero correlation with date rank
+[x] Checkpoint comparison table (candidate count, redundancy ratio, |corr|
+    bucket counts, outlier-column counts)
+[x] Evidence-based preprocessing/feature-selection recommendation per
+    checkpoint (descriptive recommendation only -- actual learned
+    transforms/selection remain fold-local during training, per
+    checkpoint_pipeline_builder.py)
+
+UNAVAILABLE (not possible from this dataset/environment)
+----------------------------------------------------------
+[ ] Documented physical units per ET column -- no unit metadata exists
+    anywhere in the dataset, config, or project documents; column names are
+    the only available semantic signal
+[ ] Confirmed (vs. hypothesized) physical explanation for skew/outliers in
+    "lkg" (leakage-current) columns -- no instrument calibration record or
+    process-engineering sign-off is available to this review
+[ ] Ground truth on whether the visible point-clusters in the gap-feature
+    scatterplots correspond to a real physical subpopulation (e.g. specific
+    lots) -- would require coloring by LotName and/or engineer input, not
+    done this round (scope: flagged as an open hypothesis, not pursued)
+
+UNRESOLVED (possible but not done this round -- would require explicit scope)
+-------------------------------------------------------------------------------
+[ ] Formal monotonicity test (e.g. isotonic-fit comparison) for the
+    gap-feature relationships -- "monotonic" remains an unverified hypothesis
+[ ] Formal nonlinearity test (e.g. linear-vs-spline comparison) -- "nonlinear"
+    remains an unverified hypothesis
+[ ] Full pairwise feature-feature scatterplot matrix (only the redundancy
+    CLUSTERING summary and pairwise-correlation DISTRIBUTION were produced;
+    not every one of the ~50,000 THIN-checkpoint pairs was individually
+    plotted -- infeasible at this scale and not requested beyond "notable"
+    relationships)
+[ ] Lot-level clustering/segmentation analysis explaining the between-lot
+    variance structure beyond the single ICC-like summary ratio
